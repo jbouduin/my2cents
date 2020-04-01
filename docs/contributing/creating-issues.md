@@ -15,4 +15,4 @@
 
 **[VIEW OR CREATE ISSUES HERE](https://github.com/jbouduin/my2cents/issues)**
 ---
-[Table of Contents](docs/documentation.md)
+[Table of Contents](/docs/documentation.md)

@@ -1,3 +1,3 @@
 ### Configuring Nginx
 ---
-[Table of Contents](docs/documentation.md)
+[Table of Contents](/docs/documentation.md)

@@ -10,4 +10,4 @@
 
 to use webpush: generate keys by running npx web-push generate-vapid-keys
 ---
-[Table of Contents](docs/documentation.md)
+[Table of Contents](/docs/documentation.md)

@@ -4,4 +4,4 @@ Lint:
 npx tslint -c tslint.json 'src/**/*.ts'
 ```
 ---
-[Table of Contents](docs/documentation.md)
+[Table of Contents](/docs/documentation.md)

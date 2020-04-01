@@ -56,20 +56,20 @@ You can now browse to http://localhost:8080.
 ---
 
 ### Documentation
-- [Installation](docs/installation/installation.md)
-  - [Installing from Source](docs/installation/from-source.md)
-  - [Configuring the My2Cents Server](docs/installation/configuration.md)
-  - [Starting My2Cents](docs/installation/starting.md)
-  - [Configuring Nginx](docs/installation/nginx.md)
-- [Using My2Cents](docs/using-my2cents)
-  - [Embedding in your HTML](docs/using-my2cents/embedding.md)
-  - [Style-sheets](docs/using-my2cents/style-sheets.md)
-- [Contributing](docs/contributing/contributing.md)
-  - [Creating issues](docs/contributing/creating-issues.md)
-  - [Develop](docs/contributing/develop.md)
-    - [Definition of Done](docs/contributing/definition-of-done.md)
-    - [Coding guidelines](docs/contributing/coding-guidelines.md)
-    - [Pull Requests](docs/contributing/pull-requests.md)
+- [Installation](/docs/installation/installation.md)
+  - [Installing from Source](/docs/installation/from-source.md)
+  - [Configuring the My2Cents Server](/docs/installation/configuration.md)
+  - [Starting My2Cents](/docs/installation/starting.md)
+  - [Configuring Nginx](/docs/installation/nginx.md)
+- [Using My2Cents](/docs/using-my2cents)
+  - [Embedding in your HTML](/docs/using-my2cents/embedding.md)
+  - [Style-sheets](/docs/using-my2cents/style-sheets.md)
+- [Contributing](/docs/contributing/contributing.md)
+  - [Creating issues](/docs/contributing/creating-issues.md)
+  - [Develop](/docs/contributing/develop.md)
+    - [Definition of Done](/docs/contributing/definition-of-done.md)
+    - [Coding guidelines](/docs/contributing/coding-guidelines.md)
+    - [Pull Requests](/docs/contributing/pull-requests.md)
 
 ### Who is using My2Cents?
 
