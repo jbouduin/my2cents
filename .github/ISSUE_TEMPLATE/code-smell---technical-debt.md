@@ -2,7 +2,7 @@
 name: Code smell - Technical debt
 about: Report code smell, technical debt, anything which seems not OK in the code
 title: ''
-labels: ''
+labels: code improvement
 assignees: ''
 
 ---

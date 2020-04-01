@@ -2,7 +2,7 @@
 name: Documentation
 about: Tell me about missing, incomplete, incomprehensible or wrong documentation
 title: ''
-labels: ''
+labels: documentation
 assignees: ''
 
 ---
