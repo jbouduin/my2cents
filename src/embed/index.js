@@ -6,8 +6,9 @@ import My2Cents from './client';
 
     const opts = script.dataset;
     var slug = opts.my2centsSlug;
-    const url = new URL(script.getAttribute('src'));
+    const url = new URL(document.URL);
     const host = `${url.protocol}//${url.host}`;
+    console.log(host);
     const partials = {
         Preview: `Preview`,
         Edit: `Edit`,
