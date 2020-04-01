@@ -23,3 +23,5 @@ Embed in your HTML page:
     });
 </script>
 ```
+---
+[Table of Contents](docs/documentation.md)

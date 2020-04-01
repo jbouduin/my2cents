@@ -1,6 +1,8 @@
 ### Installation
 
-1. [Installing from Source](https://github/jbouduin/my2cents/docs/installation/from-source.md)
-1. [Configuring the My2Cents Server](https://github/jbouduin/my2cents/docs/installation/configuration.md)
-1. [Starting My2Cents](https://github/jbouduin/my2cents/docs/installation/starting.md)
-1. [Configuring Nginx](https://github/jbouduin/my2cents/docs/installation/nginx.md)
+- [Installing from Source](docs/installation/from-source.md)
+- [Configuring the My2Cents Server](docs/installation/configuration.md)
+- [Starting My2Cents](docs/installation/starting.md)
+- [Configuring Nginx](docs/installation/nginx.md)
+---
+[Table of Contents](docs/documentation.md)

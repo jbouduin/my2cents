@@ -1,4 +1,6 @@
 ### Using My2Cents
 
-1. [Embedding in your HTML](https://github/jbouduin/my2cents/docs/using-my2cents/embedding.md)
-1. [Style-sheets](https://github/jbouduin/my2cents/docs/using-my2cents/style-sheets.md)
+- [Embedding in your HTML](docs/using-my2cents/embedding.md)
+- [Style-sheets](docs/using-my2cents/style-sheets.md)
+---
+[Table of Contents](docs/documentation.md)

@@ -56,20 +56,20 @@ You can now browse to http://localhost:8080.
 ---
 
 ### Documentation
-1. [Installation](https://github/jbouduin/my2cents/docs/installation/installation.md)
-  1. [Installing from Source](https://github/jbouduin/my2cents/docs/installation/from-source.md)
-  1. [Configuring the My2Cents Server](https://github/jbouduin/my2cents/docs/installation/configuration.md)
-  1. [Starting My2Cents](https://github/jbouduin/my2cents/docs/installation/starting.md)
-  1. [Configuring Nginx](https://github/jbouduin/my2cents/docs/installation/nginx.md)
-1. [Using My2Cents](https://github/jbouduin/my2cents/docs/using-my2cents)
-  1. [Embedding in your HTML](https://github/jbouduin/my2cents/docs/using-my2cents/embedding.md)
-  1. [Style-sheets](https://github/jbouduin/my2cents/docs/using-my2cents/style-sheets.md)
-1. [Contributing](https://github/jbouduin/my2cents/docs/contributing/contributing.md)
-  1. [Creating issues](https://github/jbouduin/my2cents/docs/contributing/creating-issues.md)
-  1. [Develop](https://github/jbouduin/my2cents/docs/contributing/develop.md)
-    1. [Definition of Done](https://github/jbouduin/my2cents/docs/contributing/definition-of-done.md)
-    1. [Coding guidelines](https://github/jbouduin/my2cents/docs/contributing/coding-guidelines.md)
-    1. [Pull Requests](https://github/jbouduin/my2cents/docs/contributing/pull-requests.md)
+- [Installation](docs/installation/installation.md)
+  - [Installing from Source](docs/installation/from-source.md)
+  - [Configuring the My2Cents Server](docs/installation/configuration.md)
+  - [Starting My2Cents](docs/installation/starting.md)
+  - [Configuring Nginx](docs/installation/nginx.md)
+- [Using My2Cents](docs/using-my2cents)
+  - [Embedding in your HTML](docs/using-my2cents/embedding.md)
+  - [Style-sheets](docs/using-my2cents/style-sheets.md)
+- [Contributing](docs/contributing/contributing.md)
+  - [Creating issues](docs/contributing/creating-issues.md)
+  - [Develop](docs/contributing/develop.md)
+    - [Definition of Done](docs/contributing/definition-of-done.md)
+    - [Coding guidelines](docs/contributing/coding-guidelines.md)
+    - [Pull Requests](docs/contributing/pull-requests.md)
 
 ### Who is using My2Cents?
 
