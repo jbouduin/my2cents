@@ -33,6 +33,7 @@ export class AuthenticationService implements IAuthenticationService {
 
   // fields
   private providers = new Array<IProvider>();
+  private successPath: string;
 
   // constructor
   public constructor(
@@ -42,6 +43,7 @@ export class AuthenticationService implements IAuthenticationService {
   // interface members
   public async initialize(app: express.Application): Promise<any> {
     this.initializePassport(app);
+    this.successPath = `${this.configurationService.environment.server.pathToMy2Cents}/auth/success`;
     return Promise.resolve(this.providers);
   }
 
@@ -106,7 +108,6 @@ export class AuthenticationService implements IAuthenticationService {
     });
 
     router.get('/success', (request, reply) => {
-        const My2CentsDomain = this.configurationService.getMy2CentsUrl();
         reply.send(`<!doctype html>
         <html lang="en">
           <head>
@@ -116,9 +117,8 @@ export class AuthenticationService implements IAuthenticationService {
                 window.opener.__my2cents_wait_for_oauth();
             </script>
           </head>
-
           <body>
-            <h1> OK</h1>
+            <h1>OK</h1>
           </body>
         </html>`);
     });
@@ -205,7 +205,7 @@ export class AuthenticationService implements IAuthenticationService {
       '/anonymous',
       passport.authenticate('local', { session: true}),
       (request, reply, next) => {
-        reply.redirect('/my2cents/auth/success');
+        reply.redirect(this.successPath);
       }
     );
 
@@ -229,7 +229,7 @@ export class AuthenticationService implements IAuthenticationService {
     router.get(
       '/twitter/callback',
       passport.authenticate('twitter', { failureRedirect: '/login' }),
-      (request, reply) => { reply.redirect('/auth/success'); }
+      (request, reply) => { reply.redirect(this.successPath); }
     );
   }
 
@@ -251,7 +251,7 @@ export class AuthenticationService implements IAuthenticationService {
     router.get(
       '/github/callback',
       passport.authenticate('github', { failureRedirect: '/login' }),
-      (request, reply) => { reply.redirect('/success'); }
+      (request, reply) => { reply.redirect(this.successPath); }
     );
   }
 
@@ -278,7 +278,7 @@ export class AuthenticationService implements IAuthenticationService {
     router.get(
         '/google/callback',
         passport.authenticate('google', { failureRedirect: '/login' }),
-        (request, reply) => { reply.redirect('/success'); }
+        (request, reply) => { reply.redirect(this.successPath); }
     );
   }
 
@@ -300,7 +300,7 @@ export class AuthenticationService implements IAuthenticationService {
     router.get(
         '/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/login' }),
-        (request, reply) => { reply.redirect('/success'); }
+        (request, reply) => { reply.redirect(this.successPath); }
     );
   }
 
@@ -322,7 +322,7 @@ export class AuthenticationService implements IAuthenticationService {
     router.get(
         '/instagram/callback',
         passport.authenticate('instagram', { failureRedirect: '/login' }),
-        (request, reply) => { reply.redirect('/success'); }
+        (request, reply) => { reply.redirect(this.successPath); }
     );
   }
 
@@ -344,7 +344,7 @@ export class AuthenticationService implements IAuthenticationService {
     router.get(
         '/linkedin/callback',
         passport.authenticate('linkedin', { failureRedirect: '/linkedin' }),
-        (request, reply) => { reply.redirect('/success'); }
+        (request, reply) => { reply.redirect(this.successPath); }
     );
   }
 }
