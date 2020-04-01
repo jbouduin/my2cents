@@ -32,16 +32,24 @@ class App {
     this.app = express();
     this.configurationService = container.get<IConfigurationService>(SERVICETYPES.ConfigurationService);
     this.databaseService = container.get<IDatabaseService>(SERVICETYPES.DatabaseService);
-    return this.configurationService.initialize(this.app)  // load the configuration files
+    // call initialize in the services
+    // ConfigurationService: load the configuration files
+    // this: cors, bodyparser.json, bodyparser.urlencoded, express-session, static
+    // EventService:  event emitting
+    // UserService: create default users
+    // AuthenticationService: passport + authentication routes
+    // RouteService: other routes
+    return this.configurationService.initialize(this.app)
+
       .then( configuration => {
         return this.databaseService
-          .initialize(this.app) // create the database connections
+          .initialize(this.app)
           .then(db => {
-            this.config(); // cors, bodyparser.json, bodyparser.urlencoded, express-session, static
+            this.config();
             return Promise.all([
-              container.get<IEventService>(SERVICETYPES.EventService).initialize(this.app), // event emitting
-              container.get<IUserService>(SERVICETYPES.UserService).initialize(this.app), // create default users
-              container.get<IAuthenticationService>(SERVICETYPES.AuthenticationService).initialize(this.app), // passport + authentication routes
+              container.get<IEventService>(SERVICETYPES.EventService).initialize(this.app),
+              container.get<IUserService>(SERVICETYPES.UserService).initialize(this.app),
+              container.get<IAuthenticationService>(SERVICETYPES.AuthenticationService).initialize(this.app)
               // container.get<IVapidService>(SERVICETYPES.VapidService).initialize(this.app)
             ]);
           })
@@ -56,6 +64,17 @@ class App {
     this.app.listen(port, () => {
         console.log(new Date() + ` Express server listening on port ${port}`);
       });
+  }
+
+  private checkOrigin(origin, callback) {
+    // origin is allowed
+    const hostname =
+      container.get<IConfigurationService>(SERVICETYPES.ConfigurationService).environment.server.hostname;
+    if (typeof origin === 'undefined' || `.${new URL(origin).hostname}`.endsWith(`.${hostname}`)) {
+      return callback(null, true);
+    }
+
+    callback(new Error('Not allowed by CORS'));
   }
 
   private config(): void {
@@ -98,19 +117,6 @@ class App {
     ));
     this.configurationService.environment.server.serveStatic
       .forEach(value => this.app.use(express.static(value)));
-  }
-
-  public checkOrigin(origin, callback) {
-      // origin is allowed
-      let hostname = container.get<IConfigurationService>(SERVICETYPES.ConfigurationService).environment.server.hostname;
-      if (
-          typeof origin === 'undefined' ||
-          `.${new URL(origin).hostname}`.endsWith(`.${hostname}`)
-      ) {
-          return callback(null, true);
-      }
-
-      callback(new Error('Not allowed by CORS'));
   }
 }
 

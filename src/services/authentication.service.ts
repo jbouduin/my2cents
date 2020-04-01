@@ -197,7 +197,7 @@ export class AuthenticationService implements IAuthenticationService {
             </body>
           </html>
           `
-        )
+        );
       }
     );
 

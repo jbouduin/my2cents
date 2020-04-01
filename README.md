@@ -50,6 +50,10 @@ Run the server:
 ```bash
 npm start
 ```
+Lint:
+```bash
+npx tslint -c tslint.json 'src/**/*.ts'
+```
 
 Embed in your HTML page:
 

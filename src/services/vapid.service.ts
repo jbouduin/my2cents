@@ -1,7 +1,7 @@
 import { Application, Request, Response } from 'express';
+import * as expressModifyResponse from 'express-modify-response';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-var expressModifyResponse = require('express-modify-response');
 
 import { IConfigurationService} from './configuration.service';
 import { IService } from './service';
@@ -15,7 +15,8 @@ export interface IVapidService extends IService {
 export class VapidService implements IVapidService {
 
   // constructor
-  public constructor(@inject(SERVICETYPES.ConfigurationService) private configurationService: IConfigurationService) {
+  public constructor(
+    @inject(SERVICETYPES.ConfigurationService) private configurationService: IConfigurationService) {
   }
 
   // interface members
@@ -27,16 +28,16 @@ export class VapidService implements IVapidService {
   }
 
   // private methods
-  checkRequest(request: Request, response: Response) {
+  private checkRequest(request: Request, response: Response) {
     if (request.path === '/push.js') {
-      console.log(`will modify ${request.path}`)
+      console.log(`will modify ${request.path}`);
       return true;
     }
-    console.log(`will not modify ${request.path}`)
+    console.log(`will not modify ${request.path}`);
     return false;
   }
 
-  modifyBody(request: Request, response: Response, body) {
+  private modifyBody(request: Request, response: Response, body) {
     console.log(`modifying ${request.path}`);
     if (request.path === '/push.js') {
       return body
