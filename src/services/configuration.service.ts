@@ -38,9 +38,9 @@ export class ConfigurationService implements IConfigurationService {
   }
 
   public getPageUrl(): string {
-    const url = `${this.environment.client.protocol}/${this.environment.client.hostname}`;
-    const port = this.environment.client.port ? `:${this.environment.client.port}` : '';
-    return `${url}${port}${this.environment.client.pathToPage}/%SLUG%`;
+    const url = `${this.environment.server.protocol}/${this.environment.server.hostname}`;
+    const port = this.environment.server.port ? `:${this.environment.server.port}` : '';
+    return `${url}${port}${this.environment.server.pathToPage}/%SLUG%`;
   }
 
   public getMy2CentsDomain(): string {
@@ -66,8 +66,8 @@ export class ConfigurationService implements IConfigurationService {
   public getMy2CentsUrl(): string {
     const host = `${this.environment.server.protocol}://${this.environment.server.hostname}`;
     return this.environment.server.port && this.environment.server.port !== 0 ?
-      `${host}:${this.environment.server.port}` :
-      host;
+      `${host}:${this.environment.server.port}/${this.environment.server.pathToMy2Cents}` :
+      `${host}/${this.environment.server.pathToMy2Cents}`;
   }
 
   public async initialize(app: express.Application): Promise<any> {
@@ -87,5 +87,4 @@ export class ConfigurationService implements IConfigurationService {
       return false;
     }
   }
-  // private helper methods
 }

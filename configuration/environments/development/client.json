@@ -1,6 +1,0 @@
-{
-  "hostname": "${process.env.EMBEDDING_HOST_NAME || 'localhost'}",
-  "pathToPage": "/",
-  "port": "${process.env.EMBEDDING_PORT || 8080}",
-  "protocol": "http"
-}

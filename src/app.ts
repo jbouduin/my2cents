@@ -3,7 +3,6 @@ import { TypeormStore } from 'connect-typeorm';
 import * as cors from 'cors';
 import * as express from 'express';
 import * as expressSession from 'express-session';
-/* import * as CookieParser from 'cookie-parser'; */
 
 import { Session } from './db/entities';
 
@@ -32,7 +31,8 @@ class App {
     this.app = express();
     this.configurationService = container.get<IConfigurationService>(SERVICETYPES.ConfigurationService);
     this.databaseService = container.get<IDatabaseService>(SERVICETYPES.DatabaseService);
-    // call initialize in the services
+
+    // call initialize in the services:
     // ConfigurationService: load the configuration files
     // this: cors, bodyparser.json, bodyparser.urlencoded, express-session, static
     // EventService:  event emitting
@@ -40,7 +40,6 @@ class App {
     // AuthenticationService: passport + authentication routes
     // RouteService: other routes
     return this.configurationService.initialize(this.app)
-
       .then( configuration => {
         return this.databaseService
           .initialize(this.app)
@@ -60,7 +59,7 @@ class App {
   }
 
   public start(): void {
-    const port = this.configurationService.environment.server.port;
+    const port = this.configurationService.environment.server.my2CentsPort;
     this.app.listen(port, () => {
         console.log(new Date() + ` Express server listening on port ${port}`);
       });
