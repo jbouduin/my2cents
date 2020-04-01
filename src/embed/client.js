@@ -9,7 +9,7 @@ export default class My2Cents {
   constructor(options) {
 
     this.options = options;
-    this.options.endpoint = `${options.host}/my2cents/comments/${options.slug}`;
+    this.options.endpoint = `${options.host}/${options.root}/comments/${options.slug}`;
     this.initialized = false;
     this.firstLoad = true;
 
@@ -17,7 +17,7 @@ export default class My2Cents {
   }
 
   refresh() {
-    const { target, slug, host, endpoint, partials } = this.options;
+    const { target, slug, host, root, endpoint, partials } = this.options;
 
     fetch(
       endpoint,
@@ -82,7 +82,7 @@ export default class My2Cents {
           preview.style.display = 'block';
           writeBtn.style.display = 'inline';
           fetch(
-            `${host}/markdown`,
+            `${host}/${root}/markdown`,
             {
               credentials: 'include',
               method: 'POST',
@@ -125,7 +125,7 @@ export default class My2Cents {
           signout.addEventListener('click', e => {
             e.preventDefault();
             fetch(
-              `${host}/my2cents/auth/signout`, {
+              `${host}/${root}/auth/signout`, {
               credentials: 'include',
               headers: { 'Content-Type': 'application/json' }
             })
@@ -150,7 +150,7 @@ export default class My2Cents {
               };
               if (provider.id === 'anonymous') {
                 let windowRef = window.open(
-                  `${host}/my2cents/auth/anonymous`,
+                  `${host}/${root}/auth/anonymous`,
                   'Post anonymously',
                   'resizable,scrollbars,status,width=600,height=500'
                 );
@@ -169,7 +169,7 @@ export default class My2Cents {
       if (data.user && data.user.admin) {
         if (!this.initialized) {
           const push = document.createElement('script');
-          push.setAttribute('src', `${host}/my2cents/push.js`);
+          push.setAttribute('src', `${host}/${root}/push.js`);
           document.head.appendChild(push);
           this.initialized = true;
         }

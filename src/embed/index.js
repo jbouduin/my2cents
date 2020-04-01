@@ -5,7 +5,9 @@ import My2Cents from './client';
     if (!script) return console.warn('my2cents script tag needs some data attributes');
 
     const opts = script.dataset;
-    var slug = opts.my2centsSlug;
+    const slug = opts.my2centsSlug;
+    const root = opts.my2centsRoot;
+    console.log(root);
     const url = new URL(document.URL);
     const host = `${url.protocol}//${url.host}`;
 
@@ -34,6 +36,7 @@ import My2Cents from './client';
     // eslint-disable-next-line no-new
     new My2Cents({
         target: opts.my2centsTarget,
+        root,
         slug,
         host,
         partials
