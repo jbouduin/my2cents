@@ -32,7 +32,7 @@ export default class My2Cents {
       data.partials = partials;
       $(target).innerHTML = my2cents_tpl(data);
 
-      const above = $(`${target} div.my2cents-above`);
+      const above = $(`${target} div.my2cents-new-comment`);
       const form = $(`${target} div.my2cents-form`);
       const textarea = $(`${target} textarea.my2cents-body`);
       const preview = $(`${target} .my2cents-form blockquote.my2cents-body`);
@@ -42,7 +42,7 @@ export default class My2Cents {
         textarea.value = draft;
       }
 
-      const postBtn = $(target + ' .my2cents-button');
+      const postBtn = $(target + ' .my2cents-post');
       const previewBtn = $(target + ' .my2cents-preview');
       const writeBtn = $(target + ' .my2cents-write');
       const cancelReplyBtn = $(target + ' .my2cents-cancel-reply');
@@ -120,7 +120,7 @@ export default class My2Cents {
       }
 
       if (data.user) {
-        const signout = $('a.my2cents-signout');
+        const signout = $('.my2cents-logout');
         if (signout) {
           signout.addEventListener('click', e => {
             e.preventDefault();
@@ -187,7 +187,7 @@ export default class My2Cents {
             })
             .then(() => this.refresh());
           };
-          document.querySelectorAll('.my2cents-action').forEach(btn => {
+          document.querySelectorAll('.my2cents-admin-action').forEach(btn => {
             btn.addEventListener('click', action);
           });
         }

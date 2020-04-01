@@ -1,46 +1,89 @@
-<% if (data.user) { %>
-  <% if (data.user.admin) { %>
-    <div class="my2cents-settings">
-        <button class="my2cents-action" data-target="notification" data-class="setting" data-action="true"><%= data.partials.UnMute %></button>
-        <button class="my2cents-action" data-target="notification" data-class="setting" data-action="false"><%= data.partials.Mute %></button>
-    </div>
-  <% } %>
-  <div class="my2cents-login-status">
-    <%= data.partials.LoginStatus.replace('%USER%', data.user.name) %>
-  </div>
-  <div class="my2cents-above">
-    <div class="my2cents-form">
-      <textarea class="my2cents-body" placeholder="<%= data.partials.PostComment %>"></textarea>
-      <blockquote class="my2cents-body" style="display:none"></blockquote>
-      <br>
-      <button class="my2cents-preview"><%= data.partials.Preview %></button>
-      <button style="display:none" class="my2cents-write"><%= data.partials.Edit %></button>&nbsp;
-      <button class="my2cents-send-comment my2cents-button"><%= data.partials.SendComment %></button>&nbsp;
-      <button class="my2cents-cancel-reply" style="display:none"><%= data.partials.Cancel %></button>
-    </div>
-  </div>
-<% } else { %>
-  <div class="my2cents-signin">
-    <%= data.partials.SignInVia %><br>
-      <% data.auth.forEach((provider, i) => {  %>
-        <%= i ? data.partials.Or : '' %><button class="my2cents-signin-<%= provider.id %>"><i class="icon my2cents-icon-<%= provider.id %>"></i> <%= provider.name %></button>
-      <% }) %>
+<div class="my2cents-wrapper">
+  <div class="my2cents-header">
+    <% if (data.user) { %>
+      <div class="my2cents-login-wrapper">
+        <div class="my2cents-login-status">
+          <span>You are logged in as</span>
+          <span class="my2cents-user"><%= data.user.name %></span>
+        </div>
+        <div class="my2cents-logout-wrapper">
+          <button class="my2cents-button my2cents-logout">Log out</button>
+        </div>
+      </div>
+
+      <% if (data.user.admin) { %>
+
+        <div class="my2cents-admin-header">
+          <button class="my2cents-button my2cents-admin-action" data-target="notification" data-class="setting" data-action="true">
+            <%= data.partials.UnMute %>
+            <span><%= data.partials.UnMute %></span>
+          </button>
+          <button class="my2cents-button my2cents-admin-action" data-target="notification" data-class="setting" data-action="false">
+            <%= data.partials.Mute %>
+            <span><%= data.partials.Mute %><span>
+          </button>
+        </div>
+
+      <% } %>
+
+      <div class="my2cents-new-comment">
+        <div class="my2cents-form">
+          <textarea class="my2cents-body" placeholder="<%= data.partials.PostComment %>"></textarea>
+          <blockquote class="my2cents-body" style="display:none"></blockquote>
+          <div class="my2cents-form-buttons">
+            <button class="my2cents-button my2cents-preview">
+              <%= data.partials.Preview %>
+            </button>
+            <button class="my2cents-button my2cents-write" style="display:none">
+              <%= data.partials.Edit %>
+            </button>
+            <button class="my2cents-button my2cents-post">
+              <%= data.partials.SendComment %>
+            </button>&nbsp;
+            <button class="my2cents-button my2cents-cancel-reply" style="display:none">
+              <%= data.partials.Cancel %>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    <% } else { %>
+      <div class="my2cents-signin">
+        <%= data.partials.SignInVia %>
+        <br>
+        <% data.auth.forEach((provider, i) => {  %>
+          <%= i ? data.partials.Or : '' %>
+          <button class="my2cents.button my2cents-signin-<%= provider.id %>">
+            <i class="icon my2cents-icon-<%= provider.id %>"></i>
+            <%= provider.name %>
+          </button>
+        <% }) %>
+      </div>
     <% } %>
   </div>
+
 <%
   const comments = [];
   data.replies = {};
   data.comments.forEach((comment) => {
+    console.log(comment.replyTo);
     if (comment.replyTo) {
-      if (!data.replies[comment.replyTo]) data.replies[comment.replyTo] = [];
+      if (!data.replies[comment.replyTo])
+      {
+        data.replies[comment.replyTo] = [];
+      }
       data.replies[comment.replyTo].push(comment);
     } else {
-        comments.push(comment);
+      comments.push(comment);
     }
   });
   data.comments = comments;
 %>
-<%= data.comments_tpl(data) %>
+  <div class="my2cents-comments">
+    <%= data.comments_tpl(data) %>
+  </div>
+</div>
+
 <style type="text/css">
-  .my2cents-action > * { pointer-events: none; }
+  .my2cents-admin-action > * { pointer-events: none; }
 </style>

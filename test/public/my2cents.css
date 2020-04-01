@@ -1,12 +1,158 @@
-ul.my2cents-comments {
-    margin: 1em 0;
-    padding: 0;
+/* layout elements */
+/* ************************************************************************** */
+/* the wrapper around the whole thing                                         */
+/* ************************************************************************** */
+/* div wrapper                                                                */
+.my2cents-wrapper {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
 }
-li.my2cents-comment {
-    list-style: none;
-    margin: 0 0 1.5em;
-    padding: 0;
+
+/* ************************************************************************** */
+/* The header                                                                 */
+/* ************************************************************************** */
+/* div wrapper.header                                                         */
+.my2cents-header {
+  display: flex;
+  flex-direction: column;
 }
+
+/* div wrapper.header.login-wrapper                                           */
+.my2cents-login-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+/* div wrapper.header.login-wrapper.login-status                              */
+.my2cents-login-status {
+
+}
+
+/* div wrapper.header.login.logout-wrapper                                    */
+.my2cents-logout-wrapper {
+
+}
+
+/* div wrapper.header.admin-header                                            */
+.my2cents-admin-header {
+  display: flex;
+  flex-direction: row;
+}
+
+/* div my2cents.my2cents.new-comment                                          */
+.my2cents-new-comment {
+
+}
+
+/* ************************************************************************** */
+/* The comment/reply form
+/* ************************************************************************** */
+.my2cents-form {
+
+}
+
+/* ************************************************************************** */
+/* The comments
+/* ************************************************************************** */
+/* div comments                                                      */
+.my2cents-comments {
+  display: flex;
+  flex-direction: column;
+}
+
+/* article comments.comment                                                   */
+.my2cents-comment {
+
+}
+
+/* ************************************************************************** */
+/* The header
+/* ************************************************************************** */
+/* header comments.comment.comment-header                                     */
+.my2cents-comment-header {
+  display: flex;
+  flex-direction: row;
+}
+
+/* div comments.comment.comment-header.author-card                            */
+.my2cents-author-card {
+
+}
+
+/* div comments.comment.comment-header.author-card.author                     */
+.my2cents-author {
+
+}
+
+/* div comments.comment.comment-header.author-card.author-actions             */
+.my2cents-author-actions {
+
+}
+
+/* div comments.comment.comment-header.date                                   */
+.my2cents-date {
+
+}
+
+/* ************************************************************************** */
+/* The body
+/* ************************************************************************** */
+/* section comments.comment.comment-body                                      */
+.my2cents-comment-body {
+
+}
+
+/* ************************************************************************** */
+/* The footer
+/* ************************************************************************** */
+/* footer comments.comment.comment-footer                                     */
+.my2cents-comment-footer {
+
+}
+
+/* div comments.comment.comment-footer.comment-actions                        */
+.my2cents-comment-actions {
+
+}
+
+/* div comments.comment.comment-footer.reply-to-comment                       */
+.my2cents-reply-to-comment {
+
+}
+
+/* footer comments.comment.comment-footer.replies                             */
+.my2cents-replies {
+  margin-left: 20px;
+}
+
+/* ************************************************************************** */
+/* span with current user                                                     */
+.my2cents-user {
+  font-weight: bold;
+}
+
+/* button logout                                                              */
+.my2cents-logout {
+
+}
+
+/* buttons that are only available for administrators */
+.my2cents-admin-action {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.my2cents-admin-action:hover {
+    color: #c00;
+    opacity: 1;
+}
+
+.my2cents-admin-action span {
+    display: none;
+}
+
+/* TODO old stuff still to validate */
 .my2cents-body {
     position: relative;
     margin: 10px 0 0;
@@ -21,30 +167,14 @@ li.my2cents-comment {
     margin: 0;
 }
 
-button.my2cents-action {
-    border:0;
-    background: none;
-    cursor: pointer;
-    padding:0;
-    opacity: 0.5;
-}
+
 
 .my2cents-comment .my2cents-form,
 .my2cents-comment .my2cents-comments {
     margin-left: 2em;
 }
 
-
-button.my2cents-action:hover {
-    color: #c00;
-    opacity: 1;
-}
-
-button.my2cents-action span {
-    display: none;
-}
-
-li.my2cents-comment.my2cents-highlight {
+my2cents-comment.my2cents-highlight {
   animation: flash 7s 1;
 }
 

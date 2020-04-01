@@ -7,7 +7,6 @@ import My2Cents from './client';
     const opts = script.dataset;
     const slug = opts.my2centsSlug;
     const root = opts.my2centsRoot;
-    console.log(root);
     const url = new URL(document.URL);
     const host = `${url.protocol}//${url.host}`;
 
