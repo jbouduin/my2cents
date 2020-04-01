@@ -1,0 +1,30 @@
+{
+  "targets": [
+    {
+      "connectionName": "comments",
+      "targetType": "comments"
+    }, {
+      "connectionName": "sessions",
+      "targetType": "sessions"
+    }
+  ],
+  "connections": [
+    {
+      "connectionName": "sessions",
+      "databaseName": "sessions.sqlite",
+      "connectionType": "sqlite",
+      "hostName": "",
+      "port": 0,
+      "user": "",
+      "password": ""
+    }, {
+      "connectionName": "comments",
+      "databaseName": "comments.sqlite",
+      "connectionType": "sqlite",
+      "hostName": "",
+      "port": 0,
+      "user": "",
+      "password": ""
+    }
+  ]
+}

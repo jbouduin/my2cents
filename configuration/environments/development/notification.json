@@ -1,0 +1,14 @@
+{
+  "interval": 0,
+  "pushover": {
+    "appToken": "",
+    "userKey": ""
+  },
+  "slack": {
+    "webHookUrl": "xxxxx"
+  },
+  "webpush": {
+    "publicKey": "BBuh81yiREqP0F3Zl6q1dkU4YpMeqXap3umLLoI6k_PzyRCJC9-wmJAPUTysmCybbo9Eb120FK_THuKNhHl6VwY",
+    "privateKey": "3ng_XHVOhyyvStBQQ6tTWvIHOyXCB8JcCRwKu_8ZaYo"
+  }
+}

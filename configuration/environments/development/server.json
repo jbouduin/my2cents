@@ -1,0 +1,6 @@
+{
+  "hostname": "${process.env.MY2CENTS_HOST_NAME || 'localhost'}",
+  "port": "${process.env.MY2CENTS_PORT || 3000}",
+  "protocol": "http",
+  "serveStatic": ["build"]
+}
