@@ -1,13 +1,13 @@
 ---
-name: Improvement
-about: Suggest an improvement for this project
+name: Functional enhancement
+about: Suggest an enhancement to an existing feature for this product
 title: ''
-labels: ''
+labels: enhancement
 assignees: ''
 
 ---
 
-**What feature would you like to be improved?**
+**What feature would you like to be enhanced?**
 
 **Is your improvement request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
