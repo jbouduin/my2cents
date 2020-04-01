@@ -13,7 +13,7 @@ const plugins = [
   commonjs(),
   resolve(),
   buble(),
-  uglify()
+  // uglify()
 ];
 
 export default [
@@ -36,6 +36,13 @@ export default [
     input: 'src/embed/push.js',
     output: {
       file: 'build/push.js',
+      format: 'cjs'
+    },
+    plugins: plugins
+  }, {
+    input: 'src/embed/sw.js',
+    output: {
+      file: 'build/sw.js',
       format: 'cjs'
     },
     plugins: plugins

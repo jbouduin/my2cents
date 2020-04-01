@@ -8,7 +8,7 @@ import My2Cents from './client';
     var slug = opts.my2centsSlug;
     const url = new URL(document.URL);
     const host = `${url.protocol}//${url.host}`;
-    console.log(host);
+
     const partials = {
         Preview: `Preview`,
         Edit: `Edit`,

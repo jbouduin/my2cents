@@ -169,7 +169,7 @@ export default class My2Cents {
       if (data.user && data.user.admin) {
         if (!this.initialized) {
           const push = document.createElement('script');
-          push.setAttribute('src', `${host}/push.js`);
+          push.setAttribute('src', `${host}/my2cents/push.js`);
           document.head.appendChild(push);
           this.initialized = true;
         }
