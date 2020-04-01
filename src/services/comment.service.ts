@@ -12,7 +12,13 @@ import SERVICETYPES from './service.types';
 
 export interface ICommentService extends IService {
   approveComment(commentId: number): Promise<Comment>;
-  createComment(user: User, replyTo: number, slug: string, comment: string): Promise<Comment>;
+  createComment(
+    user: User,
+    replyTo: number,
+    slug: string,
+    comment: string,
+    ipAddress: string,
+    userAgent: string): Promise<Comment>;
   getCommentsBySlug(slug: string, userId: number, administrator: boolean): Promise<Array<Comment>>;
   getCommentsForModeration(): Promise<Array<Comment>>;
   getLastComment(userId: number, replyTo: number, slug: string): Promise<Comment>;
@@ -35,14 +41,22 @@ export class CommentService implements ICommentService {
     return commentRepository.save(comment);
   }
 
-  public async createComment(user: User, replyTo: number, slug: string, comment: string): Promise<Comment> {
+  public async createComment(
+    user: User,
+    replyTo: number,
+    slug: string,
+    comment: string,
+    ipAddress: string,
+    userAgent: string): Promise<Comment> {
     const commentRepository = this.databaseService.getCommentRepository();
     const newComment = await commentRepository.create(
       {
         comment,
         reply_to: replyTo,
         slug,
-        user
+        user,
+        ip_address: ipAddress,
+        user_agent: userAgent
       }
     );
     return commentRepository.save(newComment);

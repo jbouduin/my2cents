@@ -35,10 +35,15 @@ export class User extends BaseEntity {
   @Column({ default: false })
   public trusted: boolean;
 
-  @Column('nvarchar', { length: 255, nullable: true })
+  @Column('nvarchar', { length: 256, nullable: true })
   public url: string;
 
   @OneToMany(type => Comment, comment => comment.user)
   public comments: Promise<Array<Comment>>;
 
+  @Column('nvarchar', { length: 256, nullable: false })
+  public ip_address: string;
+
+  @Column('nvarchar', { length: 256, nullable: false })
+  public user_agent: string;
 }

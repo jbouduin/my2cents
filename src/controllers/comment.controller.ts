@@ -163,11 +163,14 @@ export class CommentController implements ICommentController {
           if (lastComment && lastComment.comment === request.body.comment) {
             response.send({ status: 'rejected', reason: 'reason' });
           } else {
+            console.log(request.headers);
             this.commentService.createComment(
               request.session.passport.user,
               request.body.reply_to,
               request.params.slug,
-              request.body.comment
+              request.body.comment,
+              this.getCallerIP(request),
+              request.get('user-agent')
             )
             .then(result => {
               this.eventService.postEvent(new CommentPostedEvent(result));
@@ -220,5 +223,14 @@ export class CommentController implements ICommentController {
         return 'https://github.com/' + name;
     }
     return null;
+  }
+
+  private getCallerIP(request: Request): string {
+    var ip = request.get('x-forwarded-for') ||
+        request.connection.remoteAddress ||
+        request.socket.remoteAddress;
+    ip = ip.split(',')[0];
+    ip = ip.split(':').pop(); //in case the ip returned in a format: "::ffff:146.xxx.xxx.xxx"
+    return ip || 'unknown';
   }
 }

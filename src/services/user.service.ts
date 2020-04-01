@@ -67,7 +67,9 @@ export class UserService implements IUserService {
               name: 'Administrator',
               provider: 'local',
               provider_id: 'Administrator',
-              trusted: true
+              trusted: true,
+              ip_address: '127.0.0.1',
+              user_agent: 'My2Cents-Server'
             }
           ));
         } else {
@@ -83,7 +85,9 @@ export class UserService implements IUserService {
                 name: 'Anonymous',
                 provider: 'local',
                 provider_id: 'Anonymous',
-                trusted: true
+                trusted: true,
+                ip_address: '127.0.0.1',
+                user_agent: 'My2Cents-Server'
               }
             ));
             console.log('creating an anonymous user');
@@ -116,6 +120,8 @@ export class UserService implements IUserService {
     newUser.trusted = false;
     newUser.blocked = false;
     newUser.administrator = false;
+    newUser.ip_address = 'unknown';
+    newUser.user_agent = 'unknown';
     return repository.save(newUser);
   }
 
