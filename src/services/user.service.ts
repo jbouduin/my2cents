@@ -64,11 +64,11 @@ export class UserService implements IUserService {
               administrator: true,
               blocked: false,
               display_name: 'Administrator',
+              ip_address: '127.0.0.1',
               name: 'Administrator',
               provider: 'local',
               provider_id: 'Administrator',
               trusted: true,
-              ip_address: '127.0.0.1',
               user_agent: 'My2Cents-Server'
             }
           ));
@@ -82,11 +82,11 @@ export class UserService implements IUserService {
                 administrator: false,
                 blocked: false,
                 display_name: 'Anonymous user',
+                ip_address: '127.0.0.1',
                 name: 'Anonymous',
                 provider: 'local',
                 provider_id: 'Anonymous',
                 trusted: true,
-                ip_address: '127.0.0.1',
                 user_agent: 'My2Cents-Server'
               }
             ));

@@ -52,10 +52,10 @@ export class CommentService implements ICommentService {
     const newComment = await commentRepository.create(
       {
         comment,
+        ip_address: ipAddress,
         reply_to: replyTo,
         slug,
         user,
-        ip_address: ipAddress,
         user_agent: userAgent
       }
     );

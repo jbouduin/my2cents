@@ -226,11 +226,12 @@ export class CommentController implements ICommentController {
   }
 
   private getCallerIP(request: Request): string {
-    var ip = request.get('x-forwarded-for') ||
+    let ip = request.get('x-forwarded-for') ||
         request.connection.remoteAddress ||
         request.socket.remoteAddress;
     ip = ip.split(',')[0];
-    ip = ip.split(':').pop(); //in case the ip returned in a format: "::ffff:146.xxx.xxx.xxx"
+    // in case the ip returned in a format: "::ffff:146.xxx.xxx.xxx"
+    ip = ip.split(':').pop();
     return ip || 'unknown';
   }
 }
