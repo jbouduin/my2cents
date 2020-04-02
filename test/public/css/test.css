@@ -1,8 +1,19 @@
+::before ::after {
+  box-sizing: border-box;
+}
+
 body {
-  background: #d0d4d8;
   color: #414141;
-  font-size: 1.2em;
-  line-height: 1.3em;
+  background: #d0d4d8;
+  font-size: 1.5rem;
+	line-height: 1.6em;
+	font-style: normal;
+	letter-spacing: 0;
+	text-rendering: optimizeLegibility;
+	background-color: #d0d4d8;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-font-feature-settings: "liga" on;
 }
 
 .site-wrapper {
@@ -10,12 +21,13 @@ body {
   padding: 0;
   border: 0;
   display: flex;
+  flex-direction: column;
   min-height: 100vw;
 }
 
 .outer {
+  position: relative;
   padding: 0 4vw;
-  width: 100%;
 }
 
 .inner {
@@ -33,6 +45,7 @@ body {
   background: #666666;
   color: #d0d4d8;
   opacity: 0.9;
+  z-index: 1000;
 }
 
 .page-title {
