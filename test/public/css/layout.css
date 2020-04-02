@@ -4,9 +4,15 @@
 /* ************************************************************************** */
 /* div wrapper                                                                */
 .my2cents-wrapper {
-  margin: 5px;
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
+/*  min-height: 33vw; */
+  background: var(--pure-white);
+  margin: 10px 0 70px 0;
+  font-size: 1.2rem;
+	line-height: 1.3em;
+  padding: 5px;
 }
 
 /* ************************************************************************** */
@@ -22,11 +28,29 @@
 .my2cents-login-wrapper {
   display: flex;
   flex-direction: row;
+  border-radius: 5px 5px 0 0;
+  padding: 5px;
+  background: var(--midgrey);
+  color: var(--whitegrey);
 }
 
+/* div wrapper.header.signin-wrapper                                          */
+.my2cents-signin-wrapper {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px 5px 0 0;
+  padding: 5px;
+  background: var(--midgrey);
+  color: var(--whitegrey);
+}
 /* div wrapper.header.login-wrapper.login-status                              */
 .my2cents-login-status {
+  flex-grow: 0.33;
+}
 
+/* div wrapper.header.login-wrapper.add-comment-wrapper                       */
+.my2cents-add-comment-wrapper {
+  flex-grow: 0.67;
 }
 
 /* div wrapper.header.login.signout-wrapper                                    */
@@ -38,13 +62,29 @@
 .my2cents-admin-header {
   display: flex;
   flex-direction: row;
+  border-radius: 0 0 5px 5px;
+  padding: 5px;
+  margin-top: 1px;
+  background: var(--midgrey);
+  color: var(--whitegrey);
 }
 
 /* div my2cents.my2cents.new-comment                                          */
 .my2cents-new-comment {
-
+  display: none;
+  border-radius: 0 0 5px 5px;
+  padding: 5px;
+  margin-top: 1px;
+  background: var(--midgrey);
+  color: var(--whitegrey);
 }
 
+.my2cents-login-wrapper:last-child,
+.my2cents-admin-header:last-child,
+.my2cents-new-comment:last-child,
+.my2cents-signin-wrapper:last-child {
+  border-radius: 5px;
+}
 /* ************************************************************************** */
 /* The comment/reply form
 /* ************************************************************************** */
@@ -55,15 +95,26 @@
 /* ************************************************************************** */
 /* The comments
 /* ************************************************************************** */
-/* div comments                                                      */
+/* div comments                                                               */
 .my2cents-comments {
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
+  margin-top: 5px;
+  background: var(--midgrey);
+  color: var(--whitegrey);
+  padding: 5px;
 }
 
 /* article comments.comment                                                   */
 .my2cents-comment {
-
+  border: 2px;
+  border-color: var(--whitegrey);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 5px;
 }
 
 /* ************************************************************************** */
@@ -73,16 +124,24 @@
 .my2cents-comment-header {
   display: flex;
   flex-direction: row;
+  font-size: 1.0rem;
+	line-height: 1.1em;
+  border-bottom-color: var(--whitegrey);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  margin: 0 -5px;
 }
 
 /* div comments.comment.comment-header.author-card                            */
 .my2cents-author-card {
-
+  display: flex;
+  flex-direction: row;
+  padding-left: 10px;
 }
 
 /* div comments.comment.comment-header.author-card.author                     */
 .my2cents-author {
-
+  font-weight: bold;
 }
 
 /* div comments.comment.comment-header.author-card.author-actions             */
@@ -92,15 +151,26 @@
 
 /* div comments.comment.comment-header.date                                   */
 .my2cents-date {
-
+  margin-left: 5px;
 }
+
+.my2cents-date:before { content: "("; }
+.my2cents-date:after { content: ")"; }
 
 /* ************************************************************************** */
 /* The body
 /* ************************************************************************** */
 /* section comments.comment.comment-body                                      */
 .my2cents-comment-body {
+  background: var(--pure-white);
+  color: var(--darkgrey);
+  margin: 0 -5px;
+  padding: 5px 10px;
+}
 
+.my2cents-comment-body:last-child {
+  margin-bottom: -5px;
+  border-radius: 0 0 5px 5px;
 }
 
 /* ************************************************************************** */
@@ -108,7 +178,7 @@
 /* ************************************************************************** */
 /* footer comments.comment.comment-footer                                     */
 .my2cents-comment-footer {
-
+  margin: 5px 0 0 5px;
 }
 
 /* div comments.comment.comment-footer.comment-actions                        */
@@ -123,7 +193,7 @@
 
 /* footer comments.comment.comment-footer.replies                             */
 .my2cents-replies {
-  margin-left: 20px;
+  /* margin-left: 5px; */
 }
 
 /* ************************************************************************** */
@@ -132,24 +202,22 @@
   font-weight: bold;
 }
 
+
 /* button signout                                                              */
 .my2cents-signout {
 
 }
 
 /* buttons that are only available for administrators */
-.my2cents-admin-action {
-    cursor: pointer;
-    opacity: 0.5;
-}
-
-.my2cents-admin-action:hover {
-    opacity: 1;
-}
-
 .my2cents-admin-action span {
     display: none;
 }
+
+.my2cents-mute span,
+.my2cents-unmute span {
+  display: unset;
+}
+
 
 /* TODO old stuff still to validate */
 .my2cents-body {
@@ -159,10 +227,8 @@
     border-left: 4px solid #cecece;
 }
 
-.my2cents-date:before { content: "("; }
-.my2cents-date:after { content: ")"; }
 
-.my2cents-body p {
+.my2cents-comment-body p {
     margin: 0;
 }
 
@@ -173,7 +239,14 @@
     margin-left: 2em;
 }
 
-my2cents-comment.my2cents-highlight {
+.my2cents-needs-admin-action {
+  color: var(--red);
+  font-size: 1.2rem;
+	line-height: 1.3em;
+  font-weight: bold;
+}
+
+.my2cents-comment.my2cents-highlight {
   animation: flash 7s 1;
 }
 

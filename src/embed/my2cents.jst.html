@@ -7,6 +7,19 @@
               <%= data.partials.LoginStatus.replace('%USER%', '</span><span class="my2cents-user">' + data.user.name + '</span><span>') %>
           </span>
         </div>
+        <div class="my2cents-add-comment-wrapper">
+          <button class="my2cents-button my2cents-add-comment">
+            <i class="icon my2cents-icon-add-comment"></i>
+            <span>
+              <% if (data.comments.length) { %>
+                <%= data.partials.Add %>
+              <% } else { %>
+                <%= data.partials.FirstAdd %>
+              <% } %>
+
+            </span>
+          </button>
+        </div>
         <div class="my2cents-signout-wrapper">
           <button class="my2cents-button my2cents-signout">
             <i class="icon my2cents-icon-signout"></i>
@@ -70,18 +83,26 @@
       </div>
 
     <% } else { %>
-      <div class="my2cents-signin">
-        <%= data.partials.SignInVia %>
-        <br>
-        <% data.auth.forEach((provider, i) => {  %>
-          <%= i ? data.partials.Or : '' %>
-          <button class="my2cents-button my2cents-signin my2cents-<%= provider.id %>">
-            <i class="icon my2cents-icon-<%= provider.id %>"></i>
-            <span>
-              <%= provider.name %>
-            </span>
-          </button>
-        <% }) %>
+      <!--div class="my2cents-signin-wrapper"-->
+      <div class="my2cents-signin-wrapper">
+        <div class="my2cents-signin-label">
+          <% if (data.comments.length) { %>
+            <%= data.partials.SignInVia %>
+          <% } else { %>
+            <%= data.partials.FirstSignInVia %>
+          <% } %>
+        </div>
+        <div class="my2cents-signin-button-wrapper">
+          <% data.auth.forEach((provider, i) => {  %>
+            <%= i ? data.partials.Or : '' %>
+            <button class="my2cents-button my2cents-signin my2cents-<%= provider.id %>">
+              <i class="icon my2cents-icon-<%= provider.id %>"></i>
+              <span>
+                <%= provider.name %>
+              </span>
+            </button>
+          <% }) %>
+        </div>
       </div>
     <% } %>
   </div>
@@ -102,9 +123,11 @@
   });
   data.comments = comments;
 %>
+<% if (data.comments.length) { %>
   <div class="my2cents-comments">
     <%= data.comments_tpl(data) %>
   </div>
+<% } %>
 </div>
 
 <style type="text/css">

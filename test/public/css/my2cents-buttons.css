@@ -62,7 +62,7 @@
 }
 
 .my2cents-github:hover {
-  color: black;
+  color: var(--pure-white);
 }
 
 .my2cents-icon-facebook:before {
@@ -78,7 +78,7 @@
 }
 
 .my2cents-google:hover {
-  color: black;
+  color: var(--pure-white);
 }
 
 .my2cents-icon-instagram:before {
@@ -86,7 +86,7 @@
 }
 
 .my2cents-instagram:hover {
-  color: black;
+  color: var(--pure-white);
 }
 
 .my2cents-icon-linkedin:before {
@@ -158,6 +158,11 @@
   color: var(--red);
 }
 
+/* user actions */
+.my2cents-icon-add-comment:before {
+  content: var(--glyph-comments);
+}
+
 .my2cents-icon-reply:before {
   content: var(--glyph-reply);
 }
@@ -170,6 +175,14 @@
 .my2cents-icon-preview:before
 {
   content: var(--glyph-file-alt);
+}
+
+.my2cents-add-comment:hover,
+.my2cents-reply:hover,
+.my2cents-preview:hover,
+.my2cents-edit:hover
+{
+  color: var(--pure-white);
 }
 
 .my2cents-icon-post:before
@@ -190,4 +203,16 @@
 .my2cents-cancel:hover
 {
   color: var(--red);
+}
+
+.my2cents-button {
+  padding: 5px;
+  border-color: var(--whitegrey);
+  background: var(--midgrey);
+  color: var(--whitegrey);
+  border-radius: 5px;
+}
+
+.my2cents-button:hover {
+  background: var(--darkgrey);
 }

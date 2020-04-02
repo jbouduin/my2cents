@@ -16,12 +16,15 @@ import My2Cents from './client';
         SendComment: `Send comment`,
         Cancel: `Cancel`,
         Or: `Or`,
-        Mute: `mute notifications`,
-        UnMute: `unmute`,
+        Mute: `Mute notifications`,
+        UnMute: `Unmute notifications`,
         PostComment: `Post a comment. Markdown is supported!`,
         AdminApproval: `This comment is still waiting for your approval`,
         WaitingForApproval: `Your comment is still waiting for approval by the site owner`,
         SignInVia: `To post a comment you need to sign in via`,
+        Add: `Add a new comment`,
+        FirstAdd: `Add the first comment`,
+        FirstSignInVia: `To post the first comment you need to sign in via`,
         Reply: `<i class='icon my2cents-icon-reply'></i> reply`,
         LoginStatus:
             "(signed in as <span class='my2cents-user'>@%USER%</span> :: <a class='my2cents-signout' href='#'>sign out</a>)"
