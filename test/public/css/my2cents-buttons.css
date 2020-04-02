@@ -1,0 +1,193 @@
+@font-face {
+    font-family: 'my2cents';
+    src: url('../fonts/my2cents.eot');
+    src: url('../fonts/my2cents.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/my2cents.woff') format('woff'),
+         url('../fonts/my2cents.ttf') format('truetype'),
+         url('../fonts/my2cents.svg#my2cents') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="my2cents-icon-"]:before, [class*=" my2cents-icon-"]:before {
+  font-family: "my2cents";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+/* authentication buttons */
+.my2cents-icon-anonymous:before {
+  content: var(--glyph-user-alt);
+}
+
+.my2cents-anonymous:hover {
+  color: red;
+}
+
+.my2cents-icon-twitter:before {
+  content: var(--glyph-twitter);
+}
+
+.my2cents-twitter:hover {
+  color: var(--twitter-blue);
+}
+
+.my2cents-icon-github:before {
+  content: var(--glyph-github);
+}
+
+.my2cents-github:hover {
+  color: black;
+}
+
+.my2cents-icon-facebook:before {
+  content: var(--glyph-facebook);
+}
+
+.my2cents-facebook:hover {
+  color: var(--facebook-blue);
+}
+
+.my2cents-icon-google:before {
+  content: var(--glyph-google);
+}
+
+.my2cents-google:hover {
+  color: black;
+}
+
+.my2cents-icon-instagram:before {
+  content: var(--glyph-instagram);
+}
+
+.my2cents-instagram:hover {
+  color: black;
+}
+
+.my2cents-icon-linkedin:before {
+  content: var(--glyph-linkedin);
+}
+
+.my2cents-linkedin:hover {
+  color: var(--linkedin-blue);
+}
+
+.my2cents-icon-signout:before {
+  content: var(--glyph-sign-out-alt);
+}
+
+.my2cents-signout:hover {
+  color: red;
+}
+
+/* administrator actions */
+.my2cents-icon-mute:before {
+  content: var(--glyph-volume-mute);
+}
+
+.my2cents-mute:hover {
+  color: var(--red);
+}
+
+.my2cents-icon-unmute:before {
+  content: var(--glyph-volume-up);
+}
+
+.my2cents-unmute:hover {
+  color: var(--green);
+}
+
+.my2cents-icon-trust:before {
+  content: var(--glyph-user-plus);
+}
+
+.my2cents-trust:hover {
+  color: var(--green);
+}
+
+.my2cents-icon-block:before {
+  content: var(--glyph-user-slash);
+}
+
+.my2cents-block:hover {
+  color: var(--red);
+}
+
+.my2cents-icon-approve:before
+{
+  content: var(--glyph-comment-medical);
+}
+
+.my2cents-approve:hover
+{
+  color: var(--green);
+}
+
+.my2cents-icon-reject:before
+{
+  content: var(--glyph-comment-slash);
+}
+
+.my2cents-reject:hover
+{
+  color: var(--red);
+}
+
+.my2cents-icon-reply:before {
+  content: var(--glyph-reply);
+}
+
+.my2cents-icon-edit:before
+{
+  content: var(--glyph-edit);
+}
+
+.my2cents-icon-preview:before
+{
+  content: var(--glyph-file-alt);
+}
+
+.my2cents-icon-post:before
+{
+  content: var(--glyph-check);
+}
+
+.my2cents-post:hover
+{
+  color: var(--green);
+}
+
+.my2cents-icon-cancel:before
+{
+  content: var(--glyph-times);
+}
+
+.my2cents-cancel:hover
+{
+  color: var(--red);
+}

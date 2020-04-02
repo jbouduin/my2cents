@@ -15,7 +15,7 @@
           <% if (data.user && data.user.admin &&!comment.authorTrusted) {
             ['trust', 'block'].forEach((action) => {
           %>
-            <button class="my2cents-button my2cents-admin-action" data-target="<%= comment.authorId %>" data-class="user" data-action="<%= action %>">
+            <button class="my2cents-button my2cents-admin-action " data-target="<%= comment.authorId %>" data-class="user" data-action="<%= action %>">
               <i class="icon my2cents-icon-<%= action %>"></i>
               <span>
                 <%= action %>
@@ -50,7 +50,12 @@
         </div>
       <% } else if (data.user) { %>
         <div class="my2cents-reply-to-comment">
-          <button class="my2cents-button my2cents-reply" data-reply-to="<%= comment.id %>"><%= data.partials.Reply %></button>
+          <button class="my2cents-button my2cents-reply" data-reply-to="<%= comment.id %>">
+            <i class="icon my2cents-icon-reply"></i>
+            <span>
+              <%= data.partials.Reply %>
+            </span>
+          </button>
         </div>
       <% } %>
       <div class="my2cents-replies">

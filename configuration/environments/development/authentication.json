@@ -3,33 +3,33 @@
   "providers": [
     {
       "name": "Twitter",
-      "id": "",
-      "secret": ""
+      "id": "xxx",
+      "secret": "xxx"
     },
     {
       "name": "GitHub",
-      "id": "",
-      "secret": ""
+      "id": "xxx",
+      "secret": "xxx"
     },
     {
       "name": "Google",
-      "id": "",
-      "secret": ""
+      "id": "xxx",
+      "secret": "xxx"
     },
     {
       "name": "Facebook",
-      "id": "",
-      "secret": ""
+      "id": "xxx",
+      "secret": "xxx"
     },
     {
       "name": "LinkedIn",
-      "id": "",
-      "secret": ""
+      "id": "xxx",
+      "secret": "xxx"
     },
     {
       "name": "Instagram",
-      "id": "",
-      "secret": ""
+      "id": "xxx",
+      "secret": "xxx"
     },
     {
       "name": "Fake",

@@ -44,8 +44,8 @@ export default class My2Cents {
 
       const postBtn = $(target + ' .my2cents-post');
       const previewBtn = $(target + ' .my2cents-preview');
-      const writeBtn = $(target + ' .my2cents-write');
-      const cancelReplyBtn = $(target + ' .my2cents-cancel-reply');
+      const editBtn = $(target + ' .my2cents-edit');
+      const cancelReplyBtn = $(target + ' .my2cents-cancel');
       const replyBtns = $$(target + ' .my2cents-reply');
 
       if (postBtn) {
@@ -80,7 +80,7 @@ export default class My2Cents {
           textarea.style.display = 'none';
           previewBtn.style.display = 'none';
           preview.style.display = 'block';
-          writeBtn.style.display = 'inline';
+          editBtn.style.display = 'inline';
           fetch(
             `${host}/${root}/markdown`,
             {
@@ -93,11 +93,11 @@ export default class My2Cents {
           .then(res => { preview.innerHTML = res.html; });
         });
 
-        writeBtn.addEventListener('click', d => {
+        editBtn.addEventListener('click', d => {
           textarea.style.display = 'inline';
           previewBtn.style.display = 'inline';
           preview.style.display = 'none';
-          writeBtn.style.display = 'none';
+          editBtn.style.display = 'none';
         });
 
         textarea.addEventListener('keyup', () => {
@@ -120,10 +120,9 @@ export default class My2Cents {
       }
 
       if (data.user) {
-        const signout = $('.my2cents-logout');
+        const signout = $('.my2cents-signout');
         if (signout) {
           signout.addEventListener('click', e => {
-            e.preventDefault();
             fetch(
               `${host}/${root}/auth/signout`, {
               credentials: 'include',
@@ -134,12 +133,13 @@ export default class My2Cents {
         }
       } else {
         data.auth.forEach(provider => {
-          const btn = $(target + ' .my2cents-signin-' + provider.id);
+          const btn = $(target + ' .my2cents-signin.my2cents-' + provider.id);
+
           if (btn) {
             btn.addEventListener('click', d => {
               const signin = (provider_domain = '') => {
                 let windowRef = window.open(
-                  `${host}/auth/${provider.id}` + (provider_domain ? `/d/${provider_domain}` : ''),
+                  `${host}/${root}/auth/${provider.id}` + (provider_domain ? `/d/${provider_domain}` : ''),
                   provider.name + ' Sign-In',
                   'resizable,scrollbars,status,width=600,height=500'
                 );

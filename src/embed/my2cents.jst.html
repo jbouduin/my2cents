@@ -3,24 +3,34 @@
     <% if (data.user) { %>
       <div class="my2cents-login-wrapper">
         <div class="my2cents-login-status">
-          <span>You are logged in as</span>
-          <span class="my2cents-user"><%= data.user.name %></span>
+          <span>
+              <%= data.partials.LoginStatus.replace('%USER%', '</span><span class="my2cents-user">' + data.user.name + '</span><span>') %>
+          </span>
         </div>
-        <div class="my2cents-logout-wrapper">
-          <button class="my2cents-button my2cents-logout">Log out</button>
+        <div class="my2cents-signout-wrapper">
+          <button class="my2cents-button my2cents-signout">
+            <i class="icon my2cents-icon-signout"></i>
+            <span>
+              Log out
+            </span>
+          </button>
         </div>
       </div>
 
       <% if (data.user.admin) { %>
 
         <div class="my2cents-admin-header">
-          <button class="my2cents-button my2cents-admin-action" data-target="notification" data-class="setting" data-action="true">
-            <%= data.partials.UnMute %>
-            <span><%= data.partials.UnMute %></span>
+          <button class="my2cents-button my2cents-admin-action my2cents-unmute" data-target="notification" data-class="setting" data-action="true">
+            <i class="icon my2cents-icon-unmute"></i>
+            <span>
+              <%= data.partials.UnMute %>
+            </span>
           </button>
-          <button class="my2cents-button my2cents-admin-action" data-target="notification" data-class="setting" data-action="false">
-            <%= data.partials.Mute %>
-            <span><%= data.partials.Mute %><span>
+          <button class="my2cents-button my2cents-admin-action my2cents-mute" data-target="notification" data-class="setting" data-action="false">
+            <i class="icon my2cents-icon-mute"></i>
+            <span>
+              <%= data.partials.Mute %>
+            <span>
           </button>
         </div>
 
@@ -32,16 +42,28 @@
           <blockquote class="my2cents-body" style="display:none"></blockquote>
           <div class="my2cents-form-buttons">
             <button class="my2cents-button my2cents-preview">
-              <%= data.partials.Preview %>
+              <i class="icon my2cents-icon-preview"></i>
+              <span>
+                <%= data.partials.Preview %>
+              </span>
             </button>
-            <button class="my2cents-button my2cents-write" style="display:none">
-              <%= data.partials.Edit %>
+            <button class="my2cents-button my2cents-edit" style="display:none">
+              <i class="icon my2cents-icon-edit"></i>
+              <span>
+                <%= data.partials.Edit %>
+              </span>
             </button>
             <button class="my2cents-button my2cents-post">
-              <%= data.partials.SendComment %>
+              <i class="icon my2cents-icon-post"></i>
+              <span>
+                <%= data.partials.SendComment %>
+              </span>
             </button>&nbsp;
-            <button class="my2cents-button my2cents-cancel-reply" style="display:none">
-              <%= data.partials.Cancel %>
+            <button class="my2cents-button my2cents-cancel" style="display:none">
+              <i class="icon my2cents-icon-cancel"></i>
+              <span>
+                <%= data.partials.Cancel %>
+              </span>
             </button>
           </div>
         </div>
@@ -53,9 +75,11 @@
         <br>
         <% data.auth.forEach((provider, i) => {  %>
           <%= i ? data.partials.Or : '' %>
-          <button class="my2cents.button my2cents-signin-<%= provider.id %>">
+          <button class="my2cents-button my2cents-signin my2cents-<%= provider.id %>">
             <i class="icon my2cents-icon-<%= provider.id %>"></i>
-            <%= provider.name %>
+            <span>
+              <%= provider.name %>
+            </span>
           </button>
         <% }) %>
       </div>
@@ -66,7 +90,6 @@
   const comments = [];
   data.replies = {};
   data.comments.forEach((comment) => {
-    console.log(comment.replyTo);
     if (comment.replyTo) {
       if (!data.replies[comment.replyTo])
       {

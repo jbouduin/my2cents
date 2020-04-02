@@ -29,8 +29,8 @@
 
 }
 
-/* div wrapper.header.login.logout-wrapper                                    */
-.my2cents-logout-wrapper {
+/* div wrapper.header.login.signout-wrapper                                    */
+.my2cents-signout-wrapper {
 
 }
 
@@ -132,8 +132,8 @@
   font-weight: bold;
 }
 
-/* button logout                                                              */
-.my2cents-logout {
+/* button signout                                                              */
+.my2cents-signout {
 
 }
 
@@ -144,7 +144,6 @@
 }
 
 .my2cents-admin-action:hover {
-    color: #c00;
     opacity: 1;
 }
 

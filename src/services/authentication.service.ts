@@ -164,7 +164,7 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   private initializeAnonymus(router): void {
-    this.providers.push({ id: 'anonymous', name: 'Post anonymous' });
+    this.providers.push({ id: 'anonymous', name: 'Anonymous' });
     passport.use(new LocalStrategy(
         (user, password, done) => {
           console.log('using local strategy');

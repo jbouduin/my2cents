@@ -1,0 +1,57 @@
+:root {
+  /* basic colors */
+  --blue: #003aff;
+  --green: #ccff00;
+  --yellow: #ffff00;
+  --red: #f31f00;
+  --darkgrey: #414141;
+  --midgrey: #666666;
+  --lightgrey: #929599;
+  --whitegrey: #d0d4d8;
+  --pure-white: #ffffff;
+  /* other colors */
+  --facebook-blue: #4267b2;
+  --twitter-blue: #1da1f2;
+  --linkedin-blue: #0073b0;
+  --mail-yellow: #eac282;
+  --xing-green: #d4d600; /* #006567; */
+  --whatsapp-green: #00E676;
+  /*
+  --instagram-???
+  */
+
+  /* fonts - glyphs */
+  --glyph-github: '\0041';
+  --glyph-google: '\0042';
+  --glyph-instagram: '\0043';
+  --glyph-linkedin: '\0044';
+  --glyph-reply: '\0045';
+  --glyph-rss: '\0046';
+  --glyph-sign-in-alt: '\0047';
+  --glyph-sign-out-alt: '\0048';
+  --glyph-star: '\0049';
+  --glyph-thumbs-down: '\004a';
+  --glyph-thumbs-up: '\004b';
+  --glyph-trash: '\004c';
+  --glyph-trash-alt: '\004d';
+  --glyph-twitter: '\004e';
+  --glyph-user: '\004f';
+  --glyph-user-minus: '\0050';
+  --glyph-user-plus: '\0051';
+  --glyph-user-slash: '\0052';
+  --glyph-user-times: '\0053';
+  --glyph-volume-off: '\0054';
+  --glyph-volume-up: '\0055';
+  --glyph-ban: '\0056';
+  --glyph-comment-dots: '\0057';
+  --glyph-comment-medical: '\0058';
+  --glyph-comments: '\0059';
+  --glyph-comment-slash: '\005a';
+  --glyph-edit: '\0061';
+  --glyph-facebook: '\0062';
+  --glyph-user-alt: '\0063';
+  --glyph-volume-mute: '\0064';
+  --glyph-check: '\0065';
+  --glyph-times: '\0066';
+  --glyph-file-alt: '\0067';
+}
