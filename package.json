@@ -15,7 +15,7 @@
         "embed": "rollup -c",
         "start": "ts-node ./src/server.ts",
         "dev": "nodemon",
-        "test-server": "ts-node ./test/src/server.ts"
+        "hosting-test-server": "ts-node ./hosting-test-server/src/server.ts"
     },
     "repository": "git@github.com:jbouduin/my2cents.git",
     "dependencies": {

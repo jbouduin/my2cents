@@ -27,7 +27,7 @@ class App {
   public async initialize(): Promise<App> {
     this.app = express();
     this.app.use('/my2cents', this.my2CentsProxy);
-    this.app.use(express.static('test/public'));
+    this.app.use(express.static('hosting-test-server/public'));
 
     return Promise.resolve(this);
   }
