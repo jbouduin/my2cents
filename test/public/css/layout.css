@@ -89,7 +89,58 @@
 /* The comment/reply form
 /* ************************************************************************** */
 .my2cents-form {
+  border: 2px;
+  border-color: var(--whitegrey);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 5px;
+}
 
+.my2cents-form-header {
+  display: flex;
+  flex-direction: row;
+  font-size: 1.0rem;
+	line-height: 1.1em;
+  border-bottom-color: var(--whitegrey);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  margin: 0 -5px;
+}
+
+.my2cents-form-header-text {
+  display: flex;
+  flex-direction: row;
+  padding-left: 10px;
+}
+
+.my2cents-form-body {
+  margin: 0 -5px;
+  /* padding: 5px 10px; */
+}
+
+.my2cents-form-preview {
+  background: var(--pure-white);
+  color: var(--darkgrey);
+  margin: 0;
+  padding: 5px 10px;
+}
+
+.my2cents-form-edit {
+	resize: none;
+	background: var(--pure-white);
+	color: var(--darkgrey);
+  box-sizing: border-box;
+	border-style: none;
+	width: 100%;
+	margin: 0;
+	padding: 10px;
+  min-height: 10vw
+}
+
+.my2cents-form-footer {
+  margin: 5px 0 0 5px;
 }
 
 /* ************************************************************************** */
@@ -218,27 +269,6 @@
   display: unset;
 }
 
-
-/* TODO old stuff still to validate */
-.my2cents-body {
-    position: relative;
-    margin: 10px 0 0;
-    padding: 10px 10px;
-    border-left: 4px solid #cecece;
-}
-
-
-.my2cents-comment-body p {
-    margin: 0;
-}
-
-
-
-.my2cents-comment .my2cents-form,
-.my2cents-comment .my2cents-comments {
-    margin-left: 2em;
-}
-
 .my2cents-needs-admin-action {
   color: var(--red);
   font-size: 1.2rem;
@@ -246,9 +276,21 @@
   font-weight: bold;
 }
 
+/* TODO old stuff still to validate */
+.my2cents-comment-body p {
+    margin: 0;
+}
+
+
+.my2cents-comment .my2cents-form,
+.my2cents-comment .my2cents-comments {
+    margin-left: 2em;
+}
+
 .my2cents-comment.my2cents-highlight {
   animation: flash 7s 1;
 }
+
 
 @keyframes flash {
   0% { background-color: rgba(255,255,100,0.3); }

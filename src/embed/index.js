@@ -18,7 +18,7 @@ import My2Cents from './client';
         Or: `Or`,
         Mute: `Mute notifications`,
         UnMute: `Unmute notifications`,
-        PostComment: `Post a comment. Markdown is supported!`,
+        CommentPlaceholder: `Post a comment. Markdown is supported!`,
         AdminApproval: `This comment is still waiting for your approval`,
         WaitingForApproval: `Your comment is still waiting for approval by the site owner`,
         SignInVia: `To post a comment you need to sign in via`,

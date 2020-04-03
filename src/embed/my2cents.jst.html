@@ -50,10 +50,20 @@
       <% } %>
 
       <div class="my2cents-new-comment">
-        <div class="my2cents-form">
-          <textarea class="my2cents-body" placeholder="<%= data.partials.PostComment %>"></textarea>
-          <blockquote class="my2cents-body" style="display:none"></blockquote>
-          <div class="my2cents-form-buttons">
+        <article class="my2cents-form">
+          <header class="my2cents-form-header">
+            <div class="my2cents-form-header-text">
+              <span>
+                You can use Markdown to write your comment.
+              </span>
+            </div>
+          </header>
+          <section class="my2cents-form-body">
+            <textarea class="my2cents-form-edit" rows="20" placeholder="<%= data.partials.CommentPlaceholder %>"></textarea>
+            <div class="my2cents-form-preview" style="display:none">
+            </div>
+          </section>
+          <footer class="my2cents-form-footer">
             <button class="my2cents-button my2cents-preview">
               <i class="icon my2cents-icon-preview"></i>
               <span>
@@ -72,14 +82,14 @@
                 <%= data.partials.SendComment %>
               </span>
             </button>&nbsp;
-            <button class="my2cents-button my2cents-cancel" style="display:none">
+            <button class="my2cents-button my2cents-cancel">
               <i class="icon my2cents-icon-cancel"></i>
               <span>
                 <%= data.partials.Cancel %>
               </span>
             </button>
-          </div>
-        </div>
+          </footer>
+        </article>
       </div>
 
     <% } else { %>

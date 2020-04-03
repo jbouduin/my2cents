@@ -33,22 +33,39 @@ export default class My2Cents {
       $(target).innerHTML = my2cents_tpl(data);
 
       const above = $(`${target} div.my2cents-new-comment`);
-      const form = $(`${target} div.my2cents-form`);
-      const textarea = $(`${target} textarea.my2cents-body`);
-      const preview = $(`${target} .my2cents-form blockquote.my2cents-body`);
+      const form = $(`${target} article.my2cents-form`);
+      const textarea = $(`${target} textarea.my2cents-form-edit`);
+      const preview = $(`${target} .my2cents-form div.my2cents-form-preview`);
 
       const draft = window.localStorage.getItem(`my2cents-draft-${slug}`);
       if (draft && textarea) {
         textarea.value = draft;
       }
 
+      const addBtn = $(target + ' .my2cents-add-comment');
       const postBtn = $(target + ' .my2cents-post');
       const previewBtn = $(target + ' .my2cents-preview');
       const editBtn = $(target + ' .my2cents-edit');
       const cancelReplyBtn = $(target + ' .my2cents-cancel');
       const replyBtns = $$(target + ' .my2cents-reply');
 
-      if (postBtn) {
+      if (addBtn) {
+        /* display the form on top */
+        addBtn.addEventListener('click', () => {
+          form.dataset.reply = undefined;
+          above.style.display = 'block';
+          above.appendChild(form);
+        });
+
+        /* display the form where the user wants to replay */
+        replyBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            form.dataset.reply = btn.dataset.replyTo;
+            btn.parentElement.appendChild(form);
+          });
+        });
+
+        /* save the comment */
         postBtn.addEventListener('click', d => {
           const body = textarea.value;
           fetch(
@@ -75,6 +92,7 @@ export default class My2Cents {
           });
         });
 
+        /* switch to preview */
         previewBtn.addEventListener('click', d => {
           const body = textarea.value;
           textarea.style.display = 'none';
@@ -98,24 +116,23 @@ export default class My2Cents {
           previewBtn.style.display = 'inline';
           preview.style.display = 'none';
           editBtn.style.display = 'none';
+          textarea.focus();
+          textarea.setSelectionRange(textarea.value.length, textarea.value.length);
         });
 
         textarea.addEventListener('keyup', () => {
           window.localStorage.setItem(`my2cents-draft-${slug}`, textarea.value);
         });
 
-        replyBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            form.dataset.reply = btn.dataset.replyTo;
-            cancelReplyBtn.style.display = 'inline-block';
-            btn.parentElement.appendChild(form);
-          });
-        });
-
         cancelReplyBtn.addEventListener('click', () => {
           above.appendChild(form);
+          above.style.display = 'none';
           delete form.dataset.reply;
-          cancelReplyBtn.style.display = 'none';
+          textarea.value = '';
+          window.localStorage.setItem(
+            `my2cents-draft-${slug}`,
+            textarea.value
+          );
         });
       }
 
