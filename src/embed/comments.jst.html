@@ -1,13 +1,13 @@
 <% data.comments.forEach((comment) => { %>
-  <article id="comment-<%= comment.id %>" data-id="<%= comment.id %>" class="my2cents-comment<% if (!comment.approved && !comment.trusted) { %> my2cents-not-approved<% } %>">
-    <header class="my2cents-comment-header">
-      <div class="my2cents-author-card">
-        <div class="my2cents-author-actions">
+  <article id="comment-<%= comment.id %>" data-id="<%= comment.id %>" class="m2c-comment<% if (!comment.approved && !comment.trusted) { %> m2c-not-approved<% } %>">
+    <header class="m2c-comment-header">
+      <div class="m2c-author-card">
+        <div class="m2c-author-actions">
           <% if (data.user && data.user.admin && !comment.authorTrusted) {
             ['trust', 'block'].forEach((action) => {
           %>
-            <button class="my2cents-button my2cents-admin-action my2cents-<%= action %>" data-target="<%= comment.authorId %>" data-class="user" data-action="<%= action %>">
-              <i class="icon my2cents-icon-<%= action %>"></i>
+            <button class="m2c-button m2c-admin-action m2c-<%= action %>" data-target="<%= comment.authorId %>" data-class="user" data-action="<%= action %>">
+              <i class="icon m2c-icon-<%= action %>"></i>
               <span>
                 <%= action %>
               </span>
@@ -15,9 +15,9 @@
           <% }); } %>
         </div>
         <% if (data.user && data.user.admin && !comment.authorTrusted) { %>
-          <div class="my2cents-author my2cents-needs-admin-action">
+          <div class="m2c-author m2c-needs-admin-action">
         <% } else { %>
-          <div class="my2cents-author">
+          <div class="m2c-author">
         <% } %>
           <% if (comment.authorUrl) { %>
             <a href="<%= comment.authorUrl %>" target="_blank">
@@ -29,27 +29,27 @@
             <% } %>
         </div>
       </div>
-      <div class="my2cents-date">
+      <div class="m2c-date">
         <%= comment.created %>
       </div>
     </header>
-    <section class="my2cents-comment-body">
+    <section class="m2c-comment-body">
         <%= comment.comment %>
     </section>
     <% if (data.user || data.replies[comment.id]) { %>
-      <footer class="my2cents-comment-footer">
+      <footer class="m2c-comment-footer">
         <% if (comment.authorId && !comment.approved && !comment.authorTrusted) { %>
-          <div class="my2cents-comment-actions">
+          <div class="m2c-comment-actions">
             <% if (data.user && data.user.admin) {
             ['approve', 'reject'].forEach((action) => { %>
-              <button class="my2cents-button my2cents-admin-action my2cents-<%= action %>" data-target="<%= comment.id %>" data-class="comment" data-action="<%= action %>">
-                <i class="icon my2cents-icon-<%= action %>"></i>
+              <button class="m2c-button m2c-admin-action m2c-<%= action %>" data-target="<%= comment.id %>" data-class="comment" data-action="<%= action %>">
+                <i class="icon m2c-icon-<%= action %>"></i>
                 <span>
                   <%= action %>
                 </span>
               </button>
             <% }); } %>
-            <span class="my2cents-needs-admin-action">
+            <span class="m2c-needs-admin-action">
               <%= data.user && data.user.admin ?
                 data.partials.AdminApproval :
                 data.partials.WaitingForApproval
@@ -57,16 +57,16 @@
             </span>
           </div>
         <% } else if (data.user) { %>
-          <div class="my2cents-reply-to-comment">
-            <button class="my2cents-button my2cents-reply" data-reply-to="<%= comment.id %>">
-              <i class="icon my2cents-icon-reply"></i>
+          <div class="m2c-reply-to-comment">
+            <button class="m2c-button m2c-reply" data-reply-to="<%= comment.id %>">
+              <i class="icon m2c-icon-reply"></i>
               <span>
                 <%= data.partials.Reply %>
               </span>
             </button>
           </div>
         <% } %>
-        <div class="my2cents-replies">
+        <div class="m2c-replies">
           <% if (data.replies[comment.id]) {
             data.comments = data.replies[comment.id]; %>
             <%= data.comments_tpl(data) %>

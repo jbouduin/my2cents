@@ -32,22 +32,22 @@ export default class My2Cents {
       data.partials = partials;
       $(target).innerHTML = my2cents_tpl(data);
 
-      const above = $(`${target} div.my2cents-new-comment`);
-      const form = $(`${target} article.my2cents-form`);
-      const textarea = $(`${target} textarea.my2cents-form-edit`);
-      const preview = $(`${target} .my2cents-form div.my2cents-form-preview`);
+      const above = $(`${target} div.m2c-new-comment`);
+      const form = $(`${target} article.m2c-form`);
+      const textarea = $(`${target} textarea.m2c-form-edit`);
+      const preview = $(`${target} .m2c-form div.m2c-form-preview`);
 
       const draft = window.localStorage.getItem(`my2cents-draft-${slug}`);
       if (draft && textarea) {
         textarea.value = draft;
       }
 
-      const addBtn = $(target + ' .my2cents-add-comment');
-      const postBtn = $(target + ' .my2cents-post');
-      const previewBtn = $(target + ' .my2cents-preview');
-      const editBtn = $(target + ' .my2cents-edit');
-      const cancelReplyBtn = $(target + ' .my2cents-cancel');
-      const replyBtns = $$(target + ' .my2cents-reply');
+      const addBtn = $(target + ' .m2c-add-comment');
+      const postBtn = $(target + ' .m2c-post');
+      const previewBtn = $(target + ' .m2c-preview');
+      const editBtn = $(target + ' .m2c-edit');
+      const cancelReplyBtn = $(target + ' .m2c-cancel');
+      const replyBtns = $$(target + ' .m2c-reply');
 
       if (addBtn) {
         /* display the form on top */
@@ -137,7 +137,7 @@ export default class My2Cents {
       }
 
       if (data.user) {
-        const signout = $('.my2cents-signout');
+        const signout = $('.m2c-signout');
         if (signout) {
           signout.addEventListener('click', e => {
             fetch(
@@ -150,7 +150,7 @@ export default class My2Cents {
         }
       } else {
         data.auth.forEach(provider => {
-          const btn = $(target + ' .my2cents-signin.my2cents-' + provider.id);
+          const btn = $(target + ' .m2c-signin.m2c-' + provider.id);
 
           if (btn) {
             btn.addEventListener('click', d => {
@@ -204,7 +204,7 @@ export default class My2Cents {
             })
             .then(() => this.refresh());
           };
-          document.querySelectorAll('.my2cents-admin-action').forEach(btn => {
+          document.querySelectorAll('.m2c-admin-action').forEach(btn => {
             btn.addEventListener('click', action);
           });
         }
@@ -212,7 +212,7 @@ export default class My2Cents {
       if (this.firstLoad && window.location.hash.match(/^#comment-\d+$/)) {
         const hl = document.querySelector(window.location.hash);
         hl.scrollIntoView();
-        hl.classList.add('my2cents-highlight');
+        hl.classList.add('m2c-highlight');
         this.firstLoad = false;
       }
     });

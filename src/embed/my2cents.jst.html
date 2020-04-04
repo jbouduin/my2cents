@@ -1,15 +1,15 @@
-<div class="my2cents-wrapper">
-  <div class="my2cents-header">
+<div class="m2c-wrapper">
+  <div class="m2c-header">
     <% if (data.user) { %>
-      <div class="my2cents-login-wrapper">
-        <div class="my2cents-login-status">
+      <div class="m2c-login-wrapper">
+        <div class="m2c-login-status">
           <span>
-              <%= data.partials.LoginStatus.replace('%USER%', '</span><span class="my2cents-user">' + data.user.name + '</span><span>') %>
+              <%= data.partials.LoginStatus.replace('%USER%', '</span><span class="m2c-user">' + data.user.name + '</span><span>') %>
           </span>
         </div>
-        <div class="my2cents-add-comment-wrapper">
-          <button class="my2cents-button my2cents-add-comment">
-            <i class="icon my2cents-icon-add-comment"></i>
+        <div class="m2c-add-comment-wrapper">
+          <button class="m2c-button m2c-add-comment">
+            <i class="icon m2c-icon-add-comment"></i>
             <span>
               <% if (data.comments.length) { %>
                 <%= data.partials.Add %>
@@ -20,9 +20,9 @@
             </span>
           </button>
         </div>
-        <div class="my2cents-signout-wrapper">
-          <button class="my2cents-button my2cents-signout">
-            <i class="icon my2cents-icon-signout"></i>
+        <div class="m2c-signout-wrapper">
+          <button class="m2c-button m2c-signout">
+            <i class="icon m2c-icon-signout"></i>
             <span>
               Log out
             </span>
@@ -32,15 +32,15 @@
 
       <% if (data.user.admin) { %>
 
-        <div class="my2cents-admin-header">
-          <button class="my2cents-button my2cents-admin-action my2cents-unmute" data-target="notification" data-class="setting" data-action="true">
-            <i class="icon my2cents-icon-unmute"></i>
+        <div class="m2c-admin-header">
+          <button class="m2c-button m2c-admin-action m2c-unmute" data-target="notification" data-class="setting" data-action="true">
+            <i class="icon m2c-icon-unmute"></i>
             <span>
               <%= data.partials.UnMute %>
             </span>
           </button>
-          <button class="my2cents-button my2cents-admin-action my2cents-mute" data-target="notification" data-class="setting" data-action="false">
-            <i class="icon my2cents-icon-mute"></i>
+          <button class="m2c-button m2c-admin-action m2c-mute" data-target="notification" data-class="setting" data-action="false">
+            <i class="icon m2c-icon-mute"></i>
             <span>
               <%= data.partials.Mute %>
             <span>
@@ -49,41 +49,41 @@
 
       <% } %>
 
-      <div class="my2cents-new-comment">
-        <article class="my2cents-form">
-          <header class="my2cents-form-header">
-            <div class="my2cents-form-header-text">
+      <div class="m2c-new-comment">
+        <article class="m2c-form">
+          <header class="m2c-form-header">
+            <div class="m2c-form-header-text">
               <span>
                 You can use Markdown to write your comment.
               </span>
             </div>
           </header>
-          <section class="my2cents-form-body">
-            <textarea class="my2cents-form-edit" rows="20" placeholder="<%= data.partials.CommentPlaceholder %>"></textarea>
-            <div class="my2cents-form-preview" style="display:none">
+          <section class="m2c-form-body">
+            <textarea class="m2c-form-edit" rows="20" placeholder="<%= data.partials.CommentPlaceholder %>"></textarea>
+            <div class="m2c-form-preview" style="display:none">
             </div>
           </section>
-          <footer class="my2cents-form-footer">
-            <button class="my2cents-button my2cents-preview">
-              <i class="icon my2cents-icon-preview"></i>
+          <footer class="m2c-form-footer">
+            <button class="m2c-button m2c-preview">
+              <i class="icon m2c-icon-preview"></i>
               <span>
                 <%= data.partials.Preview %>
               </span>
             </button>
-            <button class="my2cents-button my2cents-edit" style="display:none">
-              <i class="icon my2cents-icon-edit"></i>
+            <button class="m2c-button m2c-edit" style="display:none">
+              <i class="icon m2c-icon-edit"></i>
               <span>
                 <%= data.partials.Edit %>
               </span>
             </button>
-            <button class="my2cents-button my2cents-post">
-              <i class="icon my2cents-icon-post"></i>
+            <button class="m2c-button m2c-post">
+              <i class="icon m2c-icon-post"></i>
               <span>
                 <%= data.partials.SendComment %>
               </span>
             </button>&nbsp;
-            <button class="my2cents-button my2cents-cancel">
-              <i class="icon my2cents-icon-cancel"></i>
+            <button class="m2c-button m2c-cancel">
+              <i class="icon m2c-icon-cancel"></i>
               <span>
                 <%= data.partials.Cancel %>
               </span>
@@ -91,22 +91,20 @@
           </footer>
         </article>
       </div>
-
     <% } else { %>
-      <!--div class="my2cents-signin-wrapper"-->
-      <div class="my2cents-signin-wrapper">
-        <div class="my2cents-signin-label">
+      <div class="m2c-signin-wrapper">
+        <div class="m2c-signin-label">
           <% if (data.comments.length) { %>
             <%= data.partials.SignInVia %>
           <% } else { %>
             <%= data.partials.FirstSignInVia %>
           <% } %>
         </div>
-        <div class="my2cents-signin-button-wrapper">
+        <div class="m2c-signin-button-wrapper">
           <% data.auth.forEach((provider, i) => {  %>
             <%= i ? data.partials.Or : '' %>
-            <button class="my2cents-button my2cents-signin my2cents-<%= provider.id %>">
-              <i class="icon my2cents-icon-<%= provider.id %>"></i>
+            <button class="m2c-button m2c-signin m2c-<%= provider.id %>">
+              <i class="icon m2c-icon-<%= provider.id %>"></i>
               <span>
                 <%= provider.name %>
               </span>
@@ -134,12 +132,12 @@
   data.comments = comments;
 %>
 <% if (data.comments.length) { %>
-  <div class="my2cents-comments">
+  <div class="m2c-comments">
     <%= data.comments_tpl(data) %>
   </div>
 <% } %>
 </div>
 
 <style type="text/css">
-  .my2cents-admin-action > * { pointer-events: none; }
+  .m2c-admin-action > * { pointer-events: none; }
 </style>

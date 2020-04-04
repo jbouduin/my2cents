@@ -3,7 +3,7 @@
 /* the wrapper around the whole thing                                         */
 /* ************************************************************************** */
 /* div wrapper                                                                */
-.my2cents-wrapper {
+.m2c-wrapper {
   display: flex;
   flex-direction: column;
   border-radius: 5px;
@@ -19,13 +19,13 @@
 /* The header                                                                 */
 /* ************************************************************************** */
 /* div wrapper.header                                                         */
-.my2cents-header {
+.m2c-header {
   display: flex;
   flex-direction: column;
 }
 
 /* div wrapper.header.login-wrapper                                           */
-.my2cents-login-wrapper {
+.m2c-login-wrapper {
   display: flex;
   flex-direction: row;
   border-radius: 5px 5px 0 0;
@@ -35,7 +35,7 @@
 }
 
 /* div wrapper.header.signin-wrapper                                          */
-.my2cents-signin-wrapper {
+.m2c-signin-wrapper {
   display: flex;
   flex-direction: column;
   border-radius: 5px 5px 0 0;
@@ -44,22 +44,22 @@
   color: var(--whitegrey);
 }
 /* div wrapper.header.login-wrapper.login-status                              */
-.my2cents-login-status {
+.m2c-login-status {
   flex-grow: 0.33;
 }
 
 /* div wrapper.header.login-wrapper.add-comment-wrapper                       */
-.my2cents-add-comment-wrapper {
+.m2c-add-comment-wrapper {
   flex-grow: 0.67;
 }
 
 /* div wrapper.header.login.signout-wrapper                                    */
-.my2cents-signout-wrapper {
+.m2c-signout-wrapper {
 
 }
 
 /* div wrapper.header.admin-header                                            */
-.my2cents-admin-header {
+.m2c-admin-header {
   display: flex;
   flex-direction: row;
   border-radius: 0 0 5px 5px;
@@ -69,8 +69,8 @@
   color: var(--whitegrey);
 }
 
-/* div my2cents.my2cents.new-comment                                          */
-.my2cents-new-comment {
+/* div new-comment                                                            */
+.m2c-new-comment {
   display: none;
   border-radius: 0 0 5px 5px;
   padding: 5px;
@@ -79,16 +79,16 @@
   color: var(--whitegrey);
 }
 
-.my2cents-login-wrapper:last-child,
-.my2cents-admin-header:last-child,
-.my2cents-new-comment:last-child,
-.my2cents-signin-wrapper:last-child {
+.m2c-login-wrapper:last-child,
+.m2c-admin-header:last-child,
+.m2c-new-comment:last-child,
+.m2c-signin-wrapper:last-child {
   border-radius: 5px;
 }
 /* ************************************************************************** */
 /* The comment/reply form
 /* ************************************************************************** */
-.my2cents-form {
+.m2c-form {
   border: 2px;
   border-color: var(--whitegrey);
   border-width: 1px;
@@ -98,7 +98,7 @@
   padding: 5px;
 }
 
-.my2cents-form-header {
+.m2c-form-header {
   display: flex;
   flex-direction: row;
   font-size: 1.0rem;
@@ -109,25 +109,25 @@
   margin: 0 -5px;
 }
 
-.my2cents-form-header-text {
+.m2c-form-header-text {
   display: flex;
   flex-direction: row;
   padding-left: 10px;
 }
 
-.my2cents-form-body {
+.m2c-form-body {
   margin: 0 -5px;
   /* padding: 5px 10px; */
 }
 
-.my2cents-form-preview {
+.m2c-form-preview {
   background: var(--pure-white);
   color: var(--darkgrey);
   margin: 0;
   padding: 5px 10px;
 }
 
-.my2cents-form-edit {
+.m2c-form-edit {
 	resize: none;
 	background: var(--pure-white);
 	color: var(--darkgrey);
@@ -139,7 +139,7 @@
   min-height: 10vw
 }
 
-.my2cents-form-footer {
+.m2c-form-footer {
   margin: 5px 0 0 5px;
 }
 
@@ -147,7 +147,7 @@
 /* The comments
 /* ************************************************************************** */
 /* div comments                                                               */
-.my2cents-comments {
+.m2c-comments {
   display: flex;
   flex-direction: column;
   border-radius: 5px;
@@ -158,7 +158,7 @@
 }
 
 /* article comments.comment                                                   */
-.my2cents-comment {
+.m2c-comment {
   border: 2px;
   border-color: var(--whitegrey);
   border-width: 1px;
@@ -172,7 +172,7 @@
 /* The header
 /* ************************************************************************** */
 /* header comments.comment.comment-header                                     */
-.my2cents-comment-header {
+.m2c-comment-header {
   display: flex;
   flex-direction: row;
   font-size: 1.0rem;
@@ -184,42 +184,42 @@
 }
 
 /* div comments.comment.comment-header.author-card                            */
-.my2cents-author-card {
+.m2c-author-card {
   display: flex;
   flex-direction: row;
   padding-left: 10px;
 }
 
 /* div comments.comment.comment-header.author-card.author                     */
-.my2cents-author {
+.m2c-author {
   font-weight: bold;
 }
 
 /* div comments.comment.comment-header.author-card.author-actions             */
-.my2cents-author-actions {
+.m2c-author-actions {
 
 }
 
 /* div comments.comment.comment-header.date                                   */
-.my2cents-date {
+.m2c-date {
   margin-left: 5px;
 }
 
-.my2cents-date:before { content: "("; }
-.my2cents-date:after { content: ")"; }
+.m2c-date:before { content: "("; }
+.m2c-date:after { content: ")"; }
 
 /* ************************************************************************** */
 /* The body
 /* ************************************************************************** */
 /* section comments.comment.comment-body                                      */
-.my2cents-comment-body {
+.m2c-comment-body {
   background: var(--pure-white);
   color: var(--darkgrey);
   margin: 0 -5px;
   padding: 5px 10px;
 }
 
-.my2cents-comment-body:last-child {
+.m2c-comment-body:last-child {
   margin-bottom: -5px;
   border-radius: 0 0 5px 5px;
 }
@@ -228,48 +228,48 @@
 /* The footer
 /* ************************************************************************** */
 /* footer comments.comment.comment-footer                                     */
-.my2cents-comment-footer {
+.m2c-comment-footer {
   margin: 5px 0 0 5px;
 }
 
 /* div comments.comment.comment-footer.comment-actions                        */
-.my2cents-comment-actions {
+.m2c-comment-actions {
 
 }
 
 /* div comments.comment.comment-footer.reply-to-comment                       */
-.my2cents-reply-to-comment {
+.m2c-reply-to-comment {
 
 }
 
 /* footer comments.comment.comment-footer.replies                             */
-.my2cents-replies {
+.m2c-replies {
   /* margin-left: 5px; */
 }
 
 /* ************************************************************************** */
 /* span with current user                                                     */
-.my2cents-user {
+.m2c-user {
   font-weight: bold;
 }
 
 
 /* button signout                                                              */
-.my2cents-signout {
+.m2c-signout {
 
 }
 
 /* buttons that are only available for administrators */
-.my2cents-admin-action span {
+.m2c-admin-action span {
     display: none;
 }
 
-.my2cents-mute span,
-.my2cents-unmute span {
+.m2c-mute span,
+.m2c-unmute span {
   display: unset;
 }
 
-.my2cents-needs-admin-action {
+.m2c-needs-admin-action {
   color: var(--red);
   font-size: 1.2rem;
 	line-height: 1.3em;
@@ -277,17 +277,17 @@
 }
 
 /* TODO old stuff still to validate */
-.my2cents-comment-body p {
+.m2c-comment-body p {
     margin: 0;
 }
 
 
-.my2cents-comment .my2cents-form,
-.my2cents-comment .my2cents-comments {
+.m2c-comment .m2c-form,
+.m2c-comment .m2c-comments {
     margin-left: 2em;
 }
 
-.my2cents-comment.my2cents-highlight {
+.m2c-comment.m2c-highlight {
   animation: flash 7s 1;
 }
 

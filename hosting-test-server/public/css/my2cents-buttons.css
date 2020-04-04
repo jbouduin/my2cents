@@ -9,7 +9,7 @@
     font-style: normal;
 }
 
-[class^="my2cents-icon-"]:before, [class*=" my2cents-icon-"]:before {
+[class^="m2c-icon-"]:before, [class*=" m2c-icon-"]:before {
   font-family: "my2cents";
   font-style: normal;
   font-weight: normal;
@@ -41,171 +41,171 @@
 }
 
 /* authentication buttons */
-.my2cents-icon-anonymous:before {
+.m2c-icon-anonymous:before {
   content: var(--glyph-user-alt);
 }
 
-.my2cents-anonymous:hover {
+.m2c-anonymous:hover {
   color: red;
 }
 
-.my2cents-icon-twitter:before {
+.m2c-icon-twitter:before {
   content: var(--glyph-twitter);
 }
 
-.my2cents-twitter:hover {
+.m2c-twitter:hover {
   color: var(--twitter-blue);
 }
 
-.my2cents-icon-github:before {
+.m2c-icon-github:before {
   content: var(--glyph-github);
 }
 
-.my2cents-github:hover {
+.m2c-github:hover {
   color: var(--pure-white);
 }
 
-.my2cents-icon-facebook:before {
+.m2c-icon-facebook:before {
   content: var(--glyph-facebook);
 }
 
-.my2cents-facebook:hover {
+.m2c-facebook:hover {
   color: var(--facebook-blue);
 }
 
-.my2cents-icon-google:before {
+.m2c-icon-google:before {
   content: var(--glyph-google);
 }
 
-.my2cents-google:hover {
+.m2c-google:hover {
   color: var(--pure-white);
 }
 
-.my2cents-icon-instagram:before {
+.m2c-icon-instagram:before {
   content: var(--glyph-instagram);
 }
 
-.my2cents-instagram:hover {
+.m2c-instagram:hover {
   color: var(--pure-white);
 }
 
-.my2cents-icon-linkedin:before {
+.m2c-icon-linkedin:before {
   content: var(--glyph-linkedin);
 }
 
-.my2cents-linkedin:hover {
+.m2c-linkedin:hover {
   color: var(--linkedin-blue);
 }
 
-.my2cents-icon-signout:before {
+.m2c-icon-signout:before {
   content: var(--glyph-sign-out-alt);
 }
 
-.my2cents-signout:hover {
+.m2c-signout:hover {
   color: red;
 }
 
 /* administrator actions */
-.my2cents-icon-mute:before {
+.m2c-icon-mute:before {
   content: var(--glyph-volume-mute);
 }
 
-.my2cents-mute:hover {
+.m2c-mute:hover {
   color: var(--red);
 }
 
-.my2cents-icon-unmute:before {
+.m2c-icon-unmute:before {
   content: var(--glyph-volume-up);
 }
 
-.my2cents-unmute:hover {
+.m2c-unmute:hover {
   color: var(--green);
 }
 
-.my2cents-icon-trust:before {
+.m2c-icon-trust:before {
   content: var(--glyph-user-plus);
 }
 
-.my2cents-trust:hover {
+.m2c-trust:hover {
   color: var(--green);
 }
 
-.my2cents-icon-block:before {
+.m2c-icon-block:before {
   content: var(--glyph-user-slash);
 }
 
-.my2cents-block:hover {
+.m2c-block:hover {
   color: var(--red);
 }
 
-.my2cents-icon-approve:before
+.m2c-icon-approve:before
 {
   content: var(--glyph-comment-medical);
 }
 
-.my2cents-approve:hover
+.m2c-approve:hover
 {
   color: var(--green);
 }
 
-.my2cents-icon-reject:before
+.m2c-icon-reject:before
 {
   content: var(--glyph-comment-slash);
 }
 
-.my2cents-reject:hover
+.m2c-reject:hover
 {
   color: var(--red);
 }
 
 /* user actions */
-.my2cents-icon-add-comment:before {
+.m2c-icon-add-comment:before {
   content: var(--glyph-comments);
 }
 
-.my2cents-icon-reply:before {
+.m2c-icon-reply:before {
   content: var(--glyph-reply);
 }
 
-.my2cents-icon-edit:before
+.m2c-icon-edit:before
 {
   content: var(--glyph-edit);
 }
 
-.my2cents-icon-preview:before
+.m2c-icon-preview:before
 {
   content: var(--glyph-file-alt);
 }
 
-.my2cents-add-comment:hover,
-.my2cents-reply:hover,
-.my2cents-preview:hover,
-.my2cents-edit:hover
+.m2c-add-comment:hover,
+.m2c-reply:hover,
+.m2c-preview:hover,
+.m2c-edit:hover
 {
   color: var(--pure-white);
 }
 
-.my2cents-icon-post:before
+.m2c-icon-post:before
 {
   content: var(--glyph-check);
 }
 
-.my2cents-post:hover
+.m2c-post:hover
 {
   color: var(--green);
 }
 
-.my2cents-icon-cancel:before
+.m2c-icon-cancel:before
 {
   content: var(--glyph-times);
 }
 
-.my2cents-cancel:hover
+.m2c-cancel:hover
 {
   color: var(--red);
 }
 
-.my2cents-button {
+.m2c-button {
   padding: 5px;
   border-color: var(--whitegrey);
   background: var(--midgrey);
@@ -213,6 +213,6 @@
   border-radius: 5px;
 }
 
-.my2cents-button:hover {
+.m2c-button:hover {
   background: var(--darkgrey);
 }
