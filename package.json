@@ -14,8 +14,8 @@
         "build": "tsc",
         "embed": "rollup -c",
         "start": "ts-node ./src/server.ts",
-        "dev": "nodemon",
-        "hosting-test-server": "ts-node ./hosting-test-server/src/server.ts"
+        "start-hosting-server": "cd hosting-test-server && npm run start",
+        "dev": "nodemon"
     },
     "repository": "git@github.com:jbouduin/my2cents.git",
     "dependencies": {
@@ -57,7 +57,6 @@
         "@types/node": "^12.12.32",
         "@types/passport": "^1.0.3",
         "@types/passport-twitter": "^1.0.34",
-        "http-server": "^0.12.1",
         "nodemon": "^1.19.4",
         "rollup": "^0.55.4",
         "rollup-plugin-buble": "^0.16.0",
