@@ -32,7 +32,7 @@ class App {
           console.log(req.url);
           const parts = req.url.split('?');
           const queryString = parts[1];
-          const updatedPath = parts[0].replace(/my2cents/, '');
+          const updatedPath = parts[0].replace('/my2cents/', '/');
           const ret = updatedPath + (queryString ? '?' + queryString : '');
           console.log(`forwarding to ${ret}`);
           return ret;

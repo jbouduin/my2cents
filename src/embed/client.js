@@ -186,7 +186,7 @@ export default class My2Cents {
       if (data.user && data.user.admin) {
         if (!this.initialized) {
           const push = document.createElement('script');
-          push.setAttribute('src', `${host}/${root}/push.js`);
+          push.setAttribute('src', `${host}/${root}/embed/push.js`);
           document.head.appendChild(push);
           this.initialized = true;
         }

@@ -1,9 +1,10 @@
 // rollup.config.js
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
 import buble from 'rollup-plugin-buble';
-import uglify from 'rollup-plugin-uglify';
+import copy from 'rollup-plugin-copy';
+import commonjs from 'rollup-plugin-commonjs';
 import jst from 'rollup-plugin-jst';
+import uglify from 'rollup-plugin-uglify';
+import resolve from 'rollup-plugin-node-resolve';
 
 var plugins = [
   jst({
@@ -17,22 +18,46 @@ var plugins = [
 
 var outputPath = 'build';
 if ((process.env.NODE_ENV || '').trim() === 'production') {
-  outputPath = 'dist/embed';
+  outputPath = 'dist/public';
   plugins.push(uglify());
 }
+/* ************************************************************************** */
+/* this does not work, rollup copy is not copying anything                    */
+/* ************************************************************************** */
+/*
+  const copyStylesheets = [...plugins];
+  copyStylesheets.push(
+  copy({
+    targets: [
+      { src: './src/css/test.css', dest: `./${outputPath}/public` }
+    ],
+    verbose: true
+  })
+);
+*/
+/* ************************************************************************** */
+/* but if I call  buildEnd() myself, it works                                 */
+/* ************************************************************************** */
+copy({
+  targets: [
+    { src: 'src/assets/css', dest: `${outputPath}` },
+    { src: 'src/assets/fonts', dest: `${outputPath}` }
+  ],
+  verbose: true
+}).buildEnd();
 
 export default [
     {
       input: 'src/embed/index.js',
       output: {
-        file: `${outputPath}/embed.js`,
+        file: `${outputPath}/embed/embed.js`,
         format: 'iife'
       },
       plugins: plugins
     }, {
       input: 'src/embed/client.js',
       output: {
-        file: `${outputPath}/client.js`,
+        file: `${outputPath}/embed/client.js`,
         format: 'umd',
         name: 'My2Cents'
       },
@@ -40,14 +65,14 @@ export default [
     },  {
       input: 'src/embed/push.js',
       output: {
-        file: `${outputPath}/push.js`,
+        file: `${outputPath}/embed/push.js`,
         format: 'cjs'
       },
       plugins: plugins
     }, {
       input: 'src/embed/sw.js',
       output: {
-        file: `${outputPath}/sw.js`,
+        file: `${outputPath}/embed/sw.js`,
         format: 'cjs'
       },
       plugins: plugins

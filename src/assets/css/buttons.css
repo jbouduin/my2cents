@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'my2cents';
-    src: url('../fonts/my2cents.eot');
-    src: url('../fonts/my2cents.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/my2cents.woff') format('woff'),
-         url('../fonts/my2cents.ttf') format('truetype'),
-         url('../fonts/my2cents.svg#my2cents') format('svg');
+    src: url('/my2cents/fonts/my2cents.eot');
+    src: url('/my2cents/fonts/my2cents.eot?#iefix') format('embedded-opentype'),
+         url('/my2cents/fonts/my2cents.woff') format('woff'),
+         url('/my2cents/fonts/my2cents.ttf') format('truetype'),
+         url('/my2cents/fonts/my2cents.svg#my2cents') format('svg');
     font-weight: normal;
     font-style: normal;
 }
