@@ -13,6 +13,7 @@
     "scripts": {
         "build": "tsc",
         "embed": "rollup -c",
+        "dist": "set NODE_ENV=production && rollup -c",
         "start": "ts-node ./src/server.ts",
         "start-hosting-server": "cd hosting-test-server && npm run start",
         "dev": "nodemon"
