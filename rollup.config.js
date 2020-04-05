@@ -36,53 +36,57 @@ copyStylesheets.push(copyPlugin);
 export default [
     {
       input: 'src/embed/index.js',
-      output: {
-        file: `${outputPath}/embed/embed.js`,
-        format: 'iife'
-      },
-      output: {
-        file: `${outputPath}/embed/embed.min.js`,
-        format: 'iife',
-        plugins: [ terser() ]
-      },
+      output: [
+        {
+          file: `${outputPath}/embed/embed.js`,
+          format: 'iife'
+        }, {
+          file: `${outputPath}/embed/embed.min.js`,
+          format: 'iife',
+          plugins: [ terser() ]
+        }
+      ],
       plugins: plugins
     }, {
       input: 'src/embed/client.js',
-      output: {
-        file: `${outputPath}/embed/client.js`,
-        format: 'umd',
-        name: 'My2Cents'
-      },
-      output: {
-        file: `${outputPath}/embed/client.min.js`,
-        format: 'umd',
-        name: 'My2Cents',
-        plugins: [ terser() ]
-      },
+      output: [
+        {
+          file: `${outputPath}/embed/client.js`,
+          format: 'umd',
+          name: 'My2Cents'
+        }, {
+          file: `${outputPath}/embed/client.min.js`,
+          format: 'umd',
+          name: 'My2Cents',
+          plugins: [ terser() ]
+        }
+      ],
       plugins: plugins
     },  {
       input: 'src/embed/push.js',
-      output: {
-        file: `${outputPath}/embed/push.js`,
-        format: 'cjs'
-      },
-      output: {
-        file: `${outputPath}/embed/push.min.js`,
-        format: 'cjs',
-        plugins: [ terser() ]
-      },
+      output: [
+        {
+          file: `${outputPath}/embed/push.js`,
+          format: 'cjs'
+        }, {
+          file: `${outputPath}/embed/push.min.js`,
+          format: 'cjs',
+          plugins: [ terser() ]
+        }
+      ],
       plugins: plugins
     }, {
       input: 'src/embed/sw.js',
-      output: {
-        file: `${outputPath}/embed/sw.js`,
-        format: 'cjs'
-      },
-      output: {
-        file: `${outputPath}/embed/sw.min.js`,
-        format: 'cjs',
-        plugins: [ terser() ]
-      },
+      output: [
+        {
+          file: `${outputPath}/embed/sw.js`,
+          format: 'cjs'
+        }, {
+          file: `${outputPath}/embed/sw.min.js`,
+          format: 'cjs',
+          plugins: [ terser() ]
+        }
+      ],
       plugins: copyStylesheets
     }
   ];
