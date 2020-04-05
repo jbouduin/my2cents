@@ -3,7 +3,7 @@ import buble from 'rollup-plugin-buble';
 import copy from 'rollup-plugin-copy';
 import commonjs from 'rollup-plugin-commonjs';
 import jst from 'rollup-plugin-jst';
-import uglify from 'rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
 import resolve from 'rollup-plugin-node-resolve';
 
 var plugins = [
@@ -19,32 +19,19 @@ var plugins = [
 var outputPath = 'build';
 if ((process.env.NODE_ENV || '').trim() === 'production') {
   outputPath = 'dist/public';
-  plugins.push(uglify());
 }
-/* ************************************************************************** */
-/* this does not work, rollup copy is not copying anything                    */
-/* ************************************************************************** */
-/*
-  const copyStylesheets = [...plugins];
-  copyStylesheets.push(
-  copy({
-    targets: [
-      { src: './src/css/test.css', dest: `./${outputPath}/public` }
-    ],
-    verbose: true
-  })
-);
-*/
-/* ************************************************************************** */
-/* but if I call  buildEnd() myself, it works                                 */
-/* ************************************************************************** */
-copy({
+
+var copyPlugin = copy({
   targets: [
     { src: 'src/assets/css', dest: `${outputPath}` },
     { src: 'src/assets/fonts', dest: `${outputPath}` }
   ],
   verbose: true
-}).buildEnd();
+});
+
+// copyPlugin.buildEnd();
+const copyStylesheets = [...plugins];
+copyStylesheets.push(copyPlugin);
 
 export default [
     {
@@ -52,6 +39,11 @@ export default [
       output: {
         file: `${outputPath}/embed/embed.js`,
         format: 'iife'
+      },
+      output: {
+        file: `${outputPath}/embed/embed.min.js`,
+        format: 'iife',
+        plugins: [ terser() ]
       },
       plugins: plugins
     }, {
@@ -61,12 +53,23 @@ export default [
         format: 'umd',
         name: 'My2Cents'
       },
+      output: {
+        file: `${outputPath}/embed/client.min.js`,
+        format: 'umd',
+        name: 'My2Cents',
+        plugins: [ terser() ]
+      },
       plugins: plugins
     },  {
       input: 'src/embed/push.js',
       output: {
         file: `${outputPath}/embed/push.js`,
         format: 'cjs'
+      },
+      output: {
+        file: `${outputPath}/embed/push.min.js`,
+        format: 'cjs',
+        plugins: [ terser() ]
       },
       plugins: plugins
     }, {
@@ -75,6 +78,11 @@ export default [
         file: `${outputPath}/embed/sw.js`,
         format: 'cjs'
       },
-      plugins: plugins
+      output: {
+        file: `${outputPath}/embed/sw.min.js`,
+        format: 'cjs',
+        plugins: [ terser() ]
+      },
+      plugins: copyStylesheets
     }
   ];
