@@ -1,9 +1,10 @@
 {
   "hostname": "${process.env.HOST_NAME || 'localhost'}",
   "my2CentsPort": "3000",
+  "pageSuffix": "html",
   "pathToMy2Cents": "/my2cents",
   "pathToPage": "/",
-  "port": "",
+  "port": "8080",
   "protocol": "http",
   "serveStatic": ["build"]
 }

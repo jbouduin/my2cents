@@ -1,5 +1,4 @@
 import * as express from 'express';
-import * as fs from 'fs';
 import { inject, injectable } from 'inversify';
 import * as moment from 'moment';
 import * as path from 'path';
@@ -38,9 +37,10 @@ export class ConfigurationService implements IConfigurationService {
   }
 
   public getPageUrl(): string {
-    const url = `${this.environment.server.protocol}/${this.environment.server.hostname}`;
+    const url = `${this.environment.server.protocol}://${this.environment.server.hostname}`;
     const port = this.environment.server.port ? `:${this.environment.server.port}` : '';
-    return `${url}${port}${this.environment.server.pathToPage}/%SLUG%`;
+    const suffix = this.environment.server.pageSuffix ? `.${this.environment.server.pageSuffix}` : '';
+    return `${url}${port}${this.environment.server.pathToPage}%SLUG%${suffix}`;
   }
 
   public getMy2CentsDomain(): string {

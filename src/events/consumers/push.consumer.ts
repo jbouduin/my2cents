@@ -6,12 +6,17 @@ import * as request from 'request';
 import * as webpush from 'web-push';
 
 import { Comment } from '../../db/entities';
-import { ICommentService, IConfigurationService, ISubscriptionService } from '../../services';
+import {
+  ICommentService,
+  IConfigurationService,
+  ISettingService,
+  ISubscriptionService } from '../../services';
 
 import { EventType, IEvent } from '..';
 
 import { ConsumerCallback, IConsumer } from './consumer';
 
+import SETTINGKEYS from '../../services/settings/setting.keys';
 import SERVICETYPES from '../../services/service.types';
 
 export interface IPushConsumer extends IConsumer { }
@@ -29,6 +34,7 @@ export class PushConsumer implements IPushConsumer {
   public constructor(
     @inject(SERVICETYPES.CommentService) private commentService: ICommentService,
     @inject(SERVICETYPES.ConfigurationService) private configurationService: IConfigurationService,
+    @inject(SERVICETYPES.SettingService) private settingService: ISettingService,
     @inject(SERVICETYPES.SubscriptionService) private subscriptionService: ISubscriptionService) { }
 
   // interface members
@@ -104,8 +110,8 @@ export class PushConsumer implements IPushConsumer {
         try {
           pusher.send(msg, callback);
         } catch (err) {
-          console.log('error pushing to pushover:');
-          console.log(err);
+          console.error('error pushing to pushover:');
+          console.error(err);
         }
       });
     }
@@ -124,7 +130,7 @@ export class PushConsumer implements IPushConsumer {
           this.subscriptionService.getSubscriptions()
             .then(subscriptions => {
               subscriptions.forEach(subscription => {
-                console.log(`Webpush to ${subscription.endpoint}`);
+                console.debug(`Webpush to ${subscription.endpoint}`);
                 webpush.sendNotification(
                   {
                     endpoint: subscription.endpoint,
@@ -140,45 +146,51 @@ export class PushConsumer implements IPushConsumer {
                   })
                 );
               });
-              // callback;
             });
           });
       } catch (err) {
-        console.log('could not initialize webpush: ');
-        console.log(err);
+        console.error('could not initialize webpush: ');
+        console.error(err);
       }
     }
   }
 
   private push(pushConsumer: PushConsumer): void {
     try {
-      console.log(new Date() + ' push');
-      let bySlug;
-      if (pushConsumer.awaitingModeration.length) {
-        bySlug = _.countBy(pushConsumer.awaitingModeration, 'slug');
-        const slugs = Object.keys(bySlug);
-        slugs.forEach(slug => {
-          const cnt = bySlug[slug];
-          const msg = {
-            message: `${cnt} new comment${cnt > 1 ? 's' : ''} on "${slug}" are awaiting moderation.`,
-            url: pushConsumer.configurationService.getPageUrl().replace('%SLUG%', slug)
-            // sound: !!row.active ? 'pushover' : 'none'
-          };
-          console.log(msg.message);
-          pushConsumer.notifiers.forEach(notifier => {
-            try {
-              notifier(msg, null);
-            } catch (err) {
-              console.log(err);
+      if (pushConsumer.awaitingModeration.length)
+      {
+        pushConsumer.settingService
+          .getSetting(SETTINGKEYS.Notification)
+          .then(setting => {
+            if (JSON.parse(setting.setting).active) {
+              console.debug(new Date() + ' push');
+              const bySlug = _.countBy(pushConsumer.awaitingModeration, 'slug');
+              const slugs = Object.keys(bySlug);
+              slugs.forEach(slug => {
+                const cnt = bySlug[slug];
+                const msg = {
+                  message: `${cnt} new comment${cnt > 1 ? 's' : ''} on "${slug}" are awaiting moderation.`,
+                  url: pushConsumer.configurationService.getPageUrl().replace('%SLUG%', slug)
+                };
+                console.debug(msg.message);
+                pushConsumer.notifiers.forEach(notifier => {
+                  try {
+                    notifier(msg, null);
+                  } catch (err) {
+                    console.error(err);
+                  }
+                });
+              });
+            } else {
+              console.debug('Notification de-activated');
             }
           });
-        });
       } else {
-        console.log('nothing queued for push');
+        console.debug('nothing queued for push');
       }
     } catch (err) {
-      console.log('error in push:');
-      console.log(err);
+      console.error('error in push:');
+      console.error(err);
     }
   }
 }
