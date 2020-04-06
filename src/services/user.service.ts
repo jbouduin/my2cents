@@ -40,6 +40,52 @@ export class UserService implements IUserService {
   }
 
   public async initialize(app: Application): Promise<any> {
+    this.seed();
+  }
+
+  public async createUser(
+    provider: string,
+    providerId: string,
+    displayName: string,
+    name: string,
+    url: string): Promise<User> {
+
+    const repository = this.databaseService.getUserRepository();
+    const newUser = new User();
+    newUser.provider = provider;
+    newUser.provider_id = providerId;
+    newUser.display_name = displayName;
+    newUser.name = name;
+    newUser.url = url;
+    newUser.trusted = false;
+    newUser.blocked = false;
+    newUser.administrator = false;
+    newUser.ip_address = 'unknown';
+    newUser.user_agent = 'unknown';
+    return repository.save(newUser);
+  }
+
+  public async findUser(provider: string, providerId: string): Promise<User> {
+    // SELECT id, name, display_name, provider, provider_id,
+    //      trusted, blocked FROM user
+    //    WHERE provider = ? AND provider_id = ?
+    return this.databaseService.getUserRepository().createQueryBuilder('user')
+      .select()
+      .where('user.provider = :provider', { provider })
+      .andWhere('user.provider_id = :providerId', { providerId })
+      .getOne();
+  }
+
+  public async trustUser(userId: number): Promise<User> {
+    const userRepository = this.databaseService.getUserRepository();
+    const user = await userRepository.findOne(userId);
+    user.trusted = true;
+    user.blocked = false;
+    return userRepository.save(user);
+  }
+
+  // private helper methods
+  private async seed(): Promise<any> {
     const repository = this.databaseService.getUserRepository();
     const searches = new Array<Promise<number>>();
 
@@ -101,46 +147,5 @@ export class UserService implements IUserService {
           repository.save(newUsers);
         }
       });
-  }
-
-  public async createUser(
-    provider: string,
-    providerId: string,
-    displayName: string,
-    name: string,
-    url: string): Promise<User> {
-
-    const repository = this.databaseService.getUserRepository();
-    const newUser = new User();
-    newUser.provider = provider;
-    newUser.provider_id = providerId;
-    newUser.display_name = displayName;
-    newUser.name = name;
-    newUser.url = url;
-    newUser.trusted = false;
-    newUser.blocked = false;
-    newUser.administrator = false;
-    newUser.ip_address = 'unknown';
-    newUser.user_agent = 'unknown';
-    return repository.save(newUser);
-  }
-
-  public async findUser(provider: string, providerId: string): Promise<User> {
-    // SELECT id, name, display_name, provider, provider_id,
-    //      trusted, blocked FROM user
-    //    WHERE provider = ? AND provider_id = ?
-    return this.databaseService.getUserRepository().createQueryBuilder('user')
-      .select()
-      .where('user.provider = :provider', { provider })
-      .andWhere('user.provider_id = :providerId', { providerId })
-      .getOne();
-  }
-
-  public async trustUser(userId: number): Promise<User> {
-    const userRepository = this.databaseService.getUserRepository();
-    const user = await userRepository.findOne(userId);
-    user.trusted = true;
-    user.blocked = false;
-    return userRepository.save(user);
   }
 }
