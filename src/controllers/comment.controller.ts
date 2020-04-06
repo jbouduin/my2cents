@@ -163,10 +163,9 @@ export class CommentController implements ICommentController {
           if (lastComment && lastComment.comment === request.body.comment) {
             response.send({ status: 'rejected', reason: 'reason' });
           } else {
-            console.debug(request.headers);
             this.commentService.createComment(
               request.session.passport.user,
-              request.body.reply_to,
+              request.body.replyTo,
               request.params.slug,
               request.body.comment,
               this.getCallerIP(request),
