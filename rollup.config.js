@@ -26,10 +26,6 @@ if (configuration === 'production') {
   outputPath = 'dist/public';
 }
 
-/* this could work, but it means that we need the value set in the configuration and can not use an environment variable
-var json = require(`./configuration/environments/${configuration}/notification.json`);
-console.log(eval('`' + json.webpush.publicKey + '`'));
-*/
 var copyPlugin = copy({
   targets: [
     { src: 'src/assets/css', dest: `${outputPath}` },

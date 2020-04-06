@@ -67,8 +67,8 @@ export class SendMailConsumer implements ISendMailConsumer {
         to
       },
       (err, info) => {
-        console.log(info.envelope);
-        console.log(info.messageId);
+        console.debug(info.envelope);
+        console.debug(info.messageId);
       });
     }
 
@@ -91,7 +91,7 @@ export class SendMailConsumer implements ISendMailConsumer {
         // TODO html: '<b>Hello world?</b>' // html body
     });
 
-    console.log(`Message sent: ${info.messageId}`);
+    console.debug(`Message sent: ${info.messageId}`);
     return Promise.resolve(true);
 
   }

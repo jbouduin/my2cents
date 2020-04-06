@@ -75,7 +75,7 @@ export class ConfigurationService implements IConfigurationService {
     this.environment = this.configuration.current;
     this.application = this.configuration.application;
 
-    console.log(this.configuration);
+    console.debug(this.configuration);
     return Promise.resolve(this.configuration);
   }
 

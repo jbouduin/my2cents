@@ -50,7 +50,7 @@ export class CommentController implements ICommentController {
               response.send({ status: 'ok' });
             })
             .catch(err => {
-              console.log(err);
+              console.error(err);
               response.sendStatus(500);
             });
         }
@@ -124,7 +124,7 @@ export class CommentController implements ICommentController {
                 site_url: this.configurationService.getMy2CentsUrl(),
                 title: 'Awaiting moderation'
               });
-              console.log(feed);
+              console.debug(feed);
               comments.forEach(comment => {
                 feed.item({
                   date: comment.created,
@@ -137,7 +137,7 @@ export class CommentController implements ICommentController {
               response.send(feed.xml({ indent: true }));
             })
             .catch(err => {
-              console.log(err);
+              console.error(err);
               response.sendStatus(500);
             });
         }
@@ -163,7 +163,7 @@ export class CommentController implements ICommentController {
           if (lastComment && lastComment.comment === request.body.comment) {
             response.send({ status: 'rejected', reason: 'reason' });
           } else {
-            console.log(request.headers);
+            console.debug(request.headers);
             this.commentService.createComment(
               request.session.passport.user,
               request.body.reply_to,
@@ -177,7 +177,7 @@ export class CommentController implements ICommentController {
               response.send({ status: 'ok', id: result.id });
             })
             .catch(err => {
-              console.log(err);
+              console.error(err);
               response.sendStatus(500);
             });
           }
@@ -203,7 +203,7 @@ export class CommentController implements ICommentController {
               response.send({ status: 'ok' });
             })
             .catch(err => {
-              console.log(err);
+              console.error(err);
               response.sendStatus(500);
             });
         }

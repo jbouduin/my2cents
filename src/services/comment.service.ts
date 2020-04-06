@@ -133,9 +133,6 @@ export class CommentService implements ICommentService {
   }
 
   public async getLastComment(userId: number, replyTo: number, slug: string): Promise<Comment> {
-    console.log(userId);
-    console.log(replyTo);
-    console.log(slug);
 
     const queryBuilder = this.databaseService.getCommentRepository()
       .createQueryBuilder('comment')

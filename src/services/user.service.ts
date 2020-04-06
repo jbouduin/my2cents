@@ -104,7 +104,7 @@ export class UserService implements IUserService {
       .then((counts: Array<number>) => {
         const newUsers = new Array<User>();
         if (counts[0] === 0) {
-          console.log('creating an administrator');
+          console.info('creating an administrator');
           newUsers.push(repository.create(
             {
               administrator: true,
@@ -119,7 +119,7 @@ export class UserService implements IUserService {
             }
           ));
         } else {
-          console.log('found an administrator');
+          console.info('found an administrator');
         }
         if (this.configurationService.environment.authentication.allowAnonymous) {
           if (counts[1] === 0) {
@@ -136,12 +136,12 @@ export class UserService implements IUserService {
                 user_agent: 'My2Cents-Server'
               }
             ));
-            console.log('creating an anonymous user');
+            console.info('creating an anonymous user');
           } else {
-            console.log('found an anonymous user');
+            console.info('found an anonymous user');
           }
         } else {
-          console.log('no anonymous user needed');
+          console.info('no anonymous user needed');
         }
         if (newUsers.length > 0) {
           repository.save(newUsers);

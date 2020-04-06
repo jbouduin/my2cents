@@ -28,7 +28,7 @@ export class SettingController implements ISettingController {
       this.settingService.getSetting(key)
         .then(setting => response.send(setting))
         .catch(err => {
-          console.log(err);
+          console.error(err);
           response.sendStatus(500);
         });
     }
@@ -44,7 +44,7 @@ export class SettingController implements ISettingController {
         this.settingService.setSetting(request.params.key, request.params.value)
           .then(setting => response.send({ status: 'ok' }))
           .catch(err => {
-            console.log(err);
+            console.error(err);
             response.sendStatus(500);
           });
       }

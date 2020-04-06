@@ -20,7 +20,7 @@ class App {
   public start(): void {
     const port = 8080;
     this.app.listen(port, () => {
-        console.log(new Date() + ` Express server listening on port ${port}`);
+        console.info(new Date() + ` Express server listening on port ${port}`);
       });
   }
 
@@ -29,12 +29,12 @@ class App {
       'http://localhost:3000',
       {
         proxyReqPathResolver: req => {
-          console.log(req.url);
+          console.info(req.url);
           const parts = req.url.split('?');
           const queryString = parts[1];
           const updatedPath = parts[0].replace('/my2cents/', '/');
           const ret = updatedPath + (queryString ? '?' + queryString : '');
-          console.log(`forwarding to ${ret}`);
+          console.info(`forwarding to ${ret}`);
           return ret;
         }
       }

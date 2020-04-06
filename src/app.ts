@@ -62,7 +62,7 @@ class App {
   public start(): void {
     const port = this.configurationService.environment.server.my2CentsPort;
     this.app.listen(port, () => {
-        console.log(new Date() + ` Express server listening on port ${port}`);
+        console.info(new Date() + ` Express server listening on port ${port}`);
       });
   }
 

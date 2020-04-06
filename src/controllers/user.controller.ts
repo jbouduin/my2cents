@@ -33,7 +33,7 @@ export class UserController implements IUserController {
           this.userService.blockUser(userId)
             .then(user => response.send({ status: 'ok' }))
             .catch(err => {
-              console.log(err);
+              console.error(err);
               response.sendStatus(500);
             });
         }
@@ -55,7 +55,7 @@ export class UserController implements IUserController {
           this.userService.trustUser(userId)
             .then(user => response.send({ status: 'ok' }))
             .catch(err => {
-              console.log(err);
+              console.error(err);
               response.sendStatus(500);
             });
         }

@@ -25,7 +25,7 @@ export class SubscriptionController implements ISubscriptionController {
       .subscribe(endpoint, publicKey, auth)
       .then(subscription => response.send({ status: 'ok' }))
       .catch(err => {
-        console.log(err);
+        console.error(err);
         response.sendStatus(500);
       });
   }
@@ -37,7 +37,7 @@ export class SubscriptionController implements ISubscriptionController {
       .unsubscribe(endpoint)
       .then(subscription => response.send({ status: 'ok' }))
       .catch(err => {
-        console.log(err);
+        console.error(err);
         response.sendStatus(500);
       });
   }

@@ -59,7 +59,7 @@ export class SettingService implements ISettingService {
       .then((counts: Array<number>) => {
         const newSettings = new Array<Setting>();
         if (counts[0] === 0) {
-          console.log('creating \'notification\' setting');
+          console.info('creating \'notification\' setting');
           const newSettingNotification = new SettingNotification();
           newSettingNotification.active = true;
           newSettings.push(repository.create(
@@ -69,7 +69,7 @@ export class SettingService implements ISettingService {
             }
           ));
         } else {
-          console.log('found \'notification\' setting');
+          console.info('found \'notification\' setting');
         }
 
         if (newSettings.length > 0) {
