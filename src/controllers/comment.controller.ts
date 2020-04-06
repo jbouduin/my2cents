@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
+import * as domPurify from 'domPurify';
 import * as marked from 'marked';
 import 'reflect-metadata';
 import * as rss from 'rss';
@@ -28,7 +29,6 @@ export class CommentController implements ICommentController {
     @inject(SERVICETYPES.ConfigurationService) private configurationService: IConfigurationService,
     @inject(SERVICETYPES.CommentService) private commentService: ICommentService,
     @inject(SERVICETYPES.EventService) private eventService: IEventService) {
-    marked.setOptions({ sanitize: true });
   }
 
   // interface members
@@ -147,7 +147,8 @@ export class CommentController implements ICommentController {
 
   public markdown2Html(request: Request, response: Response): void {
     const comment = request.body.comment;
-    response.send({ html: marked(comment.trim()) });
+    const dirty = marked(comment.trim());
+    response.send({ html: domPurify.sanitize(dirty) });
   }
 
   public postComment(request: Request, response: Response): void {
