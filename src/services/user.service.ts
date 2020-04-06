@@ -93,7 +93,6 @@ export class UserService implements IUserService {
   // private helper methods
   private async seed(): Promise<any> {
     const repository = this.databaseService.getUserRepository();
-    //const searches = new Array<ISeed>();
 
     const seedingData = new Array<Promise<User>>();
     if (this.configurationService.environment.authentication.allowAnonymous) {
@@ -203,15 +202,15 @@ export class UserService implements IUserService {
     blocked: boolean
   ): User {
     return repository.create({
-      administrator: administrator,
-      blocked: blocked,
+      administrator,
+      blocked,
       display_name: name,
       ip_address: '127.0.0.1',
       local_password: name.toLowerCase(),
-      name: name,
+      name,
       provider: 'local',
       provider_id: name.toLowerCase(),
-      trusted: trusted,
+      trusted,
       user_agent: 'My2Cents-Server'
     });
   }

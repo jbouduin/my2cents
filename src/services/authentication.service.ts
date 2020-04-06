@@ -63,6 +63,7 @@ export class AuthenticationService implements IAuthenticationService {
     const router = Router();
 
     passport.serializeUser((user: any, done: any) => {
+      console.debug(`Serialize user: ${user.id}@${user.provider}`);
       this.userService
         .findUser(user.provider, user.id)
         .then(row => {
@@ -94,6 +95,7 @@ export class AuthenticationService implements IAuthenticationService {
     });
 
     passport.deserializeUser((user: any, done: any) => {
+      console.debug(`Deserialize user: ${user.provider_id}@${user.provider}`);
       done(null, { id: user.provider_id, provider: user.provider });
     });
 
@@ -182,13 +184,13 @@ export class AuthenticationService implements IAuthenticationService {
 
     passport.use(new LocalStrategy(
         (user, password, done) => {
-          if (user === 'Anonymous' && this.configurationService.environment.authentication.allowAnonymous) {
-            return done(null, { id: 'Anonymous', provider: 'local' });
+          if (user.toLowerCase() === 'anonymous' && this.configurationService.environment.authentication.allowAnonymous) {
+            return done(null, { id: 'anonymous', provider: 'local' });
           } else {
             this.userService.findUser('local', user.toLowerCase())
-              .then(user => {
-                if (user && !user.blocked && password.toLowerCase() === user.local_password.toLowerCase()) {
-                  return done(null, { id: user.provider_id, provider: 'local' });
+              .then(found => {
+                if (found && !found.blocked && password.toLowerCase() === found.local_password.toLowerCase()) {
+                  return done(null, { id: found.provider_id, provider: 'local' });
                 } else {
                   return done(null, false, { message: 'Incorrect credentials.' });
                 }
