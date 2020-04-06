@@ -15,6 +15,7 @@ import { IWriteLogConsumer, WriteLogConsumer } from './events/consumers';
 // controllers
 import { ICommentController, CommentController } from './controllers';
 import { IHomeController, HomeController } from './controllers';
+import { ISettingController, SettingController } from './controllers';
 import { ISubscriptionController, SubscriptionController } from './controllers';
 import { ISystemController, SystemController } from './controllers';
 import { IUserController, UserController } from './controllers';
@@ -26,6 +27,7 @@ import { IDatabaseService, DatabaseService } from './services';
 import { IEventService, EventService } from './services';
 import { IConfigurationService, ConfigurationService } from './services';
 import { IRouteService, RouteService } from './services';
+import { ISettingService, SettingService } from './services';
 import { ISubscriptionService, SubscriptionService } from './services';
 import { IUserService, UserService } from './services';
 
@@ -37,9 +39,11 @@ container.bind<IPushConsumer>(CONSUMERTYPES.PushConsumer).to(PushConsumer).inSin
 container.bind<ISendMailConsumer>(CONSUMERTYPES.SendMailConsumer).to(SendMailConsumer).inSingletonScope();
 container.bind<ISlackConsumer>(CONSUMERTYPES.SlackConsumer).to(SlackConsumer).inSingletonScope();
 container.bind<IWriteLogConsumer>(CONSUMERTYPES.WriteLogConsumer).to(WriteLogConsumer).inSingletonScope();
+
 // controllers
 container.bind<ICommentController>(CONTROLLERTYPES.CommentController).to(CommentController);
 container.bind<IHomeController>(CONTROLLERTYPES.HomeController).to(HomeController);
+container.bind<ISettingController>(CONTROLLERTYPES.SettingController).to(SettingController);
 container.bind<ISubscriptionController>(CONTROLLERTYPES.SubscriptionController).to(SubscriptionController);
 container.bind<ISystemController>(CONTROLLERTYPES.SystemController).to(SystemController);
 container.bind<IUserController>(CONTROLLERTYPES.UserController).to(UserController);
@@ -51,6 +55,7 @@ container.bind<IConfigurationService>(SERVICETYPES.ConfigurationService).to(Conf
 container.bind<IDatabaseService>(SERVICETYPES.DatabaseService).to(DatabaseService).inSingletonScope();
 container.bind<IEventService>(SERVICETYPES.EventService).to(EventService).inSingletonScope();
 container.bind<IRouteService>(SERVICETYPES.RouteService).to(RouteService).inSingletonScope();
+container.bind<ISettingService>(SERVICETYPES.SettingService).to(SettingService);
 container.bind<ISubscriptionService>(SERVICETYPES.SubscriptionService).to(SubscriptionService);
 container.bind<IUserService>(SERVICETYPES.UserService).to(UserService);
 export default container;

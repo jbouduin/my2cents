@@ -5,6 +5,7 @@ const SERVICETYPES = {
   DatabaseService: Symbol('DatabaseService'),
   EventService: Symbol('EventService'),
   RouteService: Symbol('RouteService'),
+  SettingService: Symbol('SettingService'),
   SubscriptionService: Symbol('SubscriptionService'),
   UserService: Symbol('UserService')
 };

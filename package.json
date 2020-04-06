@@ -12,11 +12,12 @@
     ],
     "scripts": {
         "build": "tsc",
-        "embed": "rollup -c",
+        "dev": "nodemon",
         "dist": "set NODE_ENV=production && rollup -c",
+        "embed": "rollup -c",
+        "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "start": "ts-node ./src/server.ts",
-        "start-hosting-server": "cd hosting-test-server && npm run start",
-        "dev": "nodemon"
+        "start-hosting-server": "cd hosting-test-server && npm run start"
     },
     "repository": "git@github.com:jbouduin/my2cents.git",
     "dependencies": {

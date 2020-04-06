@@ -20,7 +20,6 @@ export class SystemController implements ISystemController {
 
   // interface members
   public getVapidData(request: Request, response: Response): void {
-    //    .replace('%MY2CENTS_HOST%', this.configurationService.environment.server.hostname);
     response.send({ key: this.configurationService.environment.notification.webpush.publicKey });
   }
 }

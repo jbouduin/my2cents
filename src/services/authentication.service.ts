@@ -63,13 +63,10 @@ export class AuthenticationService implements IAuthenticationService {
     const router = express.Router();
 
     passport.serializeUser((user: any, done: any) => {
-      console.log('serializeUser:');
-      console.log(user);
       this.userService
         .findUser(user.provider, user.id)
         .then(row => {
           if (row) {
-            console.log('user found');
             return done(null, row); // welcome back
           }
           // create a new user
@@ -97,8 +94,6 @@ export class AuthenticationService implements IAuthenticationService {
     });
 
     passport.deserializeUser((user: any, done: any) => {
-      console.log('deserializeUser:');
-      console.log(user);
       done(null, { id: user.provider_id, provider: user.provider });
     });
 
@@ -124,7 +119,7 @@ export class AuthenticationService implements IAuthenticationService {
     });
 
     if (this.configurationService.environment.authentication.allowAnonymous) {
-      console.log('allowing anonymous access');
+      console.warn('allowing anonymous access. I hope this is not a production environment!');
       this.initializeAnonymus(router);
     }
 
@@ -156,7 +151,7 @@ export class AuthenticationService implements IAuthenticationService {
           this.initializeInstagram(router, provider);
           break;
         }
-        default: console.log(`Non supported authentication provider found in the configuration: '${provider.name}'`);
+        default: console.warn(`Non supported authentication provider found in the configuration: '${provider.name}'`);
       }
     });
 
@@ -167,7 +162,6 @@ export class AuthenticationService implements IAuthenticationService {
     this.providers.push({ id: 'anonymous', name: 'Anonymous' });
     passport.use(new LocalStrategy(
         (user, password, done) => {
-          console.log('using local strategy');
           return done(null, { id: 'Anonymous', provider: 'local' });
         }
       )

@@ -5,5 +5,6 @@ export * from './database.service';
 export * from './event.service';
 export * from './configuration.service';
 export * from './route.service';
+export * from './setting.service';
 export * from './subscription.service';
 export * from './user.service';

@@ -5,6 +5,7 @@ import 'reflect-metadata';
 import {
   ICommentController,
   IHomeController,
+  ISettingController,
   ISubscriptionController,
   ISystemController,
   IUserController } from '../controllers';
@@ -21,9 +22,10 @@ export class RouteService implements IRouteService {
   public constructor(
     @inject(CONTROLLERTYPES.CommentController) private commentController: ICommentController,
     @inject(CONTROLLERTYPES.HomeController) private homeController: IHomeController,
+    @inject(CONTROLLERTYPES.SettingController) private settingController: ISettingController,
     @inject(CONTROLLERTYPES.SubscriptionController) private subscriptionController: ISubscriptionController,
     @inject(CONTROLLERTYPES.SystemController) private systemController: ISystemController,
-    @inject(CONTROLLERTYPES.UserController) private userController: IUserController,
+    @inject(CONTROLLERTYPES.UserController) private userController: IUserController
   ) { }
 
   // interface members
@@ -36,6 +38,7 @@ export class RouteService implements IRouteService {
       }
     );
 
+    // comments
     router.get(
       '/comments/:slug',
       (request: express.Request, response: express.Response) => {
@@ -50,6 +53,7 @@ export class RouteService implements IRouteService {
       }
     );
 
+    // feed
     router.get(
       '/feed',
       (request: express.Request, response: express.Response) => {
@@ -57,6 +61,7 @@ export class RouteService implements IRouteService {
       }
     );
 
+    // single comment
     router.post(
       '/comment/:id/approve',
       (request: express.Request, response: express.Response) => {
@@ -78,6 +83,7 @@ export class RouteService implements IRouteService {
       }
     );
 
+    // user
     router.post(
       '/user/:id/block',
       (request: express.Request, response: express.Response) => {
@@ -92,6 +98,7 @@ export class RouteService implements IRouteService {
       }
     );
 
+    // subscribe - unsubscribe
     router.post(
       '/subscribe',
       (request: express.Request, response: express.Response) => {
@@ -106,12 +113,29 @@ export class RouteService implements IRouteService {
       }
     );
 
+    // vapid key
     router.get(
       '/vapidData',
       (request: express.Request, response: express.Response) => {
         this.systemController.getVapidData(request, response);
       }
     )
+
+    // settings
+    router.get(
+      '/setting/:key',
+      (request: express.Request, response: express.Response) => {
+        this.settingController.getSetting(request, response);
+      }
+    )
+
+    router.post(
+      '/setting/:key/:value',
+      (request: express.Request, response: express.Response) => {
+        this.settingController.setSetting(request, response);
+      }
+    );
+
     app.use(router);
 
     return Promise.resolve(true);

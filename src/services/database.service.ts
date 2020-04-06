@@ -6,7 +6,7 @@ import { Connection as TypeOrmConnection } from 'typeorm';
 import { Repository } from 'typeorm';
 
 import { Connection, ConnectionType, TargetType } from '../configuration';
-import { Comment, Session, Subscription, User } from '../db/entities';
+import { Comment, Session, Setting, Subscription, User } from '../db/entities';
 
 import { IConfigurationService} from './configuration.service';
 import { IService } from './service';
@@ -16,6 +16,7 @@ import SERVICETYPES from './service.types';
 export interface IDatabaseService extends IService {
   getCommentRepository(): Repository<Comment>;
   getSessionRepository(): Repository<Session>;
+  getSettingRepository(): Repository<Setting>;
   getSubscriptionRepository(): Repository<Subscription>;
   getUserRepository(): Repository<User>;
 }
@@ -38,7 +39,7 @@ export class DatabaseService implements IDatabaseService {
       return Promise.all([
         this.connectByName(
           this.getConnectionNameForTargetType(TargetType.COMMENTS),
-          [Comment, Subscription, User]),
+          [Comment, Setting, Subscription, User]),
         this.connectByName(
           this.getConnectionNameForTargetType(TargetType.SESSIONS),
           [Session])
@@ -50,6 +51,12 @@ export class DatabaseService implements IDatabaseService {
     return this
       .getConnectionByTargetType(TargetType.COMMENTS)
       .getRepository(Comment);
+  }
+
+  public getSettingRepository(): Repository<Setting> {
+    return this
+      .getConnectionByTargetType(TargetType.COMMENTS)
+      .getRepository(Setting);
   }
 
   public getSessionRepository(): Repository<Session> {

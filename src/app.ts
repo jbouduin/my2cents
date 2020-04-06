@@ -13,6 +13,7 @@ import {
   IDatabaseService,
   IEventService,
   IRouteService,
+  ISettingService,
   IUserService } from './services';
 import SERVICETYPES from './services/service.types';
 
@@ -37,6 +38,7 @@ class App {
     // EventService:  event emitting
     // UserService: create default users
     // AuthenticationService: passport + authentication routes
+    // SettingService: seed settings table
     // RouteService: other routes
     return this.configurationService.initialize(this.app)
       .then( configuration => {
@@ -47,6 +49,7 @@ class App {
             return Promise.all([
               container.get<IEventService>(SERVICETYPES.EventService).initialize(this.app),
               container.get<IUserService>(SERVICETYPES.UserService).initialize(this.app),
+              container.get<ISettingService>(SERVICETYPES.SettingService).initialize(this.app),
               container.get<IAuthenticationService>(SERVICETYPES.AuthenticationService).initialize(this.app)
             ]);
           })
