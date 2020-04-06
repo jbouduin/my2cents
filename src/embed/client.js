@@ -194,8 +194,9 @@ export default class My2Cents {
         const action = evt => {
           const btn = evt.target;
           const data = btn.dataset;
+          console.log(`in action ${data}`);
           fetch(
-            `${host}/${data.class}/${data.target}/${data.action}`,
+            `${host}/${root}/${data.class}/${data.target}/${data.action}`,
             {
               credentials: 'include',
               method: 'POST',
@@ -203,11 +204,11 @@ export default class My2Cents {
               body: ''
             })
             .then(() => this.refresh());
-          };
-          document.querySelectorAll('.m2c-admin-action').forEach(btn => {
-            btn.addEventListener('click', action);
-          });
-        }
+        };
+        document.querySelectorAll('.m2c-admin-action').forEach(btn => {
+          btn.addEventListener('click', action);
+        });
+      }
 
       if (this.firstLoad && window.location.hash.match(/^#comment-\d+$/)) {
         const hl = document.querySelector(window.location.hash);

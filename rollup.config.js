@@ -16,11 +16,20 @@ var plugins = [
   buble()
 ];
 
+var configuration = 'development';
 var outputPath = 'build';
-if ((process.env.NODE_ENV || '').trim() === 'production') {
+if (process.env.NODE_ENV) {
+  configuration = (process.env.NODE_ENV).trim();
+}
+
+if (configuration === 'production') {
   outputPath = 'dist/public';
 }
 
+/* this could work, but it means that we need the value set in the configuration and can not use an environment variable
+var json = require(`./configuration/environments/${configuration}/notification.json`);
+console.log(eval('`' + json.webpush.publicKey + '`'));
+*/
 var copyPlugin = copy({
   targets: [
     { src: 'src/assets/css', dest: `${outputPath}` },
@@ -29,7 +38,7 @@ var copyPlugin = copy({
   verbose: true
 });
 
-// copyPlugin.buildEnd();
+
 const copyStylesheets = [...plugins];
 copyStylesheets.push(copyPlugin);
 

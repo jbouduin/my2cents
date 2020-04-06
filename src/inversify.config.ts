@@ -16,6 +16,7 @@ import { IWriteLogConsumer, WriteLogConsumer } from './events/consumers';
 import { ICommentController, CommentController } from './controllers';
 import { IHomeController, HomeController } from './controllers';
 import { ISubscriptionController, SubscriptionController } from './controllers';
+import { ISystemController, SystemController } from './controllers';
 import { IUserController, UserController } from './controllers';
 
 // services
@@ -27,9 +28,8 @@ import { IConfigurationService, ConfigurationService } from './services';
 import { IRouteService, RouteService } from './services';
 import { ISubscriptionService, SubscriptionService } from './services';
 import { IUserService, UserService } from './services';
-import { IVapidService, VapidService} from './services';
-/* tslint:enable ordered-imports */
 
+/* tslint:enable ordered-imports */
 const container = new Container();
 
 // Consumers
@@ -41,6 +41,7 @@ container.bind<IWriteLogConsumer>(CONSUMERTYPES.WriteLogConsumer).to(WriteLogCon
 container.bind<ICommentController>(CONTROLLERTYPES.CommentController).to(CommentController);
 container.bind<IHomeController>(CONTROLLERTYPES.HomeController).to(HomeController);
 container.bind<ISubscriptionController>(CONTROLLERTYPES.SubscriptionController).to(SubscriptionController);
+container.bind<ISystemController>(CONTROLLERTYPES.SystemController).to(SystemController);
 container.bind<IUserController>(CONTROLLERTYPES.UserController).to(UserController);
 
 // services
@@ -52,5 +53,4 @@ container.bind<IEventService>(SERVICETYPES.EventService).to(EventService).inSing
 container.bind<IRouteService>(SERVICETYPES.RouteService).to(RouteService).inSingletonScope();
 container.bind<ISubscriptionService>(SERVICETYPES.SubscriptionService).to(SubscriptionService);
 container.bind<IUserService>(SERVICETYPES.UserService).to(UserService);
-container.bind<IVapidService>(SERVICETYPES.VapidService).to(VapidService).inSingletonScope();
 export default container;

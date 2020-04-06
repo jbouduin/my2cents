@@ -2,7 +2,12 @@ import * as express from 'express';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 
-import { ICommentController, IHomeController, ISubscriptionController, IUserController } from '../controllers';
+import {
+  ICommentController,
+  IHomeController,
+  ISubscriptionController,
+  ISystemController,
+  IUserController } from '../controllers';
 import CONTROLLERTYPES from '../controllers/controller.types';
 
 import { IService } from './service';
@@ -17,7 +22,8 @@ export class RouteService implements IRouteService {
     @inject(CONTROLLERTYPES.CommentController) private commentController: ICommentController,
     @inject(CONTROLLERTYPES.HomeController) private homeController: IHomeController,
     @inject(CONTROLLERTYPES.SubscriptionController) private subscriptionController: ISubscriptionController,
-    @inject(CONTROLLERTYPES.UserController) private userController: IUserController
+    @inject(CONTROLLERTYPES.SystemController) private systemController: ISystemController,
+    @inject(CONTROLLERTYPES.UserController) private userController: IUserController,
   ) { }
 
   // interface members
@@ -100,6 +106,12 @@ export class RouteService implements IRouteService {
       }
     );
 
+    router.get(
+      '/vapidData',
+      (request: express.Request, response: express.Response) => {
+        this.systemController.getVapidData(request, response);
+      }
+    )
     app.use(router);
 
     return Promise.resolve(true);

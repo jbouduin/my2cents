@@ -13,8 +13,7 @@ import {
   IDatabaseService,
   IEventService,
   IRouteService,
-  IUserService,
-  IVapidService } from './services';
+  IUserService } from './services';
 import SERVICETYPES from './services/service.types';
 
 class App {
@@ -49,7 +48,6 @@ class App {
               container.get<IEventService>(SERVICETYPES.EventService).initialize(this.app),
               container.get<IUserService>(SERVICETYPES.UserService).initialize(this.app),
               container.get<IAuthenticationService>(SERVICETYPES.AuthenticationService).initialize(this.app)
-              // container.get<IVapidService>(SERVICETYPES.VapidService).initialize(this.app)
             ]);
           })
           .then(all => container.get<IRouteService>(SERVICETYPES.RouteService).initialize(this.app)) // other routes
@@ -77,7 +75,6 @@ class App {
   }
 
   private config(): void {
-    // container.get<IVapidService>(SERVICETYPES.VapidService).initialize(this.app);
 
     this.app.use(cors(
       {
