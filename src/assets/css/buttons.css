@@ -41,11 +41,11 @@
 }
 
 /* authentication buttons */
-.m2c-icon-anonymous:before {
+.m2c-icon-local:before {
   content: var(--glyph-user-alt);
 }
 
-.m2c-anonymous:hover {
+.m2c-local:hover {
   color: red;
 }
 

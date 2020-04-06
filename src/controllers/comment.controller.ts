@@ -166,7 +166,7 @@ export class CommentController implements ICommentController {
           } else {
             this.commentService.createComment(
               request.session.passport.user,
-              request.body.replyTo,
+              request.body.replyTo === undefined ? null : request.body.reply_to,
               request.params.slug,
               request.body.comment,
               this.getCallerIP(request),

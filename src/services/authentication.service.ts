@@ -1,4 +1,4 @@
-import * as express from 'express';
+import { Application, Router } from 'express';
 import { inject, injectable } from 'inversify';
 import * as passport from 'passport';
 import * as facebook from 'passport-facebook';
@@ -41,7 +41,7 @@ export class AuthenticationService implements IAuthenticationService {
     @inject(SERVICETYPES.UserService) private userService: IUserService) { }
 
   // interface members
-  public async initialize(app: express.Application): Promise<any> {
+  public async initialize(app: Application): Promise<any> {
     this.initializePassport(app);
     this.successPath = `${this.configurationService.environment.server.pathToMy2Cents}/auth/success`;
     return Promise.resolve(this.providers);
@@ -56,11 +56,11 @@ export class AuthenticationService implements IAuthenticationService {
     return `${this.configurationService.environment.server.protocol}/auth/${authorizer}/callback`;
   }
 
-  private initializePassport(app: express.Application) {
+  private initializePassport(app: Application) {
 
     app.use(passport.initialize());
     app.use(passport.session());
-    const router = express.Router();
+    const router = Router();
 
     passport.serializeUser((user: any, done: any) => {
       this.userService
@@ -118,9 +118,24 @@ export class AuthenticationService implements IAuthenticationService {
         </html>`);
     });
 
-    if (this.configurationService.environment.authentication.allowAnonymous) {
-      console.warn('allowing anonymous access. I hope this is not a production environment!');
-      this.initializeAnonymus(router);
+    if (this.configurationService.environment.authentication.allowAnonymous  ||
+      this.configurationService.environment.authentication.allowLocal) {
+
+      if (this.configurationService.environment.authentication.allowAnonymous) {
+        console.warn('allowing anonymous access. I hope this is not a production environment!');
+      }
+
+      if (this.configurationService.environment.authentication.allowLocal &&
+        this.configurationService.getNodeEnvironment() !== 'development') {
+          console.error('This is not a development environment! Not allowing user/password for access');
+      }
+
+      this.initializeLocal(
+        router,
+        this.configurationService.environment.authentication.allowAnonymous,
+        this.configurationService.environment.authentication.allowLocal &&
+          this.configurationService.getNodeEnvironment() === 'development'
+      );
     }
 
     this.configurationService.environment.authentication.providers
@@ -158,17 +173,33 @@ export class AuthenticationService implements IAuthenticationService {
     app.use('/auth', router);
   }
 
-  private initializeAnonymus(router): void {
-    this.providers.push({ id: 'anonymous', name: 'Anonymous' });
+  private initializeLocal(router: Router, allowAnonymous: boolean, allowLocal: boolean): void {
+
+    this.providers.push({
+      id: 'local',
+      name: allowLocal ? 'Local and Anonymous' : 'Anonymous'
+    });
+
     passport.use(new LocalStrategy(
         (user, password, done) => {
-          return done(null, { id: 'Anonymous', provider: 'local' });
+          if (user === 'Anonymous' && this.configurationService.environment.authentication.allowAnonymous) {
+            return done(null, { id: 'Anonymous', provider: 'local' });
+          } else {
+            this.userService.findUser('local', user.toLowerCase())
+              .then(user => {
+                if (user && !user.blocked && password.toLowerCase() === user.local_password.toLowerCase()) {
+                  return done(null, { id: user.provider_id, provider: 'local' });
+                } else {
+                  return done(null, false, { message: 'Incorrect credentials.' });
+                }
+              });
+          }
         }
       )
     );
 
     router.get(
-      '/anonymous',
+      '/local',
       (request, reply) => {
         reply.send(`
           <!doctype html>
@@ -181,12 +212,23 @@ export class AuthenticationService implements IAuthenticationService {
 
             <body>
               <center>
-              <h1> do not use in production environment</h1>
-              <form action="/my2cents/auth/anonymous" method="post">
-                <input type="hidden" name="username" value ="Anonymous">
-                <input type="hidden" name="password" value ="x">
-                <input type="submit" value="Anonymously comment">
-              </form>'
+                <h1>Do not use local login in production environment!</h1>
+
+                <div style="{border: 2px;}">
+                  <form action="/my2cents/auth/anonymous" method="post">
+                    <input type="hidden" name="username" value ="Anonymous">
+                    <input type="hidden" name="password" value ="x">
+                    <input type="submit" value="Anonymously comment">
+                  </form>
+                <div>
+                <br>
+                <div style="{border: 2px;}">
+                  <form action="/my2cents/auth/local" method="post" >
+                    <p>User: <input name="username" placeholder="enter username"></p>
+                    <p>Password: <input name="password" placeholder="enter password"></p>
+                    <input type="submit" value="Login">
+                  </form>
+                <div>
               </center>
             </body>
           </html>
@@ -203,9 +245,17 @@ export class AuthenticationService implements IAuthenticationService {
       }
     );
 
+    router.post(
+      '/local',
+      passport.authenticate('local', { session: true}),
+      (request, reply, next) => {
+        reply.redirect(this.successPath);
+      }
+    );
+
   }
 
-  private initializeTwitter(router: express.Router, provider: Provider): void {
+  private initializeTwitter(router: Router, provider: Provider): void {
     this.providers.push({ id: 'twitter', name: 'Twitter' });
     passport.use(
       new twitter.Strategy(
@@ -227,7 +277,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeGitHub(router: express.Router, provider: Provider): void {
+  private initializeGitHub(router: Router, provider: Provider): void {
     this.providers.push({ id: 'github', name: 'Github' });
     passport.use(
       new github.Strategy(
@@ -249,7 +299,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeGoogle(router: express.Router, provider: Provider): void {
+  private initializeGoogle(router: Router, provider: Provider): void {
     this.providers.push({ id: 'google', name: 'Google' });
     passport.use(
       new google.Strategy(
@@ -276,7 +326,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeFacebook(router: express.Router, provider: Provider): void {
+  private initializeFacebook(router: Router, provider: Provider): void {
     this.providers.push({ id: 'facebook', name: 'Facebook' });
     passport.use(
       new facebook.Strategy(
@@ -298,7 +348,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeInstagram(router: express.Router, provider: Provider): void {
+  private initializeInstagram(router: Router, provider: Provider): void {
     this.providers.push({ id: 'instagram', name: 'Instagram' });
     passport.use(
       new instagram.Strategy(
@@ -320,7 +370,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeLinkedIn(router: express.Router, provider: Provider): void {
+  private initializeLinkedIn(router: Router, provider: Provider): void {
     this.providers.push({ id: 'linkedin', name: 'LinkedIn' });
     passport.use(
       new linkedin.Strategy(

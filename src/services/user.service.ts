@@ -1,6 +1,7 @@
 import { Application } from 'express';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
+import { Repository } from 'typeorm';
 
 import { Comment, User } from '../db/entities';
 
@@ -20,6 +21,11 @@ export interface IUserService extends IService {
     url: string): Promise<User>;
   findUser(provider: string, providerId: string): Promise<User>;
   trustUser(userId: number): Promise<User>;
+}
+
+interface ISeed {
+  key: string;
+  value: Promise<number>
 }
 
 @injectable()
@@ -87,65 +93,126 @@ export class UserService implements IUserService {
   // private helper methods
   private async seed(): Promise<any> {
     const repository = this.databaseService.getUserRepository();
-    const searches = new Array<Promise<number>>();
+    //const searches = new Array<ISeed>();
 
-    searches.push(repository.count({ where: { administrator: true } }));
+    const seedingData = new Array<Promise<User>>();
     if (this.configurationService.environment.authentication.allowAnonymous) {
-      searches.push(
-        repository.count(
-          {
-            where: { provider: 'local', provider_id: 'Anonymous' }
+      seedingData.push(repository
+        .count({ where: { provider: 'local', provider_id: 'Anonymous'.toLowerCase() } })
+        .then(cnt => {
+          if (cnt === 0) {
+            console.info('creating \'Anonymous\'');
+            return this.createSeededUser(
+              repository,
+              'Anonymous',
+              false,
+              false,
+              false
+            );
           }
-        )
+        })
       );
     }
 
-    return Promise.all(searches)
-      .then((counts: Array<number>) => {
-        const newUsers = new Array<User>();
-        if (counts[0] === 0) {
-          console.info('creating an administrator');
-          newUsers.push(repository.create(
-            {
-              administrator: true,
-              blocked: false,
-              display_name: 'Administrator',
-              ip_address: '127.0.0.1',
-              name: 'Administrator',
-              provider: 'local',
-              provider_id: 'Administrator',
-              trusted: true,
-              user_agent: 'My2Cents-Server'
-            }
-          ));
-        } else {
-          console.info('found an administrator');
-        }
-        if (this.configurationService.environment.authentication.allowAnonymous) {
-          if (counts[1] === 0) {
-            newUsers.push(repository.create(
-              {
-                administrator: false,
-                blocked: false,
-                display_name: 'Anonymous user',
-                ip_address: '127.0.0.1',
-                name: 'Anonymous',
-                provider: 'local',
-                provider_id: 'Anonymous',
-                trusted: true,
-                user_agent: 'My2Cents-Server'
-              }
-            ));
-            console.info('creating an anonymous user');
-          } else {
-            console.info('found an anonymous user');
+    if (this.configurationService.environment.authentication.allowLocal) {
+      // seed the Administrator
+      seedingData.push(repository
+        .count({ where: { administrator: true } })
+        .then(cnt => {
+          if (cnt === 0) {
+            console.info('creating \'Administrator\'');
+            return this.createSeededUser(
+              repository,
+              'Administrator',
+              true,
+              true,
+              false
+            );
           }
-        } else {
-          console.info('no anonymous user needed');
-        }
-        if (newUsers.length > 0) {
-          repository.save(newUsers);
-        }
-      });
+        })
+      );
+
+      // seed 'Good Boy'
+      seedingData.push(repository
+        .count({ where: { provider: 'local', provider_id: 'Good boy'.toLowerCase() } })
+        .then(cnt => {
+          if (cnt === 0) {
+            console.info('creating \'Good boy\'');
+            return this.createSeededUser(
+              repository,
+              'Good boy',
+              false,
+              true,
+              false
+            );
+          }
+        })
+      );
+
+      // seed 'Naughty Girl'
+      seedingData.push(repository
+        .count({ where: { provider: 'local', provider_id: 'Naughty girl'.toLowerCase() } })
+        .then(cnt => {
+          if (cnt === 0) {
+            console.info('creating \'Naughty girl\'');
+            return this.createSeededUser(
+              repository,
+              'Naughty girl',
+              false,
+              false,
+              false
+            );
+          }
+        })
+      );
+
+      // seed 'Bad Boy'
+      seedingData.push(repository
+        .count({ where: { provider: 'local', provider_id: 'Bad boy'.toLowerCase() } })
+        .then(cnt => {
+          if (cnt === 0) {
+            console.info('creating \'Bad boy\'');
+            return this.createSeededUser(
+              repository,
+              'Bad boy',
+              false,
+              false,
+              true
+            );
+          }
+        })
+      );
+    }
+
+    return Promise.all(seedingData).then(newUsers => {
+      const toCreate = newUsers.filter(newUser => newUser);
+      if (toCreate.length > 0) {
+        console.debug('writing new users to database');
+        repository.save(toCreate);
+      } else {
+        console.info('User table already seeded');
+      }
+    });
+  }
+
+  private createSeededUser(
+    repository: Repository<User>,
+    name: string,
+    administrator: boolean,
+    trusted: boolean,
+    blocked: boolean
+  ): User {
+    return repository.create({
+      administrator: administrator,
+      blocked: blocked,
+      display_name: name,
+      ip_address: '127.0.0.1',
+      local_password: name.toLowerCase(),
+      name: name,
+      provider: 'local',
+      provider_id: name.toLowerCase(),
+      trusted: trusted,
+      user_agent: 'My2Cents-Server'
+    });
   }
 }

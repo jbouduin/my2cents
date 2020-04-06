@@ -1,5 +1,6 @@
 {
   "allowAnonymous": false,
+  "allowLocal": false,
   "providers": [
     {
       "name": "Twitter",

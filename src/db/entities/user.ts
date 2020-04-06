@@ -38,6 +38,9 @@ export class User extends BaseEntity {
   @Column('nvarchar', { length: 256, nullable: true })
   public url: string;
 
+  @Column('nvarchar', { length: 256, nullable: true })
+  public local_password: string;
+
   @OneToMany(type => Comment, comment => comment.user)
   public comments: Promise<Array<Comment>>;
 

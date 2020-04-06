@@ -29,7 +29,13 @@ export class Configuration {
   // constructor
   private constructor() {
     this.appPath = process.cwd();
-    this.environment = _.toLower(process.env.NODE_ENV) || 'development';
+    if (process.env.NODE_ENV) {
+      this.environment = process.env.NODE_ENV.trim().toLowerCase();
+    } else {
+      console.info('NODE_ENV not set. Presuming development.');
+      this.environment = 'development';
+    }
+
     this.launchedAt = new Date();
   }
 

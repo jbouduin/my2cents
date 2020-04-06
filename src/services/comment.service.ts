@@ -53,7 +53,7 @@ export class CommentService implements ICommentService {
       {
         comment,
         ip_address: ipAddress,
-        reply_to: replyTo,
+        reply_to: replyTo ? replyTo : null,
         slug,
         user,
         user_agent: userAgent

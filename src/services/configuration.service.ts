@@ -12,6 +12,7 @@ export interface IConfigurationService extends IService {
   environment: Environment;
 
   formatDate(rawDate: any): string;
+  getNodeEnvironment(): string;
   getPageUrl(): string;
   getMy2CentsDomain(): string;
   getMy2CentsUrl(): string;
@@ -34,6 +35,10 @@ export class ConfigurationService implements IConfigurationService {
       return m.format(this.application.dateFormat);
     }
     return m.fromNow();
+  }
+
+  public getNodeEnvironment(): string {
+    return this.configuration.environment;
   }
 
   public getPageUrl(): string {
