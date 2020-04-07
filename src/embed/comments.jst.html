@@ -38,17 +38,19 @@
     </section>
     <% if (data.user || data.replies[comment.id]) { %>
       <footer class="m2c-comment-footer">
-        <% if (comment.authorId && !comment.approved && !comment.authorTrusted) { %>
+        <% // if logged in, and not an administrator, comments that are not approved or from an untrusted user just get approved = false %>
+        <% if (!comment.approved) { %>
           <div class="m2c-comment-actions">
             <% if (data.user && data.user.admin) {
-            ['approve', 'reject'].forEach((action) => { %>
-              <button class="m2c-button m2c-admin-action m2c-<%= action %>" data-target="<%= comment.id %>" data-class="comment" data-action="<%= action %>">
-                <i class="icon m2c-icon-<%= action %>"></i>
-                <span>
-                  <%= action %>
-                </span>
-              </button>
-            <% }); } %>
+              ['approve', 'reject'].forEach((action) => { %>
+                <button class="m2c-button m2c-admin-action m2c-<%= action %>" data-target="<%= comment.id %>" data-class="comment" data-action="<%= action %>">
+                  <i class="icon m2c-icon-<%= action %>"></i>
+                  <span>
+                    <%= action %>
+                  </span>
+                </button>
+              <% });
+            } %>
             <span class="m2c-needs-admin-action">
               <%= data.user && data.user.admin ?
                 data.partials.AdminApproval :

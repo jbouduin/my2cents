@@ -77,7 +77,6 @@ export class CommentController implements ICommentController {
           const trfComment = new TrfComment();
           trfComment.id = comment.id;
           trfComment.replyTo = comment.reply_to;
-          trfComment.approved = comment.approved;
           trfComment.author = comment.user.display_name || comment.user.name;
           trfComment.authorUrl = this.getAuthorUrl(
             comment.user.url,
@@ -86,9 +85,11 @@ export class CommentController implements ICommentController {
           trfComment.comment = marked(comment.comment.trim());
           trfComment.created = this.configurationService.formatDate(comment.created);
           if (trfUser && trfUser.admin) {
+            trfComment.approved = comment.approved;
             trfComment.authorId = comment.user.id;
             trfComment.authorTrusted = comment.user.trusted;
           } else {
+            trfComment.approved = comment.approved || comment.user.trusted;
             trfComment.authorId = null;
             trfComment.authorTrusted = null;
           }
