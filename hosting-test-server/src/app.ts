@@ -29,13 +29,7 @@ class App {
       'http://localhost:3000',
       {
         proxyReqPathResolver: req => {
-          console.info(req.url);
-          const parts = req.url.split('?');
-          const queryString = parts[1];
-          const updatedPath = parts[0].replace('/my2cents/', '/');
-          const ret = updatedPath + (queryString ? '?' + queryString : '');
-          console.info(`forwarding to ${ret}`);
-          return ret;
+          console.info(`forwarding ${req.url} to ${this.host}`);
         }
       }
     );
