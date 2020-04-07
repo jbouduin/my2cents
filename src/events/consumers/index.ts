@@ -1,4 +1,3 @@
-export * from './callback-parameter';
 export * from './consumer';
 export * from './push.consumer';
 export * from './send-mail.consumer';

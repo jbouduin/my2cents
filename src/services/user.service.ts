@@ -6,9 +6,9 @@ import { Repository } from 'typeorm';
 import { Comment, User } from '../db/entities';
 import { IUserSeeder } from '../db/seeders';
 
-import { IConfigurationService} from './';
-import { IDatabaseService } from './';
-import { IService } from './';
+import { IConfigurationService} from './configuration.service';
+import { IDatabaseService } from './database.service';
+import { IService } from './service';
 
 import SEEDERTYPES from '../db/seeders/seeder.types';
 import SERVICETYPES from './service.types';

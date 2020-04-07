@@ -4,8 +4,8 @@ import * as express from 'express';
 import { inject, injectable } from 'inversify';
 
 import { EventType, IEvent } from '../events';
-import { CallbackParameter } from '../events/consumers';
 import { IPushConsumer, ISendMailConsumer, ISlackConsumer, IWriteLogConsumer } from '../events/consumers';
+import { CallbackParameter } from '../objects/events/callback-parameter';
 
 import { IConfigurationService} from './configuration.service';
 import { IService } from './service';

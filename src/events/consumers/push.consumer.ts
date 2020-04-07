@@ -12,9 +12,10 @@ import {
   ISettingService,
   ISubscriptionService } from '../../services';
 
+import { CallbackParameter } from '../../objects/events/callback-parameter';
+
 import { EventType, IEvent } from '..';
 
-import { CallbackParameter } from './callback-parameter';
 import { ConsumerCallback, IConsumer } from './consumer';
 
 import SETTINGKEYS from '../../objects/settings/setting.keys';

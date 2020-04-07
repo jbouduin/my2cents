@@ -4,11 +4,11 @@ import 'reflect-metadata';
 
 import { Comment } from '../../db/entities';
 import { MailProtocol } from '../../objects/configuration';
+import { CallbackParameter } from '../../objects/events/callback-parameter';
 import { IConfigurationService } from '../../services';
 
 import { EventType, IEvent } from '..';
 
-import { CallbackParameter } from './callback-parameter';
 import { ConsumerCallback, IConsumer } from './consumer';
 
 import SERVICETYPES from '../../services/service.types';

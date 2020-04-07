@@ -2,11 +2,11 @@ import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 
 import { Comment, User } from '../../db/entities';
+import { CallbackParameter } from '../../objects/events/callback-parameter';
 import { IConfigurationService } from '../../services';
 
 import { EventType, IEvent } from '..';
 
-import { CallbackParameter } from './callback-parameter';
 import { ConsumerCallback, IConsumer } from './consumer';
 
 import SERVICETYPES from '../../services/service.types';
