@@ -12,9 +12,7 @@ export interface IEvent {
 
 export class Event<T> implements IEvent {
 
-  protected constructor(private eventType: EventType, private data: T) {
-    this.eventType = eventType;
-  }
+  protected constructor(private eventType: EventType, private data: T) { }
 
   public getEventType(): EventType {
     return this.eventType;

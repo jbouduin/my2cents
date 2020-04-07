@@ -5,6 +5,8 @@ import { Comment, User } from '../../db/entities';
 import { IConfigurationService } from '../../services';
 
 import { EventType, IEvent } from '..';
+
+import { CallbackParameter } from './callback-parameter';
 import { ConsumerCallback, IConsumer } from './consumer';
 
 import SERVICETYPES from '../../services/service.types';
@@ -27,7 +29,8 @@ export class WriteLogConsumer implements IWriteLogConsumer {
   }
 
   // callback method
-  private CommentPostedCallBack(comment: Comment): void {
+  private CommentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
+    const comment = callbackParameter.data;
     console.info(`event: ${EventType.COMMENTPOSTED} on slug '${comment.slug}'' by '${comment.user.display_name || comment.user.name}''`);
   }
 }

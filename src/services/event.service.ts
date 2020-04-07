@@ -4,6 +4,7 @@ import * as express from 'express';
 import { inject, injectable } from 'inversify';
 
 import { EventType, IEvent } from '../events';
+import { CallbackParameter } from '../events/consumers';
 import { IPushConsumer, ISendMailConsumer, ISlackConsumer, IWriteLogConsumer } from '../events/consumers';
 
 import { IConfigurationService} from './configuration.service';
@@ -19,6 +20,7 @@ export interface IEventService extends IService {
 @injectable()
 export class EventService implements IEventService {
 
+  // private properties
   private emitter: EventEmitter;
 
   // constructor
@@ -31,6 +33,7 @@ export class EventService implements IEventService {
 
   // interface members
   public async initialize(app: express.Application): Promise<any> {
+    console.debug('Initializing EventService');
     this.emitter = new EventEmitter();
     this.pushConsumer.registerConsumers().forEach(consumer => this.emitter.on(consumer[0], consumer[1]));
     this.sendMailConsumer.registerConsumers().forEach(consumer => this.emitter.on(consumer[0], consumer[1]));
@@ -40,6 +43,35 @@ export class EventService implements IEventService {
   }
 
   public postEvent(event: IEvent): void {
-    this.emitter.emit(event.getEventType(), event.getData());
+    const eventType = event.getEventType();
+    const eventData = event.getData();
+    let newParameter;
+
+    switch (eventType) {
+      case EventType.COMMENTAPPROVED:
+      case EventType.COMMENTPOSTED:
+      case EventType.COMMENTREJECTED: {
+        newParameter = new CallbackParameter<Comment>(
+          this.pushConsumer,
+          this.sendMailConsumer,
+          this.slackConsumer,
+          this.writeLogConsumer,
+          eventData as Comment
+        );
+        break;
+      }
+      default: {
+        newParameter = new CallbackParameter<any>(
+          this.pushConsumer,
+          this.sendMailConsumer,
+          this.slackConsumer,
+          this.writeLogConsumer,
+          eventData
+        );
+        break;
+      }
+    }
+
+    this.emitter.emit(eventType, newParameter);
   }
 }

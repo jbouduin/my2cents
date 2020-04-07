@@ -8,6 +8,7 @@ import { IConfigurationService } from '../../services';
 
 import { EventType, IEvent } from '..';
 
+import { CallbackParameter } from './callback-parameter';
 import { ConsumerCallback, IConsumer } from './consumer';
 
 import SERVICETYPES from '../../services/service.types';
@@ -31,10 +32,10 @@ export class SendMailConsumer implements ISendMailConsumer {
   }
 
   // callback method
-  private CommentPostedCallBack(comment: Comment): void {
+  private CommentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     try {
+      const comment = callbackParameter.data;
       const user = comment.user.display_name || comment.user.name;
-
       const to = `My2Cents Admin <${this.configurationService.environment.mail.to}>`;
       const from = `${user} <${this.configurationService.environment.mail.from}>`;
       const subject = `New comment on your post ${comment.slug}`;

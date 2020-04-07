@@ -14,12 +14,17 @@ import {
 
 import { EventType, IEvent } from '..';
 
+import { CallbackParameter } from './callback-parameter';
 import { ConsumerCallback, IConsumer } from './consumer';
 
 import SETTINGKEYS from '../../services/settings/setting.keys';
 import SERVICETYPES from '../../services/service.types';
 
-export interface IPushConsumer extends IConsumer { }
+export interface IPushConsumer extends IConsumer {
+  // TODO these two methods have to be made threadsafe
+  addToAwaitingModeration(comment: Comment): void;
+  removeFromAwaitingModeration(comment: Comment): void;
+}
 
 type Notifier = (msg, callback) => void;
 
@@ -27,8 +32,10 @@ type Notifier = (msg, callback) => void;
 export class PushConsumer implements IPushConsumer {
 
   // private properties
-  private awaitingModeration: Array<Comment>;
   private notifiers: Array<Notifier>;
+
+  // public properties
+  public awaitingModeration: Array<Comment>;
 
   // constructor
   public constructor(
@@ -38,6 +45,11 @@ export class PushConsumer implements IPushConsumer {
     @inject(SERVICETYPES.SubscriptionService) private subscriptionService: ISubscriptionService) { }
 
   // interface members
+  public addToAwaitingModeration(comment: Comment): void {
+    this.awaitingModeration.push(comment)
+    console.debug(`awaitingModeration queue contains ${this.awaitingModeration.length} entries`);
+  }
+
   public registerConsumers(): Array<[EventType, ConsumerCallback]> {
     const result = new Array<[EventType, ConsumerCallback]>();
 
@@ -47,7 +59,6 @@ export class PushConsumer implements IPushConsumer {
     }
 
     if (this.notifiers.length) {
-
       result.push([EventType.COMMENTAPPROVED, this.CommentApprovedOrRejectedCallBack]);
       result.push([EventType.COMMENTPOSTED, this.CommentPostedCallBack]);
       result.push([EventType.COMMENTREJECTED, this.CommentApprovedOrRejectedCallBack]);
@@ -61,20 +72,25 @@ export class PushConsumer implements IPushConsumer {
     return result;
   }
 
+  public removeFromAwaitingModeration(comment: Comment): void {
+    _.remove(this.awaitingModeration, awaiting => awaiting.id === comment.id);
+    console.debug(`awaitingModeration queue contains ${this.awaitingModeration.length} entries`);
+  }
+
   // callback methods
-  private CommentPostedCallBack(comment: Comment): void {
+  private CommentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     try {
-      if (!comment.user.trusted) {
-        this.awaitingModeration.push(comment);
+      if (!callbackParameter.data.user.trusted) {
+        callbackParameter.pushConsumer.addToAwaitingModeration(callbackParameter.data);
       }
     } catch (error) {
       console.error('Error queuing comment for push notification:', error);
     }
   }
 
-  private CommentApprovedOrRejectedCallBack(comment: Comment): void {
+  private CommentApprovedOrRejectedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     try {
-      _.remove(this.awaitingModeration, awaiting => awaiting.id === comment.id);
+      callbackParameter.pushConsumer.removeFromAwaitingModeration(callbackParameter.data);
     } catch (error) {
       console.error('Error un-queuing comment for push notification:', error);
     }
@@ -88,7 +104,9 @@ export class PushConsumer implements IPushConsumer {
       .getCommentsForModeration()
       .then(comments => {
         this.awaitingModeration = comments;
+        console.debug(`awaitingModeration queue contains ${this.awaitingModeration.length} entries`)
       });
+
     if (this.configurationService.environment.notification.webpush) {
       this.initializeWebPush();
     }
@@ -100,7 +118,7 @@ export class PushConsumer implements IPushConsumer {
   private initializePushover(): void {
     if (this.configurationService.environment.notification.pushover.appToken &&
       this.configurationService.environment.notification.pushover.userKey) {
-
+      console.debug('Initializing Pushover');
       const pusher = new pushover({
           token: this.configurationService.environment.notification.pushover.appToken,
           user: this.configurationService.environment.notification.pushover.userKey
@@ -121,6 +139,7 @@ export class PushConsumer implements IPushConsumer {
     if (this.configurationService.environment.notification.webpush.publicKey &&
       this.configurationService.environment.notification.webpush.privateKey) {
       try {
+        console.debug('Initializing WebPush');
         webpush.setVapidDetails(
           this.configurationService.getMy2CentsUrl(),
           this.configurationService.environment.notification.webpush.publicKey,
