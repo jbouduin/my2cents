@@ -17,7 +17,7 @@ import { EventType, IEvent } from '..';
 import { CallbackParameter } from './callback-parameter';
 import { ConsumerCallback, IConsumer } from './consumer';
 
-import SETTINGKEYS from '../../services/settings/setting.keys';
+import SETTINGKEYS from '../../objects/settings/setting.keys';
 import SERVICETYPES from '../../services/service.types';
 
 export interface IPushConsumer extends IConsumer {

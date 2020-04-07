@@ -3,14 +3,13 @@ import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 
 import { Setting } from '../db/entities';
+import { SettingNotification } from '../objects/settings';
 
 import { IDatabaseService } from './database.service';
 import { IService } from './service';
 
-import { SettingNotification } from './settings';
-
+import SETTINGKEYS from '../objects/settings/setting.keys';
 import SERVICETYPES from './service.types';
-import SETTINGKEYS from './settings/setting.keys';
 
 export interface ISettingService extends IService {
   getSetting(key: string): Promise<Setting>;
