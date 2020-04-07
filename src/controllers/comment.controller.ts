@@ -7,7 +7,8 @@ import * as rss from 'rss';
 
 import { CommentApprovedEvent, CommentPostedEvent, CommentRejectedEvent } from '../events';
 import { IAuthenticationService, ICommentService, IConfigurationService, IEventService } from '../services';
-import { TrfComment, TrfUser } from '../transfer';
+
+import { DtoComment, DtoUser } from '../objects/data-transfer';
 
 import SERVICETYPES from '../services/service.types';
 
@@ -61,49 +62,49 @@ export class CommentController implements ICommentController {
   public getComments(request: Request, response: Response): void {
     const slug = request.params.slug;
 
-    let trfUser: TrfUser = null;
+    let dtoUser: DtoUser = null;
     let userId = 0;
     if (request.session && request.session.passport && request.session.passport.user) {
-      trfUser = new TrfUser();
-      trfUser.name = request.session.passport.user.display_name || request.session.passport.user.name;
-      trfUser.admin = request.session.passport.user.administrator;
+      dtoUser = new DtoUser();
+      dtoUser.name = request.session.passport.user.display_name || request.session.passport.user.name;
+      dtoUser.admin = request.session.passport.user.administrator;
       userId = request.session.passport.user.id;
     }
 
     this.commentService
-      .getCommentsBySlug(slug, userId, trfUser && trfUser.admin)
+      .getCommentsBySlug(slug, userId, dtoUser && dtoUser.admin)
       .then(comments => {
-        const trfComments = comments.map(comment => {
-          const trfComment = new TrfComment();
-          trfComment.id = comment.id;
-          trfComment.replyTo = comment.reply_to;
-          trfComment.author = comment.user.display_name || comment.user.name;
-          trfComment.authorUrl = this.getAuthorUrl(
+        const dtoComments = comments.map(comment => {
+          const dtoComment = new DtoComment();
+          dtoComment.id = comment.id;
+          dtoComment.replyTo = comment.reply_to;
+          dtoComment.author = comment.user.display_name || comment.user.name;
+          dtoComment.authorUrl = this.getAuthorUrl(
             comment.user.url,
             comment.user.provider,
             comment.user.name);
-          trfComment.comment = marked(comment.comment.trim());
-          trfComment.created = this.configurationService.formatDate(comment.created);
-          if (trfUser && trfUser.admin) {
-            trfComment.approved = comment.approved;
-            trfComment.authorId = comment.user.id;
-            trfComment.authorTrusted = comment.user.trusted;
+          dtoComment.comment = marked(comment.comment.trim());
+          dtoComment.created = this.configurationService.formatDate(comment.created);
+          if (dtoUser && dtoUser.admin) {
+            dtoComment.approved = comment.approved;
+            dtoComment.authorId = comment.user.id;
+            dtoComment.authorTrusted = comment.user.trusted;
           } else {
-            trfComment.approved = comment.approved || comment.user.trusted;
-            trfComment.authorId = null;
-            trfComment.authorTrusted = null;
+            dtoComment.approved = comment.approved || comment.user.trusted;
+            dtoComment.authorId = null;
+            dtoComment.authorTrusted = null;
           }
-          return trfComment;
+          return dtoComment;
         });
 
         response.send(
           {
-            auth: trfUser ?
+            auth: dtoUser ?
               null :
               this.authenticationService.getProviders(),
-            comments: trfComments,
+            comments: dtoComments,
             slug,
-            user: trfUser
+            user: dtoUser
           }
         );
       });

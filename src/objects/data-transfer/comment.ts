@@ -1,4 +1,4 @@
-export class TrfComment {
+export class DtoComment {
   public id: number;
   public replyTo: number;
   public comment: string;
