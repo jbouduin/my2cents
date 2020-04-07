@@ -30,6 +30,7 @@ class App {
       {
         proxyReqPathResolver: req => {
           console.info(`forwarding ${req.url} to ${this.host}`);
+          return req.url;
         }
       }
     );
