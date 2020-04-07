@@ -1,5 +1,5 @@
-import { IEventService} from '../../services';
-import { EventType } from '..';
+import { IEventService} from '../services';
+import { EventType } from '../objects/events';
 
 export type ConsumerCallback = (event: any) => void;
 

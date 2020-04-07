@@ -2,16 +2,14 @@ import { inject, injectable } from 'inversify';
 import * as nodemailer from 'nodemailer';
 import 'reflect-metadata';
 
-import { Comment } from '../../db/entities';
-import { MailProtocol } from '../../objects/configuration';
-import { CallbackParameter } from '../../objects/events/callback-parameter';
-import { IConfigurationService } from '../../services';
-
-import { EventType, IEvent } from '..';
+import { Comment } from '../db/entities';
+import { MailProtocol } from '../objects/configuration';
+import { CallbackParameter, EventType, IEvent } from '../objects/events';
+import { IConfigurationService } from '../services';
 
 import { ConsumerCallback, IConsumer } from './consumer';
 
-import SERVICETYPES from '../../services/service.types';
+import SERVICETYPES from '../services/service.types';
 
 export interface ISendMailConsumer extends IConsumer { }
 

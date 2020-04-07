@@ -1,4 +1,4 @@
-import { Comment } from '../db/entities';
+import { Comment } from '../../db/entities';
 import { Event, EventType } from './event';
 
 export class CommentApprovedEvent extends Event<Comment> {

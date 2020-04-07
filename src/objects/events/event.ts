@@ -18,7 +18,7 @@ export class Event<T> implements IEvent {
     return this.eventType;
   }
 
-  public getData(): any {
+  public getData(): T {
     return this.data;
   }
 }

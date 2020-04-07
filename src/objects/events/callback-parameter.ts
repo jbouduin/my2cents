@@ -1,4 +1,4 @@
-import { IPushConsumer, ISendMailConsumer, ISlackConsumer, IWriteLogConsumer } from '../../events/consumers';
+import { IPushConsumer, ISendMailConsumer, ISlackConsumer, IWriteLogConsumer } from '../../consumers';
 
 export class CallbackParameter<T> {
   // constructor

@@ -5,21 +5,18 @@ import 'reflect-metadata';
 import * as request from 'request';
 import * as webpush from 'web-push';
 
-import { Comment } from '../../db/entities';
+import { Comment } from '../db/entities';
+import { CallbackParameter, EventType, IEvent } from '../objects/events';
 import {
   ICommentService,
   IConfigurationService,
   ISettingService,
-  ISubscriptionService } from '../../services';
-
-import { CallbackParameter } from '../../objects/events/callback-parameter';
-
-import { EventType, IEvent } from '..';
+  ISubscriptionService } from '../services';
 
 import { ConsumerCallback, IConsumer } from './consumer';
 
-import SETTINGKEYS from '../../objects/settings/setting.keys';
-import SERVICETYPES from '../../services/service.types';
+import SETTINGKEYS from '../objects/settings/setting.keys';
+import SERVICETYPES from '../services/service.types';
 
 export interface IPushConsumer extends IConsumer {
   // TODO these two methods have to be made threadsafe

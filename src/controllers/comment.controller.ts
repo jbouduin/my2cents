@@ -5,7 +5,7 @@ import * as marked from 'marked';
 import 'reflect-metadata';
 import * as rss from 'rss';
 
-import { CommentApprovedEvent, CommentPostedEvent, CommentRejectedEvent } from '../events';
+import { CommentApprovedEvent, CommentPostedEvent, CommentRejectedEvent } from '../objects/events';
 import { IAuthenticationService, ICommentService, IConfigurationService, IEventService } from '../services';
 
 import { DtoComment, DtoUser } from '../objects/data-transfer';

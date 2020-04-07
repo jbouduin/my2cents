@@ -1,17 +1,16 @@
 import { Container } from 'inversify';
 
+import CONSUMERTYPES from './consumers/consumer.types';
 import CONTROLLERTYPES from './controllers/controller.types';
-import CONSUMERTYPES from './events/consumers/consumer.types';
 import SEEDERTYPES from './db/seeders/seeder.types';
 import SERVICETYPES from './services/service.types';
 
 /* tslint:disable ordered-imports */
 // consumers
-
-import { IPushConsumer, PushConsumer } from './events/consumers';
-import { ISendMailConsumer, SendMailConsumer } from './events/consumers';
-import { ISlackConsumer, SlackConsumer } from './events/consumers';
-import { IWriteLogConsumer, WriteLogConsumer } from './events/consumers';
+import { IPushConsumer, PushConsumer } from './consumers';
+import { ISendMailConsumer, SendMailConsumer } from './consumers';
+import { ISlackConsumer, SlackConsumer } from './consumers';
+import { IWriteLogConsumer, WriteLogConsumer } from './consumers';
 
 // controllers
 import { ICommentController, CommentController } from './controllers';

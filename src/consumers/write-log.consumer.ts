@@ -1,15 +1,13 @@
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 
-import { Comment, User } from '../../db/entities';
-import { CallbackParameter } from '../../objects/events/callback-parameter';
-import { IConfigurationService } from '../../services';
-
-import { EventType, IEvent } from '..';
+import { Comment, User } from '../db/entities';
+import { CallbackParameter, EventType, IEvent } from '../objects/events';
+import { IConfigurationService } from '../services';
 
 import { ConsumerCallback, IConsumer } from './consumer';
 
-import SERVICETYPES from '../../services/service.types';
+import SERVICETYPES from '../services/service.types';
 
 export interface IWriteLogConsumer extends IConsumer { }
 

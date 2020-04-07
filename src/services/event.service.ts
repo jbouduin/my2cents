@@ -1,16 +1,14 @@
-import { EventEmitter } from 'events';
 import * as express from 'express';
-
+import { EventEmitter } from 'events';
 import { inject, injectable } from 'inversify';
 
-import { EventType, IEvent } from '../events';
-import { IPushConsumer, ISendMailConsumer, ISlackConsumer, IWriteLogConsumer } from '../events/consumers';
-import { CallbackParameter } from '../objects/events/callback-parameter';
+import { IPushConsumer, ISendMailConsumer, ISlackConsumer, IWriteLogConsumer } from '../consumers';
+import { CallbackParameter, EventType, IEvent } from '../objects/events';
 
 import { IConfigurationService} from './configuration.service';
 import { IService } from './service';
 
-import CONSUMERTYPES from '../events/consumers/consumer.types';
+import CONSUMERTYPES from '../consumers/consumer.types';
 import SERVICETYPES from './service.types';
 
 export interface IEventService extends IService {
