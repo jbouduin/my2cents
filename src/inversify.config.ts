@@ -2,6 +2,7 @@ import { Container } from 'inversify';
 
 import CONTROLLERTYPES from './controllers/controller.types';
 import CONSUMERTYPES from './events/consumers/consumer.types';
+import SEEDERTYPES from './db/seeders/seeder.types';
 import SERVICETYPES from './services/service.types';
 
 /* tslint:disable ordered-imports */
@@ -31,6 +32,10 @@ import { ISettingService, SettingService } from './services';
 import { ISubscriptionService, SubscriptionService } from './services';
 import { IUserService, UserService } from './services';
 
+// seeders
+import { ICommentSeeder, CommentSeeder } from './db/seeders';
+import { IUserSeeder, UserSeeder } from './db/seeders';
+
 /* tslint:enable ordered-imports */
 const container = new Container();
 
@@ -58,4 +63,9 @@ container.bind<IRouteService>(SERVICETYPES.RouteService).to(RouteService).inSing
 container.bind<ISettingService>(SERVICETYPES.SettingService).to(SettingService);
 container.bind<ISubscriptionService>(SERVICETYPES.SubscriptionService).to(SubscriptionService);
 container.bind<IUserService>(SERVICETYPES.UserService).to(UserService);
+
+// seeders
+container.bind<ICommentSeeder>(SEEDERTYPES.CommentSeeder).to(CommentSeeder);
+container.bind<IUserSeeder>(SEEDERTYPES.UserSeeder).to(UserSeeder);
+
 export default container;

@@ -27,8 +27,28 @@
       <div class="site-body-wrapper outer">
         <div class="inner">
           <div class="site-body">
-            <p>This is the content of the page.</p>
-            <p>Below it, you can start commenting.</p>
+            <p>After initial seeding or re-seeding the database, it contains the following comments for this page:<p>
+            <ul>
+              <li>a comment, non-approved, non-rejected, created by 'Administrator'</li>
+              <li>a comment, non-approved, non-rejected, created by 'Naughty girl'</li>
+              <li>a comment, non-approved, rejected, created by 'Naughty girl'</li>
+              <li>a comment, approved, non-rejected, created by 'Naughty girl'</li>
+                <ul>
+                  <li>a reply, non-approved, non-rejected, created by 'Good boy'</li>
+                    <ul>
+                      <li>a reply, non-approved, non-rejected, created by 'Naughty girl'</li>
+                      <li>a reply, non-approved, non-rejected, created by 'Good boy'</li>
+                    </ul>
+                  </li>
+                </ul>
+              <li>a comment, non-approved, non-rejected, created by 'Good boy'
+                <ul>
+                  <li>a reply, approved, non-rejected, created by 'Naughty girl'
+                  <li>a reply, non-approved, rejected, created by 'Naughty girl'
+                </ul>
+              </li>
+            </ul>
+            <h3>!!! Which of those are displayed, depends on your login !!!</h3>
           </div>
           <div id="my-comments"></div>
         </div>

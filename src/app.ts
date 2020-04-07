@@ -10,6 +10,7 @@ import container from './inversify.config';
 import {
   IAuthenticationService,
   IConfigurationService,
+  ICommentService,
   IDatabaseService,
   IEventService,
   IRouteService,
@@ -48,7 +49,8 @@ class App {
             this.config();
             return Promise.all([
               container.get<IEventService>(SERVICETYPES.EventService).initialize(this.app),
-              container.get<IUserService>(SERVICETYPES.UserService).initialize(this.app),
+              container.get<IUserService>(SERVICETYPES.UserService).initialize(this.app)
+                .then(() => container.get<ICommentService>(SERVICETYPES.CommentService).initialize(this.app)),
               container.get<ISettingService>(SERVICETYPES.SettingService).initialize(this.app),
               container.get<IAuthenticationService>(SERVICETYPES.AuthenticationService).initialize(this.app)
             ]);

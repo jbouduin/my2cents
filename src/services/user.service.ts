@@ -4,12 +4,14 @@ import 'reflect-metadata';
 import { Repository } from 'typeorm';
 
 import { Comment, User } from '../db/entities';
+import { IUserSeeder } from '../db/seeders';
 
-import { IConfigurationService} from './configuration.service';
-import { IDatabaseService } from './database.service';
-import { IService } from './service';
+import { IConfigurationService} from './';
+import { IDatabaseService } from './';
+import { IService } from './';
 
-import SERVICETYPES from '../services/service.types';
+import SEEDERTYPES from '../db/seeders/seeder.types';
+import SERVICETYPES from './service.types';
 
 export interface IUserService extends IService {
   blockUser(userId: number): Promise<User>;
@@ -23,18 +25,14 @@ export interface IUserService extends IService {
   trustUser(userId: number): Promise<User>;
 }
 
-interface ISeed {
-  key: string;
-  value: Promise<number>
-}
-
 @injectable()
 export class UserService implements IUserService {
 
   // constructor
   public constructor(
     @inject(SERVICETYPES.ConfigurationService) private configurationService: IConfigurationService,
-    @inject(SERVICETYPES.DatabaseService) private databaseService: IDatabaseService) { }
+    @inject(SERVICETYPES.DatabaseService) private databaseService: IDatabaseService,
+    @inject(SEEDERTYPES.UserSeeder) private userSeeder: IUserSeeder) { }
 
   // interface members
   public async blockUser(userId: number): Promise<User> {
@@ -46,7 +44,8 @@ export class UserService implements IUserService {
   }
 
   public async initialize(app: Application): Promise<any> {
-    this.seed();
+    console.debug('initializing UserService');
+    return this.userSeeder.seed();
   }
 
   public async createUser(
@@ -90,128 +89,4 @@ export class UserService implements IUserService {
     return userRepository.save(user);
   }
 
-  // private helper methods
-  private async seed(): Promise<any> {
-    const repository = this.databaseService.getUserRepository();
-
-    const seedingData = new Array<Promise<User>>();
-    if (this.configurationService.environment.authentication.allowAnonymous) {
-      seedingData.push(repository
-        .count({ where: { provider: 'local', provider_id: 'Anonymous'.toLowerCase() } })
-        .then(cnt => {
-          if (cnt === 0) {
-            console.info('creating \'Anonymous\'');
-            return this.createSeededUser(
-              repository,
-              'Anonymous',
-              false,
-              false,
-              false
-            );
-          }
-        })
-      );
-    }
-
-    if (this.configurationService.environment.authentication.allowLocal) {
-      // seed the Administrator
-      seedingData.push(repository
-        .count({ where: { administrator: true } })
-        .then(cnt => {
-          if (cnt === 0) {
-            console.info('creating \'Administrator\'');
-            return this.createSeededUser(
-              repository,
-              'Administrator',
-              true,
-              true,
-              false
-            );
-          }
-        })
-      );
-
-      // seed 'Good Boy'
-      seedingData.push(repository
-        .count({ where: { provider: 'local', provider_id: 'Good boy'.toLowerCase() } })
-        .then(cnt => {
-          if (cnt === 0) {
-            console.info('creating \'Good boy\'');
-            return this.createSeededUser(
-              repository,
-              'Good boy',
-              false,
-              true,
-              false
-            );
-          }
-        })
-      );
-
-      // seed 'Naughty Girl'
-      seedingData.push(repository
-        .count({ where: { provider: 'local', provider_id: 'Naughty girl'.toLowerCase() } })
-        .then(cnt => {
-          if (cnt === 0) {
-            console.info('creating \'Naughty girl\'');
-            return this.createSeededUser(
-              repository,
-              'Naughty girl',
-              false,
-              false,
-              false
-            );
-          }
-        })
-      );
-
-      // seed 'Bad Boy'
-      seedingData.push(repository
-        .count({ where: { provider: 'local', provider_id: 'Bad boy'.toLowerCase() } })
-        .then(cnt => {
-          if (cnt === 0) {
-            console.info('creating \'Bad boy\'');
-            return this.createSeededUser(
-              repository,
-              'Bad boy',
-              false,
-              false,
-              true
-            );
-          }
-        })
-      );
-    }
-
-    return Promise.all(seedingData).then(newUsers => {
-      const toCreate = newUsers.filter(newUser => newUser);
-      if (toCreate.length > 0) {
-        console.debug('writing new users to database');
-        repository.save(toCreate);
-      } else {
-        console.info('User table already seeded');
-      }
-    });
-  }
-
-  private createSeededUser(
-    repository: Repository<User>,
-    name: string,
-    administrator: boolean,
-    trusted: boolean,
-    blocked: boolean
-  ): User {
-    return repository.create({
-      administrator,
-      blocked,
-      display_name: name,
-      ip_address: '127.0.0.1',
-      local_password: name.toLowerCase(),
-      name,
-      provider: 'local',
-      provider_id: name.toLowerCase(),
-      trusted,
-      user_agent: 'My2Cents-Server'
-    });
-  }
 }

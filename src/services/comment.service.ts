@@ -4,10 +4,12 @@ import 'reflect-metadata';
 import { Brackets, createQueryBuilder } from 'typeorm';
 
 import { Comment, User } from '../db/entities';
+import { ICommentSeeder } from '../db/seeders';
 
 import { IDatabaseService } from './database.service';
 import { IService } from './service';
 
+import SEEDERTYPES from '../db/seeders/seeder.types';
 import SERVICETYPES from './service.types';
 
 export interface ICommentService extends IService {
@@ -30,7 +32,8 @@ export class CommentService implements ICommentService {
 
   // constructor
   public constructor(
-    @inject(SERVICETYPES.DatabaseService) private databaseService: IDatabaseService) { }
+    @inject(SERVICETYPES.DatabaseService) private databaseService: IDatabaseService,
+    @inject(SEEDERTYPES.CommentSeeder) private commentSeeder: ICommentSeeder) { }
 
   // interface members
   public async approveComment(commentId: number): Promise<Comment> {
@@ -49,7 +52,7 @@ export class CommentService implements ICommentService {
     ipAddress: string,
     userAgent: string): Promise<Comment> {
     const commentRepository = this.databaseService.getCommentRepository();
-    const newComment = await commentRepository.create(
+    const newComment = commentRepository.create(
       {
         comment,
         ip_address: ipAddress,
@@ -148,7 +151,8 @@ export class CommentService implements ICommentService {
   }
 
   public async initialize(app: Application): Promise<any> {
-    return Promise.resolve(true);
+    console.debug('Initializing CommentService');
+    return this.commentSeeder.seed();
   }
 
   public async rejectComment(commentId: number): Promise<Comment> {
