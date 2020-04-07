@@ -62,14 +62,16 @@ export class CommentController implements ICommentController {
     const slug = request.params.slug;
 
     let trfUser: TrfUser = null;
+    let userId = 0;
     if (request.session && request.session.passport && request.session.passport.user) {
       trfUser = new TrfUser();
       trfUser.name = request.session.passport.user.display_name || request.session.passport.user.name;
       trfUser.admin = request.session.passport.user.administrator;
+      userId = request.session.passport.user.id;
     }
 
     this.commentService
-      .getCommentsBySlug(slug, 1, trfUser && trfUser.admin)
+      .getCommentsBySlug(slug, userId, trfUser && trfUser.admin)
       .then(comments => {
         const trfComments = comments.map(comment => {
           const trfComment = new TrfComment();
