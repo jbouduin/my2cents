@@ -3,7 +3,7 @@ export enum TargetType {
   SESSIONS = 'sessions'
 }
 
-export class Target {
+export class CfgTarget {
   public connectionName: string;
   public targetType: TargetType;
 }

@@ -1,5 +1,3 @@
-export * from './configuration';
-
 export * from './application/application';
 
 export * from './authentication/authentication';

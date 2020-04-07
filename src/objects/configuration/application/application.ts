@@ -1,4 +1,4 @@
-export class Application {
+export class CfgApplication {
   public dateFormat: string;
   public secret: string;
 }

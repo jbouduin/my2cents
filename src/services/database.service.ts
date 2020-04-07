@@ -5,8 +5,8 @@ import { createConnection, getConnection, getRepository } from 'typeorm';
 import { Connection as TypeOrmConnection } from 'typeorm';
 import { Repository } from 'typeorm';
 
-import { Connection, ConnectionType, TargetType } from '../configuration';
 import { Comment, Session, Setting, Subscription, User } from '../db/entities';
+import { CfgConnection, ConnectionType, TargetType } from '../objects/configuration';
 
 import { IConfigurationService} from './configuration.service';
 import { IService } from './service';
@@ -100,7 +100,7 @@ export class DatabaseService implements IDatabaseService {
     return this.createConnection(toConnect, entities);
   }
 
-  private async createConnection(connection: Connection, entities: Array<any>): Promise<TypeOrmConnection> {
+  private async createConnection(connection: CfgConnection, entities: Array<any>): Promise<TypeOrmConnection> {
 
     switch (connection.connectionType) {
       case ConnectionType.MYSQL: {
@@ -115,7 +115,7 @@ export class DatabaseService implements IDatabaseService {
     }
   }
 
-  private async createSqliteConnection(connection: Connection, entities: Array<any>): Promise<TypeOrmConnection> {
+  private async createSqliteConnection(connection: CfgConnection, entities: Array<any>): Promise<TypeOrmConnection> {
     return createConnection({
         database: connection.databaseName,
         entities,
@@ -125,7 +125,7 @@ export class DatabaseService implements IDatabaseService {
     });
   }
 
-  private async createMySqlConnection(connection: Connection, entities: Array<any>): Promise<TypeOrmConnection> {
+  private async createMySqlConnection(connection: CfgConnection, entities: Array<any>): Promise<TypeOrmConnection> {
     return createConnection({
         database: connection.databaseName,
         entities,
@@ -139,7 +139,7 @@ export class DatabaseService implements IDatabaseService {
     });
   }
 
-  private async createPostgresConnection(connection: Connection, entities: Array<any>): Promise<TypeOrmConnection> {
+  private async createPostgresConnection(connection: CfgConnection, entities: Array<any>): Promise<TypeOrmConnection> {
     return createConnection({
         database: connection.databaseName,
         entities,

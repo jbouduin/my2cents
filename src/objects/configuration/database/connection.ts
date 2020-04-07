@@ -3,7 +3,8 @@ export enum ConnectionType {
   POSTGRES = 'postgres',
   SQLITE = 'sqlite'
 }
-export class Connection {
+
+export class CfgConnection {
   public connectionName: string;
   public databaseName: string;
   public connectionType: string;

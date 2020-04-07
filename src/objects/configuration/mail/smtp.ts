@@ -1,4 +1,4 @@
-export class Smtp {
+export class CfgSmtp {
 
   public host: string;
   public password: string;

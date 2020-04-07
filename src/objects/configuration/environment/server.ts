@@ -1,5 +1,4 @@
-
-export class Server {
+export class CfgServer {
 
   // public properties
   public hostname: string;

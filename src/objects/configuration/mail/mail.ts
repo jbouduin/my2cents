@@ -1,5 +1,5 @@
-import { SendMail } from './send-mail';
-import { Smtp } from './smtp';
+import { CfgSendMail } from './send-mail';
+import { CfgSmtp } from './smtp';
 
 export enum MailProtocol {
   SENDMAIL = 'sendmail',
@@ -7,17 +7,17 @@ export enum MailProtocol {
   NOMAIL = 'nomail'
 }
 
-export class Mail {
+export class CfgMail {
 
   public from: string;
   public mailProtocol: MailProtocol;
-  public sendMail: SendMail;
-  public smtp: Smtp;
+  public sendMail: CfgSendMail;
+  public smtp: CfgSmtp;
   public to: string;
 
   public constructor() {
     this.mailProtocol = MailProtocol.NOMAIL;
-    this.sendMail = new SendMail();
-    this.smtp = new Smtp();
+    this.sendMail = new CfgSendMail();
+    this.smtp = new CfgSmtp();
   }
 }

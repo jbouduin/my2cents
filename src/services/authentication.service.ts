@@ -10,12 +10,13 @@ import * as passportLocal from 'passport-local';
 import * as twitter from 'passport-twitter';
 import 'reflect-metadata';
 
-import { Authentication, Provider, ProviderName } from '../configuration';
-import SERVICETYPES from './service.types';
+import { CfgAuthentication, CfgProvider, ProviderName } from '../objects/configuration';
 
 import { IConfigurationService} from './configuration.service';
 import { IService } from './service';
 import { IUserService } from './user.service';
+
+import SERVICETYPES from './service.types';
 
 const LocalStrategy = passportLocal.Strategy;
 
@@ -257,7 +258,7 @@ export class AuthenticationService implements IAuthenticationService {
 
   }
 
-  private initializeTwitter(router: Router, provider: Provider): void {
+  private initializeTwitter(router: Router, provider: CfgProvider): void {
     this.providers.push({ id: 'twitter', name: 'Twitter' });
     passport.use(
       new twitter.Strategy(
@@ -279,7 +280,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeGitHub(router: Router, provider: Provider): void {
+  private initializeGitHub(router: Router, provider: CfgProvider): void {
     this.providers.push({ id: 'github', name: 'Github' });
     passport.use(
       new github.Strategy(
@@ -301,7 +302,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeGoogle(router: Router, provider: Provider): void {
+  private initializeGoogle(router: Router, provider: CfgProvider): void {
     this.providers.push({ id: 'google', name: 'Google' });
     passport.use(
       new google.Strategy(
@@ -328,7 +329,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeFacebook(router: Router, provider: Provider): void {
+  private initializeFacebook(router: Router, provider: CfgProvider): void {
     this.providers.push({ id: 'facebook', name: 'Facebook' });
     passport.use(
       new facebook.Strategy(
@@ -350,7 +351,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeInstagram(router: Router, provider: Provider): void {
+  private initializeInstagram(router: Router, provider: CfgProvider): void {
     this.providers.push({ id: 'instagram', name: 'Instagram' });
     passport.use(
       new instagram.Strategy(
@@ -372,7 +373,7 @@ export class AuthenticationService implements IAuthenticationService {
     );
   }
 
-  private initializeLinkedIn(router: Router, provider: Provider): void {
+  private initializeLinkedIn(router: Router, provider: CfgProvider): void {
     this.providers.push({ id: 'linkedin', name: 'LinkedIn' });
     passport.use(
       new linkedin.Strategy(

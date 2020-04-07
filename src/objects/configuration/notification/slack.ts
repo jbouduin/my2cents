@@ -1,3 +1,3 @@
-export class Slack {
+export class CfgSlack {
   public webHookUrl: string;
 }

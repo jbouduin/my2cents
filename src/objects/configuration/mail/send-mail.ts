@@ -1,4 +1,4 @@
-export class SendMail {
+export class CfgSendMail {
   public path: string;
 
   public constructor() {

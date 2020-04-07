@@ -37,7 +37,8 @@ class App {
     // ConfigurationService: load the configuration files
     // this: cors, bodyparser.json, bodyparser.urlencoded, express-session, static
     // EventService:  event emitting
-    // UserService: create default users
+    // UserService: calls its own seeder
+    // CommentService: calls its own seeder. This requires that the users have been created
     // AuthenticationService: passport + authentication routes
     // SettingService: seed settings table
     // RouteService: other routes

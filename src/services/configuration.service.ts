@@ -4,12 +4,14 @@ import * as moment from 'moment';
 import * as path from 'path';
 import 'reflect-metadata';
 
-import { Application, Configuration, Environment, Notification } from '../configuration';
+import { CfgApplication, CfgEnvironment, CfgNotification } from '../objects/configuration';
+import { Configuration } from '../configuration';
+
 import { IService } from './service';
 
 export interface IConfigurationService extends IService {
-  application: Application;
-  environment: Environment;
+  application: CfgApplication;
+  environment: CfgEnvironment;
 
   formatDate(rawDate: any): string;
   getNodeEnvironment(): string;
@@ -24,8 +26,8 @@ export interface IConfigurationService extends IService {
 export class ConfigurationService implements IConfigurationService {
 
   // public properties
-  public application: Application;
-  public environment: Environment;
+  public application: CfgApplication;
+  public environment: CfgEnvironment;
 
   private configuration: Configuration;
 

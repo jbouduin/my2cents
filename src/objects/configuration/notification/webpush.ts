@@ -1,4 +1,4 @@
-export class Webpush {
+export class CfgWebpush {
   public publicKey: string;
   public privateKey: string;
 }

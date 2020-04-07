@@ -1,5 +1,5 @@
 {
-  "interval": 120000,
+  "interval": 123456,
   "pushover": {
     "appToken": "",
     "userKey": ""

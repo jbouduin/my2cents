@@ -7,7 +7,7 @@ export enum ProviderName {
   INSTAGRAM = 'Instagram'
 }
 
-export class Provider {
+export class CfgProvider {
   public name: ProviderName;
   public id: string;
   public secret: string;

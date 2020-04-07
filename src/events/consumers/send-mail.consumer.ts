@@ -2,8 +2,8 @@ import { inject, injectable } from 'inversify';
 import * as nodemailer from 'nodemailer';
 import 'reflect-metadata';
 
-import { MailProtocol } from '../../configuration';
 import { Comment } from '../../db/entities';
+import { MailProtocol } from '../../objects/configuration';
 import { IConfigurationService } from '../../services';
 
 import { EventType, IEvent } from '..';

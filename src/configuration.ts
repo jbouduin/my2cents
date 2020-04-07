@@ -3,9 +3,7 @@ import * as glob from 'glob';
 import * as _ from 'lodash';
 import * as path from 'path';
 
-import { Environment } from './environment/environment';
-
-import { Application } from './application/application';
+import { CfgApplication, CfgEnvironment } from './objects/configuration';
 
 export class Configuration {
 
@@ -20,10 +18,10 @@ export class Configuration {
   }
 
   // public properties
-  public application: Application;
+  public application: CfgApplication;
   public appPath: string;
   public environment: string;
-  public current: Environment;
+  public current: CfgEnvironment;
   public launchedAt: Date;
 
   // constructor
@@ -62,10 +60,10 @@ export class Configuration {
       });
 
     const current = _.get(root, `configuration.environments.${this.environment}`);
-    const result = new Environment();
+    const result = new CfgEnvironment();
     this.current = _.merge(result, current);
 
-    const app = new Application();
+    const app = new CfgApplication();
     this.application = _.merge(app, _.get(root, 'configuration.application'));
     return Promise.resolve(this);
   }
