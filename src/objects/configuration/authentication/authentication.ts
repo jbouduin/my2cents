@@ -7,7 +7,7 @@ export class CfgAuthentication {
 
   public constructor() {
     this.allowAnonymous = false;
-    this.allowLocal = true;
+    this.allowLocal = false;
     this.providers = new Array<CfgProvider>();
   }
 }

@@ -1,5 +1,5 @@
 {
-  "interval": "${process.env.SCNACK_NOTIFICATION_INTERVAL || '' }",
+  "interval": "${process.env.MY2CENTS_NOTIFICATION_INTERVAL || '' }",
   "pushover": {
     "appToken": "${process.env.PUSHOVER_APPTOKEN || '' }",
     "userKey": "${process.env.PUSHOVER_USERKEY || '' }"

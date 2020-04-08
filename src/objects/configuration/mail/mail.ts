@@ -2,7 +2,7 @@ import { CfgSendMail } from './send-mail';
 import { CfgSmtp } from './smtp';
 
 export enum MailProtocol {
-  SENDMAIL = 'sendmail',
+  SENDMAIL = 'sendMail',
   SMTP = 'smtp',
   NOMAIL = 'nomail'
 }

@@ -1,6 +1,6 @@
 {
   "hostname": "${process.env.HOST_NAME || 'localhost'}",
-  "my2CentsPort": "${process.env.MY2CENTS_PORT || 'localhost'}",
+  "my2CentsPort": "${process.env.MY2CENTS_PORT || 3000}",
   "pageSuffix": "html",
   "pathToMy2Cents": "/my2cents",
   "pathToPage": "/",

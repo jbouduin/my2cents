@@ -12,13 +12,10 @@ export class CfgServer {
 
   // constructor
   public constructor() {
-    this.hostname = process.env.MY2CENTS_HOST || process.env.MY2CENTS_HOSTNAME || 'localhost';
-    this.pageSuffix = '';
-    this.my2CentsPort = Number(process.env.MY2CENTS_PORT) || 3000;
+    this.my2CentsPort = 3000;
     this.pathToMy2Cents = '/my2cents';
-    this.pathToPage = process.env.PATH_TO_PAGE || '/';
-    this.port = Number(process.env.PORT) || 0;
-    this.protocol = process.env.CLIENT_PROTOCOL || 'https';
+    this.pathToPage = '/';
+    this.protocol = 'https';
   }
 
 }
