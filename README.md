@@ -25,7 +25,7 @@ This is the fastest way to setup *My2Cents* on your local workstation.
 - npm (>= v5)
 - [Optional] git
 
-Clone or download My2Cents from Github:
+Clone (if you have git) or download My2Cents from Github:
 
 ```bash
 git clone https://github.com/jbouduin/my2cents
@@ -46,9 +46,9 @@ Run the *My2Cents server*:
 npm run dev
 ```
 
-Run the *Test web server*:
+In another terminal window, in the my2cents directory, run the *Test web server*:
 ```bash
-npm run test-server
+npm run start-hosting-server
 ```
 
 You can now browse to http://localhost:8080.
