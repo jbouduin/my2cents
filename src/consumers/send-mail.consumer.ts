@@ -87,7 +87,7 @@ export class SendMailConsumer implements ISendMailConsumer {
         subject,
         text: body,
         to
-        // TODO html: '<b>Hello world?</b>' // html body
+        // TODO: html => '<b>Hello world?</b>' // html body
     });
 
     console.debug(`Message sent: ${info.messageId}`);

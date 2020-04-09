@@ -4,7 +4,8 @@ import { CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
 import { Comment } from './comment';
 
-// TODO until we find the time to change this
+// FIXME: until we find the time to fix this, we have to disable tslint:disable
+// I'm not sure anymore why I did not do this from the beginning.
 /* tslint:disable variable-name */
 @Entity()
 @Index(['provider', 'provider_id'], { unique: true })
