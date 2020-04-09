@@ -16,6 +16,15 @@ If you do not want to save sensitive information in the configuration files, or 
 ````
 At runtime, when reading this setting, *My2Cents* will first evaluate the environment variable **HOST_NAME**. If that one is not set, it will use **localhost** as value. The Production configuration files do come with environment variables out of the box. But you can change them as desired.
 
+#### Testing the configuration
+You can use 'validate-config.ts' to test a configuration.
+It will write to the console.
+**Warning:** this is a simple warning about an element that seems to be configured strangely.
+**Error:** this means that something is configured erroneously or incompletely. The server will start, but it's functionality will be reduced.
+**Fatal:** this is a fatal error and the server would not start.
+
+In 'json.package' there is an npm script defined to test the production configuration. After a fresh install it will throw fatal errors.
+
 **Remarks:**
 - The default values described below, are the default values set in the code, before the configuration files are loaded and -eventually- override them.
 - If the parameter is marked as *mandatory*, it means that the value **must** be set in the configuration files.

@@ -17,7 +17,8 @@
         "embed": "rollup -c",
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "start": "ts-node ./src/server.ts",
-        "start-hosting-server": "cd hosting-test-server && npm run start"
+        "start-hosting-server": "cd hosting-test-server && npm run start",
+        "test-config": "set NODE_ENV=production && ts-node ./src/cli/validate-config.ts"
     },
     "repository": "git@github.com:jbouduin/my2cents.git",
     "dependencies": {

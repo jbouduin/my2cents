@@ -5,7 +5,7 @@ import * as path from 'path';
 import 'reflect-metadata';
 
 import { CfgApplication, CfgEnvironment, CfgNotification } from '../objects/configuration';
-import { Configuration } from '../configuration';
+import { CfgValidation, Configuration } from '../configuration';
 
 import { IService } from './service';
 
@@ -18,8 +18,6 @@ export interface IConfigurationService extends IService {
   getPageUrl(): string;
   getMy2CentsDomain(): string;
   getMy2CentsUrl(): string;
-  isValidUrl(value: string);
-
 }
 
 @injectable()
@@ -79,19 +77,11 @@ export class ConfigurationService implements IConfigurationService {
 
   public async initialize(app: express.Application): Promise<any> {
     this.configuration = await Configuration.loadConfiguration();
+    this.configuration.validate();
     this.environment = this.configuration.current;
     this.application = this.configuration.application;
 
-    console.debug(this.configuration);
     return Promise.resolve(this.configuration);
   }
 
-  public isValidUrl(value: string) {
-    const regexp =  /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
-    if (value && value.match(regexp) !== null) {
-      return true;
-    }  else  {
-      return false;
-    }
-  }
 }

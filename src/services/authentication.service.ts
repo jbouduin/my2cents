@@ -124,15 +124,6 @@ export class AuthenticationService implements IAuthenticationService {
     if (this.configurationService.environment.authentication.allowAnonymous  ||
       this.configurationService.environment.authentication.allowLocal) {
 
-      if (this.configurationService.environment.authentication.allowAnonymous) {
-        console.warn('allowing anonymous access. I hope this is not a production environment!');
-      }
-
-      if (this.configurationService.environment.authentication.allowLocal &&
-        this.configurationService.getNodeEnvironment() !== 'development') {
-          console.error('This is not a development environment! Not allowing user/password for access');
-      }
-
       this.initializeLocal(
         router,
         this.configurationService.environment.authentication.allowAnonymous,
@@ -169,7 +160,6 @@ export class AuthenticationService implements IAuthenticationService {
           this.initializeInstagram(router, provider);
           break;
         }
-        default: console.warn(`Non supported authentication provider found in the configuration: '${provider.name}'`);
       }
     });
 

@@ -4,8 +4,8 @@
   "providers": [
     {
       "name": "Twitter",
-      "id": "${process.env.TWITTER_CONSUMER_KEY || ''}",
-      "secret": "${process.env.TWITTER_CONSUMER_SECRET || ''}"
+      "id": "${process.env.TWITTER_CONSUMER_KEY || 'x'}",
+      "secret": "${process.env.TWITTER_CONSUMER_SECRET || 'x'}"
     },
     {
       "name": "GitHub",

@@ -16,6 +16,8 @@ import {
   IRouteService,
   ISettingService,
   IUserService } from './services';
+import { CfgValidation } from './configuration';
+
 import SERVICETYPES from './services/service.types';
 
 class App {
@@ -44,6 +46,12 @@ class App {
     // RouteService: other routes
     return this.configurationService.initialize(this.app)
       .then( configuration => {
+        /* tslint:disable no-bitwise */
+        if (configuration.validationResult & CfgValidation.Fatal) {
+          console.error('The configuration has fatal errors. Shutting down the server');
+          process.exit(1);
+        }
+        /* tslint:enable no-bitwise */
         return this.databaseService
           .initialize(this.app)
           .then(db => {

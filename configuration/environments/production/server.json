@@ -1,5 +1,5 @@
 {
-  "hostname": "${process.env.HOST_NAME || 'localhost'}",
+  "hostname": "${process.env.HOST_NAME || ''}",
   "my2CentsPort": "${process.env.MY2CENTS_PORT || 3000}",
   "pageSuffix": "html",
   "pathToMy2Cents": "/my2cents",
