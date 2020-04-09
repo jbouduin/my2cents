@@ -30,13 +30,14 @@ export class SettingService implements ISettingService {
 
   public async getSetting(key: string): Promise<Setting> {
     const settingRepository = this.databaseService.getSettingRepository();
+    // BUG: (#592) handle record not found, although seeding will always create it
     return settingRepository.findOne(key);
   }
 
   public async setSetting(key: string, value: any): Promise<Setting> {
     const settingRepository = this.databaseService.getSettingRepository();
     const setting = await settingRepository.findOne(key.toLowerCase());
-    // TODO: handle record not found, although seeding will always create it
+    // BUG: (#592) handle record not found, although seeding will always create it
     const newSettingNotification = new SettingNotification();
     if (value === 'true') {
       newSettingNotification.active = true;

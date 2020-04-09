@@ -13,6 +13,7 @@ import SERVICETYPES from '../services/service.types';
 
 export interface ISendMailConsumer extends IConsumer { }
 
+// TODO: (#593) this consumer has to be reviewed completely
 @injectable()
 export class SendMailConsumer implements ISendMailConsumer {
 
@@ -87,7 +88,6 @@ export class SendMailConsumer implements ISendMailConsumer {
         subject,
         text: body,
         to
-        // TODO: html => '<b>Hello world?</b>' // html body
     });
 
     console.debug(`Message sent: ${info.messageId}`);

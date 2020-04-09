@@ -19,7 +19,7 @@ import SETTINGKEYS from '../objects/settings/setting.keys';
 import SERVICETYPES from '../services/service.types';
 
 export interface IPushConsumer extends IConsumer {
-  // TODO these two methods have to be made threadsafe
+  // TODO (#577) these two methods have to be made threadsafe
   addToAwaitingModeration(comment: Comment): void;
   removeFromAwaitingModeration(comment: Comment): void;
 }
@@ -121,7 +121,8 @@ export class PushConsumer implements IPushConsumer {
           token: this.configurationService.environment.notification.pushover.appToken,
           user: this.configurationService.environment.notification.pushover.userKey
       });
-      // TODO: regularly call pushover to make sure that we stay connected
+      // TODO: (#595) regularly call pushover to make sure that we stay connected
+      // the remark comes from the original code. Pushover has to be reviewed and tested anyway
       this.notifiers.push((msg, callback) => {
         try {
           pusher.send(msg, callback);

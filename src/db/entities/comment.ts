@@ -4,7 +4,7 @@ import { CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
 import { User } from './user';
 
-// FIXME: until we find the time to fix this, we have to disable tslint:disable
+// FIXME: (#594) until we find the time to fix this, we have to disable tslint:disable
 // I'm not sure anymore why I did not do this from the beginning.
 /* tslint:disable variable-name */
 @Entity()

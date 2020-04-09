@@ -11,7 +11,7 @@ import SERVICETYPES from '../services/service.types';
 
 export interface IWriteLogConsumer extends IConsumer { }
 
-// TODO: get parameters from configuration
+// TODO: (#591) get parameters from configuration and implement using a decent logging mechanism
 @injectable()
 export class WriteLogConsumer implements IWriteLogConsumer {
 

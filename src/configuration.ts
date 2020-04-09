@@ -342,17 +342,17 @@ export class Configuration {
 
     switch (mail.mailProtocol) {
       case MailProtocol.NOMAIL: {
-        // IDEA: warn if protocol is nomail and smtp/sendmail are defined
+        // IDEA: (#589) warn if protocol is nomail and smtp/sendmail are defined
         break;
       }
       case MailProtocol.SMTP: {
         result = result | this.checkSmtp(fileName, mail.smtp);
-        // IDEA: warn if protocol is smpt and sendmail is defined
+        // IDEA: (#589) warn if protocol is smpt and sendmail is defined
         break;
       }
       case MailProtocol.SENDMAIL: {
         result = result | this.checkSendMail(fileName, mail.sendMail);
-        // IDEA: warn if protocol is sendmail and smtp is defined
+        // IDEA: (#589) warn if protocol is sendmail and smtp is defined
         break;
       }
       default: {
@@ -375,7 +375,7 @@ export class Configuration {
         CfgValidation.Error,
         `${fileName}: ${keyPath} file '${sendMail.path}' does not exist. No mails will be send`);
     }
-    // IDEA: check if the executeable exists and we can execute it
+    // IDEA: (#589) check if the executeable exists and we can execute it
 
     return result;
   }
