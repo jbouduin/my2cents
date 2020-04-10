@@ -1,1 +1,1 @@
-export * from './setting-notification';
+export * from './notification.setting';

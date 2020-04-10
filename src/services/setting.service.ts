@@ -1,9 +1,10 @@
 import { Application } from 'express';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
+import { Repository } from 'typeorm';
 
 import { Setting } from '../db/entities';
-import { SettingNotification } from '../objects/settings';
+import { NotificationSetting } from '../objects/settings';
 
 import { IDatabaseService } from './database.service';
 import { IService } from './service';
@@ -29,23 +30,20 @@ export class SettingService implements ISettingService {
   }
 
   public async getSetting(key: string): Promise<Setting> {
-    const settingRepository = this.databaseService.getSettingRepository();
-    // BUG: (#592) handle record not found, although seeding will always create it
-    return settingRepository.findOne(key);
+    return this.findOrCreateSetting(this.databaseService.getSettingRepository(), key);
   }
 
   public async setSetting(key: string, value: any): Promise<Setting> {
-    const settingRepository = this.databaseService.getSettingRepository();
-    const setting = await settingRepository.findOne(key.toLowerCase());
-    // BUG: (#592) handle record not found, although seeding will always create it
-    const newSettingNotification = new SettingNotification();
-    if (value === 'true') {
-      newSettingNotification.active = true;
-    } else {
-      newSettingNotification.active = false;
-    }
-    setting.setting = JSON.stringify(newSettingNotification);
-    return settingRepository.save(setting);
+    const repository = this.databaseService.getSettingRepository();
+    return this.findSetting(repository, key)
+      .then( setting => {
+        if (!setting) {
+          setting = this.createSetting(repository, key, value);
+        } else {
+          this.setValue(setting, value);
+        }
+        return repository.save(setting);
+      });
   }
 
   // private helper methods
@@ -60,21 +58,72 @@ export class SettingService implements ISettingService {
         const newSettings = new Array<Setting>();
         if (counts[0] === 0) {
           console.info('creating \'notification\' setting');
-          const newSettingNotification = new SettingNotification();
-          newSettingNotification.active = true;
-          newSettings.push(repository.create(
-            {
-              name: SETTINGKEYS.Notification,
-              setting: JSON.stringify(newSettingNotification)
-            }
-          ));
+          newSettings.push(this.createSetting(repository, SETTINGKEYS.Notification));
         } else {
           console.info('found \'notification\' setting');
         }
-
         if (newSettings.length > 0) {
           repository.save(newSettings);
         }
       });
+  }
+
+  private async findOrCreateSetting(repository: Repository<Setting>, key: string): Promise<Setting> {
+    return this.findSetting(repository, key)
+      .then( setting => {
+        if (!setting) {
+          setting = this.createSetting(repository, key);
+          return repository.save(setting)
+        }
+        return Promise.resolve(setting);
+      } );
+  }
+
+  private async findSetting(repository: Repository<Setting>, key: string): Promise<Setting> {
+    return repository.findOne(key.toLowerCase());
+  }
+
+  private createSetting(repository: Repository<Setting>, key: string, value?: any): Setting {
+    let newValue: any;
+
+    switch (key) {
+      case SETTINGKEYS.Notification: {
+        newValue = new NotificationSetting();
+        if (value) {
+          if (Boolean(value)) {
+            newValue.active = true;
+          } else {
+            newValue.active = false;
+          }
+        }
+        break;
+      }
+      default: {
+        return null;
+      }
+    }
+
+    return repository.create({
+      name: key,
+      setting: JSON.stringify(newValue)
+    });
+  }
+
+  private setValue(setting: Setting, value: any) {
+    switch (setting.name) {
+      case SETTINGKEYS.Notification: {
+        let newValue = new NotificationSetting();
+        if (Boolean(value)) {
+          newValue.active = true;
+        } else {
+          newValue.active = false;
+        }
+        setting.setting = JSON.stringify(newValue);
+        break;
+      }
+      default: {
+        return null;
+      }
+    }
   }
 }
