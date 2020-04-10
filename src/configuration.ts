@@ -218,14 +218,17 @@ export class Configuration {
           }
         } else {
           result = this.logByLevel(
-            CfgValidation.Ok,
-            `${fileName}: authentication provider '${provider.name}' can be used.`);
+            CfgValidation.Warning,
+            `${fileName}: Experimental authentication provider: '${provider.name}' has not been tested.`) |
+            this.logByLevel(
+              CfgValidation.Ok,
+              `${fileName}: authentication provider: '${provider.name}' will be used.`);
         }
         break;
       }
       default: {
         result = this.logByLevel(
-          CfgValidation.Warning,
+          CfgValidation.Error,
           `${fileName}: unknown authentication provider found: '${provider.name}'.`);
 
       }
@@ -309,12 +312,17 @@ export class Configuration {
       switch (connection.connectionType) {
         case ConnectionType.MYSQL:
         case ConnectionType.POSTGRES: {
+          result = result | this.logByLevel(
+            CfgValidation.Warning,
+            `Experimental Database: My2Cents has not been tested with a database of type '${connection.connectionType}'`
+          );
           result = result |
             this.mandatoryString(fileName, `connections.connection[${connection.connectionName}].databaseName`, CfgValidation.Fatal, connection.databaseName) |
             this.mandatoryString(fileName, `connections.connection[${connection.connectionName}].hostName`, CfgValidation.Fatal, connection.hostName) |
             this.mandatoryString(fileName, `connections.connection[${connection.connectionName}].user`, CfgValidation.Fatal, connection.user) |
             this.mandatoryString(fileName, `connections.connection[${connection.connectionName}].password`, CfgValidation.Fatal, connection.password) |
-            this.mandatoryNumber(fileName, `connections.connection[${connection.connectionName}].port`, CfgValidation.Fatal, connection.port)
+            this.mandatoryNumber(fileName, `connections.connection[${connection.connectionName}].port`, CfgValidation.Fatal, connection.port);
+
           break;
         }
         case ConnectionType.SQLITE: {
@@ -439,13 +447,23 @@ export class Configuration {
 
   private checkPushover(fileName: string, pushover: CfgPushover): CfgValidation {
     const result =
+      this.logByLevel(
+        CfgValidation.Warning,
+        'Experimental usage of Pushover. This has not been tested!'
+      ) |
       this.mandatoryString(fileName, 'pushover.appToken', CfgValidation.Error, pushover.appToken) |
       this.mandatoryString(fileName, 'pushover.userKey', CfgValidation.Error, pushover.userKey);
     return result;
   }
 
   private checkSlack(fileName: string, slack: CfgSlack): CfgValidation {
-    return this.isValidUrl(fileName, 'slack.webHookUrl', CfgValidation.Error, slack.webHookUrl);
+    const result =
+      this.logByLevel(
+        CfgValidation.Warning,
+        'Experimental usage of Slack. This has not been tested!'
+      ) |
+      this.isValidUrl(fileName, 'slack.webHookUrl', CfgValidation.Error, slack.webHookUrl);
+    return result;
   }
 
   private checkWebpush(fileName: string, webpush: CfgWebpush): CfgValidation {
