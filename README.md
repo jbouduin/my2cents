@@ -5,26 +5,30 @@
 
 ## This is still a work in progress
 This means that a lot of the features have not been tested.
+Features checked "work on my machine"
 
 ## Features:
 - **Tiny**: it takes only ~**14 KB!!!** to embed My2Cents.
 - **Open source** and **self-hosted**.
 - **Ad-free**: *My2Cents* will not disturb your users.
 - **Tracking-free**
-- **Multiple databases supported**: SQLite3, Postgres and MySQL databases
+- **Multiple databases supported**:
+  - [x] SQLite3
+  - [ ] Postgres
+  - [ ] MySQL databases
 - **Moderation**: with a *minimal* and *slick UI* a site administrator can allow/reject comments or trust/block users.
-- **Notifications**: as a site owner, you can get notified about new comments awaiting moderation.
-  - [webpush protocol](https://tools.ietf.org/html/draft-ietf-webpush-protocol-12)
-  - slack
-  - mail
-  - pushover
+- **Notifications**:
+  - [x] [webpush protocol](https://tools.ietf.org/html/draft-ietf-webpush-protocol-12) - regularly notifies logged in administrators about new comments awaiting moderation
+  - [x] slack: send a message every time a new comment is posted
+  - [ ] mail
+  - [ ] pushover
 - **Third party providers for authentication**: users are not required to register a new account and you don't need to manage a user management system or bother about GDPR.
- - Github
- - Twitter
- - Google
- - Facebook
- - Instagram
- - LinkedIn
+ - [ ] Github
+ - [ ] Twitter
+ - [ ] Google
+ - [ ] Facebook
+ - [ ] Instagram
+ - [ ] LinkedIn
 
 ## Why I started building my2cents
 I was looking for an embeddable commenting solution with the features described above for [my blog](https://agile-is-a-state-of-mind), and found [Schnack](https://schnack.cool/). Unfortunately, it only offers support for SQLite, a personal no-go for production environments.

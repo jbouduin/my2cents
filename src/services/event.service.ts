@@ -54,6 +54,7 @@ export class EventService implements IEventService {
           this.sendMailConsumer,
           this.slackConsumer,
           this.writeLogConsumer,
+          this.configurationService,
           eventData as Comment
         );
         break;
@@ -64,6 +65,7 @@ export class EventService implements IEventService {
           this.sendMailConsumer,
           this.slackConsumer,
           this.writeLogConsumer,
+          this.configurationService,
           eventData
         );
         break;

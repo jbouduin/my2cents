@@ -37,7 +37,7 @@ export class SlackConsumer implements ISlackConsumer {
   private CommentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     try {
       const comment = callbackParameter.data;
-      const postUrl = this.configurationService.getPageUrl().replace('%SLUG%', comment.slug);
+      const postUrl = callbackParameter.configurationService.getPageUrl().replace('%SLUG%', comment.slug);
       const user = comment.user.display_name || comment.user.name;
       const slackComment = comment.comment
         .split(/\n+/)
@@ -45,11 +45,12 @@ export class SlackConsumer implements ISlackConsumer {
         .join('\n>\n');
       const text = `A <${postUrl}|new comment> was posted by ${user} under *${comment.slug}*:\n\n${slackComment}`;
       request({
-        body: { text },
+        body: { 'text': text },
         json: true,
         method: 'post',
-        url: this.configurationService.environment.notification.slack.webHookUrl
+        url: callbackParameter.configurationService.environment.notification.slack.webHookUrl
       });
+      console.debug('event send to slack');
     } catch (error) {
       console.error('Error sending slack notification:', error);
     }

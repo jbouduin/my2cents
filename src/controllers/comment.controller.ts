@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
-import * as domPurify from 'domPurify';
+// import * as domPurify from 'domPurify';
 import * as marked from 'marked';
 import 'reflect-metadata';
 import * as rss from 'rss';
@@ -19,7 +19,6 @@ export interface ICommentController {
   markdown2Html(request: Request, response: Response): void;
   postComment(request: Request, response: Response): void;
   rejectComment(request: Request, response: Response): void;
-
 }
 
 @injectable()
@@ -152,7 +151,9 @@ export class CommentController implements ICommentController {
   public markdown2Html(request: Request, response: Response): void {
     const comment = request.body.comment;
     const dirty = marked(comment.trim());
-    response.send({ html: domPurify.sanitize(dirty) });
+    // BUG: (#612) dompurify is not a function error
+    // response.send({ html: domPurify.sanitize(dirty) });
+    response.send({ html: dirty });
   }
 
   public postComment(request: Request, response: Response): void {
