@@ -113,7 +113,7 @@ export class SettingService implements ISettingService {
     switch (setting.name) {
       case SETTINGKEYS.Notification: {
         const newValue = new NotificationSetting();
-        if (Boolean(value)) {
+        if (value === 'true' || value === 1) {
           newValue.active = true;
         } else {
           newValue.active = false;
