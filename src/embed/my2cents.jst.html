@@ -16,7 +16,6 @@
               <% } else { %>
                 <%= data.partials.FirstAdd %>
               <% } %>
-
             </span>
           </button>
         </div>
@@ -31,20 +30,22 @@
       </div>
 
       <% if (data.user.admin) { %>
-
         <div class="m2c-admin-header">
-          <button class="m2c-button m2c-admin-action m2c-unmute" data-target="notification" data-class="setting" data-action="true">
-            <i class="icon m2c-icon-unmute"></i>
-            <span>
-              <%= data.partials.UnMute %>
-            </span>
-          </button>
-          <button class="m2c-button m2c-admin-action m2c-mute" data-target="notification" data-class="setting" data-action="false">
-            <i class="icon m2c-icon-mute"></i>
-            <span>
-              <%= data.partials.Mute %>
-            <span>
-          </button>
+          <% if (data.notification.active) { %>
+            <button class="m2c-button m2c-admin-action m2c-mute" data-target="notification" data-class="setting" data-action="false">
+              <i class="icon m2c-icon-mute"></i>
+              <span>
+                <%= data.partials.Mute %>
+              <span>
+            </button>
+          <% } else { %>
+            <button class="m2c-button m2c-admin-action m2c-unmute" data-target="notification" data-class="setting" data-action="true">
+              <i class="icon m2c-icon-unmute"></i>
+              <span>
+                <%= data.partials.UnMute %>
+              </span>
+            </button>
+          <% } %>
         </div>
 
       <% } %>

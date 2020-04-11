@@ -41,7 +41,6 @@ export class SettingController implements ISettingController {
       if (!request.session.passport.user.administrator) {
         response.sendStatus(403);
       } else {
-        console.log(`setting ${request.params.key} to ${request.params.value}`);
         this.settingService.setSetting(request.params.key, request.params.value)
           .then(setting => response.send({ status: 'ok' }))
           .catch(err => {
