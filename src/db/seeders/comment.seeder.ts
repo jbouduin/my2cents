@@ -68,7 +68,7 @@ export class CommentSeeder extends Seeder implements ICommentSeeder {
     comments: Array<any>,
     commentRepository: Repository<Comment>,
     userRepository: Repository<User>): Array<Promise<Comment>> {
-    console.log(`seeding ${slug}${replyTo ? '/' + replyTo : ''} with ${comments.length} ${replyTo ? 'replies' : 'comments'} `);
+    console.info(`seeding ${slug}${replyTo ? '/' + replyTo : ''} with ${comments.length} ${replyTo ? 'replies' : 'comments'} `);
 
     return comments.map(comment => this.seedSingleComment(slug, replyTo, comment, commentRepository, userRepository));
   }
@@ -103,7 +103,7 @@ export class CommentSeeder extends Seeder implements ICommentSeeder {
       user_agent: this.userAgent
     });
 
-    console.log(`${replyTo ? 'Reply' : 'Comment'} by ${user.display_name}`);
+    console.info(`${replyTo ? 'Reply' : 'Comment'} by ${user.display_name}`);
 
     return commentRepository
       .save(newComment)

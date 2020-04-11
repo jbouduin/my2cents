@@ -194,7 +194,6 @@ export default class My2Cents {
         const action = evt => {
           const btn = evt.target;
           const data = btn.dataset;
-          console.log(`in action ${data}`);
           fetch(
             `${host}/${root}/${data.class}/${data.target}/${data.action}`,
             {

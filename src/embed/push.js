@@ -137,7 +137,7 @@ function sendSubscriptionToServer(endpoint, key, auth) {
     body: JSON.stringify({ publicKey: encodedKey, auth: encodedAuth, endpoint })
   })
   .then(res => {
-    console.log('Subscribed successfully! ' + JSON.stringify(res));
+    console.info('Subscribed successfully! ' + JSON.stringify(res));
   });
 }
 
@@ -151,7 +151,7 @@ function removeSubscriptionFromServer(endpoint) {
     body: JSON.stringify({ publicKey: encodedKey, auth: encodedAuth, endpoint })
   })
   .then(res => {
-    console.log('Unsubscribed successfully! ' + JSON.stringify(res));
+    console.info('Unsubscribed successfully! ' + JSON.stringify(res));
   });
 }
 
