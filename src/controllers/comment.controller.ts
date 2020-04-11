@@ -6,10 +6,12 @@ import 'reflect-metadata';
 import * as rss from 'rss';
 
 import { CommentApprovedEvent, CommentPostedEvent, CommentRejectedEvent } from '../objects/events';
-import { IAuthenticationService, ICommentService, IConfigurationService, IEventService } from '../services';
+import { IAuthenticationService, ICommentService, IConfigurationService, IEventService , ISettingService} from '../services';
 
+import { Comment, Setting } from '../db/entities';
 import { DtoComment, DtoUser } from '../objects/data-transfer';
 
+import SETTINGKEYS from '../objects/settings/setting.keys';
 import SERVICETYPES from '../services/service.types';
 
 export interface ICommentController {
@@ -28,7 +30,8 @@ export class CommentController implements ICommentController {
     @inject(SERVICETYPES.AuthenticationService) private authenticationService: IAuthenticationService,
     @inject(SERVICETYPES.ConfigurationService) private configurationService: IConfigurationService,
     @inject(SERVICETYPES.CommentService) private commentService: ICommentService,
-    @inject(SERVICETYPES.EventService) private eventService: IEventService) {
+    @inject(SERVICETYPES.EventService) private eventService: IEventService,
+    @inject(SERVICETYPES.SettingService) private settingService: ISettingService) {
   }
 
   // interface members
@@ -70,31 +73,12 @@ export class CommentController implements ICommentController {
       userId = request.session.passport.user.id;
     }
 
-    this.commentService
-      .getCommentsBySlug(slug, userId, dtoUser && dtoUser.admin)
-      .then(comments => {
-        const dtoComments = comments.map(comment => {
-          const dtoComment = new DtoComment();
-          dtoComment.id = comment.id;
-          dtoComment.replyTo = comment.reply_to;
-          dtoComment.author = comment.user.display_name || comment.user.name;
-          dtoComment.authorUrl = this.getAuthorUrl(
-            comment.user.url,
-            comment.user.provider,
-            comment.user.name);
-          dtoComment.comment = marked(comment.comment.trim());
-          dtoComment.created = this.configurationService.formatDate(comment.created);
-          if (dtoUser && dtoUser.admin) {
-            dtoComment.approved = comment.approved;
-            dtoComment.authorId = comment.user.id;
-            dtoComment.authorTrusted = comment.user.trusted;
-          } else {
-            dtoComment.approved = comment.approved || comment.user.trusted;
-            dtoComment.authorId = null;
-            dtoComment.authorTrusted = null;
-          }
-          return dtoComment;
-        });
+    Promise.all<Array<Comment>, Setting>([
+      this.commentService.getCommentsBySlug(slug, userId, dtoUser && dtoUser.admin),
+      this.settingService.getSetting(SETTINGKEYS.Notification)
+    ]).then( ([comments, setting]) => {
+        const notification = dtoUser && dtoUser.admin ? setting.setting : null;
+        const dtoComments = this.transformComments(comments, dtoUser && dtoUser.admin);
 
         response.send(
           {
@@ -102,6 +86,7 @@ export class CommentController implements ICommentController {
               null :
               this.authenticationService.getProviders(),
             comments: dtoComments,
+            notification,
             slug,
             user: dtoUser
           }
@@ -217,6 +202,32 @@ export class CommentController implements ICommentController {
   }
 
   // private helper methods
+  private transformComments(comments: Array<Comment>, admin: boolean): Array<DtoComment> {
+    return comments.map(comment => {
+      const dtoComment = new DtoComment();
+      dtoComment.id = comment.id;
+      dtoComment.replyTo = comment.reply_to;
+      dtoComment.author = comment.user.display_name || comment.user.name;
+      dtoComment.authorUrl = this.getAuthorUrl(
+        comment.user.url,
+        comment.user.provider,
+        comment.user.name);
+      dtoComment.comment = marked(comment.comment.trim());
+      dtoComment.created = this.configurationService.formatDate(comment.created);
+
+      if (admin) {
+        dtoComment.approved = comment.approved;
+        dtoComment.authorId = comment.user.id;
+        dtoComment.authorTrusted = comment.user.trusted;
+      } else {
+        dtoComment.approved = comment.approved || comment.user.trusted;
+        dtoComment.authorId = null;
+        dtoComment.authorTrusted = null;
+      }
+      return dtoComment;
+    });
+  }
+
   private getAuthorUrl(userUrl: string, provider: string, name: string): string {
     if (userUrl) {
       return userUrl;
