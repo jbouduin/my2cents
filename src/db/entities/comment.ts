@@ -19,10 +19,10 @@ export class Comment extends BaseEntity {
   @Column({ nullable: true })
   public reply_to: number;
 
-  @Column('nvarchar', { length: 128, nullable: false })
+  @Column('nvarchar', { length: 256, nullable: false })
   public slug: string;
 
-  @Column('nvarchar', { length: 4096, nullable: false })
+  @Column('nvarchar', { length: 8192, nullable: false })
   public comment: string;
 
   @Index()
@@ -36,6 +36,6 @@ export class Comment extends BaseEntity {
   @Column('nvarchar', { length: 256, nullable: false })
   public ip_address: string;
 
-  @Column('nvarchar', { length: 256, nullable: false })
+  @Column('nvarchar', { length: 512, nullable: false })
   public user_agent: string;
 }

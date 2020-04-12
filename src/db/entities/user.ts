@@ -48,6 +48,6 @@ export class User extends BaseEntity {
   @Column('nvarchar', { length: 256, nullable: false })
   public ip_address: string;
 
-  @Column('nvarchar', { length: 256, nullable: false })
+  @Column('nvarchar', { length: 512, nullable: false })
   public user_agent: string;
 }

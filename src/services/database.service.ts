@@ -34,7 +34,7 @@ export class DatabaseService implements IDatabaseService {
     const x = new Set(this.configurationService.environment.database.targets.map(target => target.connectionName));
     // if both are in the same db, we only need one single connection
     if (x.size === 1) {
-      return this.connectByName(x.values().next().value, [Comment, Session, Subscription, User]);
+      return this.connectByName(x.values().next().value, [Comment, Setting, Session, Subscription, User]);
     } else {
       return Promise.all([
         this.connectByName(

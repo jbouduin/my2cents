@@ -8,6 +8,6 @@ export class Setting extends BaseEntity {
   @PrimaryColumn('nvarchar', { length: 128, nullable: false })
   public name: string;
 
-  @Column('nvarchar', { length: 4096, nullable: false })
+  @Column('nvarchar', { length: 8192, nullable: false })
   public setting: string;
 }
