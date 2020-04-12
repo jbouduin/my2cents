@@ -39,7 +39,7 @@
     <% if (data.user || data.replies[comment.id]) { %>
       <footer class="m2c-comment-footer">
         <% // if logged in, and not an administrator, comments that are not approved or from an untrusted user just get approved = false %>
-        <% if (!comment.approved) { %>
+        <% if (!comment.approved && !comment.authorTrusted) { %>
           <div class="m2c-comment-actions">
             <% if (data.user && data.user.admin) {
               ['approve', 'reject'].forEach((action) => { %>
@@ -52,7 +52,7 @@
               <% });
             } %>
             <span class="m2c-needs-admin-action">
-              <%= data.user && data.user.admin ?
+              <%= !comment.approved && data.user && data.user.admin ?
                 data.partials.AdminApproval :
                 data.partials.WaitingForApproval
               %>

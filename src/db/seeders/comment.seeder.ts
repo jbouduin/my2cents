@@ -95,9 +95,11 @@ export class CommentSeeder extends Seeder implements ICommentSeeder {
 
 `;
     const newComment = commentRepository.create({
+      approved: comment.approved,
       comment: content,
       ip_address: this.ipAddress,
       reply_to: replyTo,
+      rejected: comment.rejected,
       slug,
       user,
       user_agent: this.userAgent
