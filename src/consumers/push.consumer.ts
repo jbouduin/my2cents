@@ -162,7 +162,21 @@ export class PushConsumer implements IPushConsumer {
                     message: msg.message,
                     title: 'my2cents'
                   })
-                );
+                )
+                .catch(err => {
+                  // see http://autopush.readthedocs.io/en/latest/http.html#error-codes
+                  switch (err.statusCode) {
+                    case 404:
+                    case 410: {
+                      console.info(`Removing subscription with endpoint ${err.enpoint}`);
+                      this.subscriptionService.unsubscribe(err.endpoint);
+                      break;
+                    }
+                    default: {
+                      console.error(err);
+                    }
+                  }
+                });
               });
             });
           });
