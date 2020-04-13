@@ -53,20 +53,23 @@ export class PushConsumer implements IPushConsumer {
 
     if (this.configurationService.environment.notification.webpush ||
       this.configurationService.environment.notification.pushover) {
-      this.initialize();
-    }
-
-    if (this.notifiers.length) {
-      result.push([EventType.COMMENTAPPROVED, this.CommentApprovedOrRejectedCallBack]);
-      result.push([EventType.COMMENTPOSTED, this.CommentPostedCallBack]);
-      result.push([EventType.COMMENTREJECTED, this.CommentApprovedOrRejectedCallBack]);
-      if (this.configurationService.environment.notification.interval > 0) {
-        setInterval(
-          this.push,
-          this.configurationService.environment.notification.interval,
-          this);
-      }
-    }
+      this.initialize().then( initResult => {
+        if (this.notifiers.length) {
+          result.push([EventType.COMMENTAPPROVED, this.commentApprovedOrRejectedCallBack]);
+          result.push([EventType.COMMENTPOSTED, this.commentPostedCallBack]);
+          result.push([EventType.COMMENTREJECTED, this.commentApprovedOrRejectedCallBack]);
+          if (this.configurationService.environment.notification.interval > 0) {
+            if (this.awaitingModeration.length > 0) {
+              this.push(this);
+            }
+            setInterval(
+              this.push,
+              this.configurationService.environment.notification.interval,
+              this);
+          }
+        }
+      });
+   }
     return result;
   }
 
@@ -76,7 +79,7 @@ export class PushConsumer implements IPushConsumer {
   }
 
   // callback methods
-  private CommentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
+  private commentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     try {
       if (!callbackParameter.data.user.trusted) {
         callbackParameter.pushConsumer.addToAwaitingModeration(callbackParameter.data);
@@ -86,7 +89,7 @@ export class PushConsumer implements IPushConsumer {
     }
   }
 
-  private CommentApprovedOrRejectedCallBack(callbackParameter: CallbackParameter<Comment>): void {
+  private commentApprovedOrRejectedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     try {
       callbackParameter.pushConsumer.removeFromAwaitingModeration(callbackParameter.data);
     } catch (error) {
@@ -95,22 +98,23 @@ export class PushConsumer implements IPushConsumer {
   }
 
   // private methods
-  private initialize(): void {
+  private async initialize(): Promise<number> {
+    let result = 0;
     this.notifiers = new Array<Notifier>();
     // fill awaiting at startup
-    this.commentService
-      .getCommentsForModeration()
-      .then(comments => {
-        this.awaitingModeration = comments;
-        console.debug(`awaitingModeration queue contains ${this.awaitingModeration.length} entries`)
-      });
+    this.awaitingModeration = await this.commentService.getCommentsForModeration();
+    console.debug(`awaitingModeration queue contains ${this.awaitingModeration.length} entries`)
 
     if (this.configurationService.environment.notification.webpush) {
       this.initializeWebPush();
+      result++;
     }
     if (this.configurationService.environment.notification.pushover) {
       this.initializePushover();
+      result++;
     }
+
+    return Promise.resolve(result);
   }
 
   private initializePushover(): void {
