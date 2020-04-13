@@ -196,7 +196,7 @@ export class PushConsumer implements IPushConsumer {
       if (pushConsumer.awaitingModeration.length)
       {
         pushConsumer.settingService
-          .getSetting(SETTINGKEYS.Notification)
+          .getSetting(SETTINGKEYS.Push)
           .then(setting => {
             if (JSON.parse(setting.setting).active) {
               console.debug(new Date() + ' push');

@@ -51,16 +51,16 @@ export class SettingService implements ISettingService {
     const repository = this.databaseService.getSettingRepository();
     const searches = new Array<Promise<number>>();
 
-    searches.push(repository.count({ where: { name: SETTINGKEYS.Notification } }));
+    searches.push(repository.count({ where: { name: SETTINGKEYS.Push } }));
 
     return Promise.all(searches)
       .then((counts: Array<number>) => {
         const newSettings = new Array<Setting>();
         if (counts[0] === 0) {
           console.info('creating \'notification\' setting');
-          newSettings.push(this.createSetting(repository, SETTINGKEYS.Notification));
+          newSettings.push(this.createSetting(repository, SETTINGKEYS.Push));
         } else {
-          console.info('found \'notification\' setting');
+          console.info('found \'Push\' setting');
         }
         if (newSettings.length > 0) {
           repository.save(newSettings);
@@ -87,7 +87,7 @@ export class SettingService implements ISettingService {
     let newValue: any;
 
     switch (key) {
-      case SETTINGKEYS.Notification: {
+      case SETTINGKEYS.Push: {
         newValue = new NotificationSetting();
         if (value) {
           if (Boolean(value)) {
@@ -111,7 +111,7 @@ export class SettingService implements ISettingService {
 
   private setValue(setting: Setting, value: any) {
     switch (setting.name) {
-      case SETTINGKEYS.Notification: {
+      case SETTINGKEYS.Push: {
         const newValue = new NotificationSetting();
         if (value === 'true' || value === 1) {
           newValue.active = true;

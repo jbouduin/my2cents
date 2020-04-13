@@ -75,7 +75,7 @@ export class CommentController implements ICommentController {
 
     Promise.all<Array<Comment>, Setting>([
       this.commentService.getCommentsBySlug(slug, userId, dtoUser && dtoUser.admin),
-      this.settingService.getSetting(SETTINGKEYS.Notification)
+      this.settingService.getSetting(SETTINGKEYS.Push)
     ]).then( ([comments, setting]) => {
         const notification = dtoUser && dtoUser.admin ? JSON.parse(setting.setting) : null;
         const dtoComments = this.transformComments(comments, dtoUser && dtoUser.admin);
