@@ -6,7 +6,6 @@ export default class Push {
     const url = new URL(document.URL);
     this.my2cents_host = `${url.protocol}//${url.host}/${script.dataset.m2cRoot}`;
     this.serviceWorkerName = `${url.protocol}//${url.host}/sw.js`;
-    console.log(this.serviceWorkerName);
     this.target = script.dataset.m2cTarget;
     this.appSrvPK = '';
     this.swRegistration = null;
@@ -42,7 +41,6 @@ export default class Push {
 
   // hide and unhide the buttons depending on the subscription status
   setSubscription (subscribed) {
-    console.log(subscribed);
     this.muteBtn.style.display = subscribed ? 'block' : 'none';
     this.unmuteBtn.style.display = subscribed ? 'none' : 'block';
   }
@@ -96,12 +94,10 @@ export default class Push {
         .getSubscription()
         .then(subscription => {
           if (!subscription) {
-            console.log('no');
             caller.setSubscription(false);
           } else {
             // initialize status, which includes setting UI elements for subscribed status
             // and updating Subscribers list via push
-            console.log('yes');
             caller.setSubscription(true);
           }
         })
