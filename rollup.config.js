@@ -43,10 +43,10 @@ export default [
       input: 'src/embed/index.js',
       output: [
         {
-          file: `${outputPath}/embed/embed.js`,
+          file: `${outputPath}/embed.js`,
           format: 'iife'
         }, {
-          file: `${outputPath}/embed/embed.min.js`,
+          file: `${outputPath}/embed.min.js`,
           format: 'iife',
           plugins: [ terser() ]
         }
@@ -56,11 +56,11 @@ export default [
       input: 'src/embed/client.js',
       output: [
         {
-          file: `${outputPath}/embed/client.js`,
+          file: `${outputPath}/client.js`,
           format: 'umd',
           name: 'My2Cents'
         }, {
-          file: `${outputPath}/embed/client.min.js`,
+          file: `${outputPath}/client.min.js`,
           format: 'umd',
           name: 'My2Cents',
           plugins: [ terser() ]
@@ -71,11 +71,13 @@ export default [
       input: 'src/embed/push.js',
       output: [
         {
-          file: `${outputPath}/embed/push.js`,
-          format: 'cjs'
+          file: `${outputPath}/push.js`,
+          format: 'umd',
+          name: 'Push'
         }, {
-          file: `${outputPath}/embed/push.min.js`,
-          format: 'cjs',
+          file: `${outputPath}/push.min.js`,
+          format: 'umd',
+          name: 'Push',
           plugins: [ terser() ]
         }
       ],
@@ -84,10 +86,10 @@ export default [
       input: 'src/embed/sw.js',
       output: [
         {
-          file: `${outputPath}/embed/sw.js`,
+          file: `${outputPath}/sw.js`,
           format: 'cjs'
         }, {
-          file: `${outputPath}/embed/sw.min.js`,
+          file: `${outputPath}/sw.min.js`,
           format: 'cjs',
           plugins: [ terser() ]
         }

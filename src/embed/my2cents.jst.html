@@ -31,23 +31,19 @@
 
       <% if (data.user.admin) { %>
         <div class="m2c-admin-header">
-          <% if (data.notification.active) { %>
-            <button class="m2c-button m2c-admin-action m2c-mute" data-target="notification" data-class="setting" data-action="false">
-              <i class="icon m2c-icon-mute"></i>
-              <span>
-                <%= data.partials.Mute %>
-              <span>
-            </button>
-          <% } else { %>
-            <button class="m2c-button m2c-admin-action m2c-unmute" data-target="notification" data-class="setting" data-action="true">
-              <i class="icon m2c-icon-unmute"></i>
-              <span>
-                <%= data.partials.UnMute %>
-              </span>
-            </button>
-          <% } %>
+          <button class="m2c-button m2c-mute" style="display: none">
+            <i class="icon m2c-icon-mute"></i>
+            <span>
+              <%= data.partials.Mute %>
+            <span>
+          </button>
+          <button class="m2c-button m2c-unmute" style="display: none">
+            <i class="icon m2c-icon-unmute"></i>
+            <span>
+              <%= data.partials.UnMute %>
+            </span>
+          </button>
         </div>
-
       <% } %>
 
       <div class="m2c-new-comment">

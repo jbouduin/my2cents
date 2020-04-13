@@ -15,13 +15,16 @@ Features checked "work on my machine"
 - **Multiple databases supported**:
   - [x] SQLite3
   - [ ] Postgres
-  - [ ] MySQL databases
+  - [X] MySQL databases
 - **Moderation**: with a *minimal* and *slick UI* a site administrator can allow/reject comments or trust/block users.
 - **Notifications**:
-  - [x] [webpush protocol](https://tools.ietf.org/html/draft-ietf-webpush-protocol-12) - regularly notifies logged in administrators about new comments awaiting moderation
-  - [x] slack: send a message every time a new comment is posted
+  - Push the number of comments awaiting moderation, if any, for each slug
+    - [x] [webpush protocol](https://tools.ietf.org/html/draft-ietf-webpush-protocol-12) **currently requires copying sw.js to the website**
+    - [ ] pushover
+  - Send a notification if a new comment is posted
+    [x] slack
   - [ ] mail
-  - [ ] pushover
+
 - **Third party providers for authentication**: users are not required to register a new account and you don't need to manage a user management system or bother about GDPR.
  - [ ] Github
  - [ ] Twitter

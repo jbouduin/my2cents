@@ -109,7 +109,7 @@ export class RouteService implements IRouteService {
     router.post(
       '/unsubscribe',
       (request: express.Request, response: express.Response) => {
-        this.subscriptionController.subscribe(request, response);
+        this.subscriptionController.unsubscribe(request, response);
       }
     );
 

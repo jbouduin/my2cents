@@ -36,7 +36,6 @@ export class SubscriptionService implements ISubscriptionService {
   }
 
   public async subscribe(endpoint: string, publicKey: string, auth: string): Promise<Subscription> {
-
     const subscriptionRepository = this.databaseService.getSubscriptionRepository();
     const newSubscription = await subscriptionRepository.create(
       {

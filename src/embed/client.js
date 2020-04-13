@@ -3,16 +3,16 @@ import my2cents_tpl from './my2cents.jst.html';
 import comments_tpl from './comments.jst.html';
 
 const $ = sel => document.querySelector(sel);
+// do not remove, it is used in embed.js
 const $$ = sel => document.querySelectorAll(sel);
 
 export default class My2Cents {
   constructor(options) {
-
     this.options = options;
     this.options.endpoint = `${options.host}/${options.root}/comments/${options.slug}`;
     this.initialized = false;
     this.firstLoad = true;
-
+    this.push = null;
     this.refresh();
   }
 
@@ -48,6 +48,28 @@ export default class My2Cents {
       const editBtn = $(target + ' .m2c-edit');
       const cancelReplyBtn = $(target + ' .m2c-cancel');
       const replyBtns = $$(target + ' .m2c-reply');
+
+      // mute and unmute are only there if logged in as administrator
+      if ($(target + ' .m2c-admin-header')) {
+        if ("Notification" in window) {
+          // TODO: (#624) replace this.initialized with 'has the script been loaded'
+          if (!this.initialized) {
+            const s = document.createElement('script');
+            s.type= 'module';
+            s.onreadystatechange = function () {
+              if (this.readyState == 'complete') {
+               new Push().initialize();
+             }
+            };
+            s.onload= function () {
+              new Push().initialize();
+            };
+            s.setAttribute('src', `${host}/${root}/push.js`);
+            document.body.appendChild(s);
+            this.initialized = true;
+          }
+        }
+      }
 
       if (addBtn) {
         /* display the form on top */
@@ -184,13 +206,6 @@ export default class My2Cents {
       }
 
       if (data.user && data.user.admin) {
-        if (!this.initialized) {
-          const push = document.createElement('script');
-          push.setAttribute('src', `${host}/${root}/embed/push.js`);
-          document.head.appendChild(push);
-          this.initialized = true;
-        }
-
         const action = evt => {
           const btn = evt.target;
           const data = btn.dataset;
