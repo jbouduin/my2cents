@@ -3,14 +3,12 @@ import { Repository } from 'typeorm';
 
 import { IConfigurationService, IDatabaseService } from '../../services';
 
-import { Comment, User } from '../entities';
-import SERVICETYPES from '../../services/service.types';
-
+import { Comment, CommentStatus, User } from '../entities';
 import { ISeeder, Seeder } from './seeder';
 
-export interface ICommentSeeder extends ISeeder {
+import SERVICETYPES from '../../services/service.types';
 
-}
+export interface ICommentSeeder extends ISeeder { }
 
 @injectable()
 export class CommentSeeder extends Seeder implements ICommentSeeder {
@@ -89,18 +87,14 @@ export class CommentSeeder extends Seeder implements ICommentSeeder {
 
 **User Blocked:**  ${user.blocked}
 
-**Comment Approved:** ${comment.approved}
-
-**Comment Rejected:** ${comment.rejected}
-
+**Comment Status:** ${comment.Status}
 `;
     const newComment = commentRepository.create({
-      approved: comment.approved,
       comment: content,
       ipAddress: this.ipAddress,
       replyTo,
-      rejected: comment.rejected,
       slug,
+      status: comment.status,
       user,
       userAgent: this.userAgent
     });

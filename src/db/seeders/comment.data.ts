@@ -1,3 +1,5 @@
+import { CommentStatus } from '../entities';
+
 export default [
   // slug fu
   {
@@ -5,20 +7,17 @@ export default [
     'comments': [
       // a comment, non-approved, non-rejected, created by 'Bad Boy'
       {
-        'rejected': false,
-        'approved': false,
+        'status': CommentStatus.INITIAL,
         'user': 'bad boy'
       },
       // a comment, approved, non-rejected, created by 'Bad Boy'
       {
-        'rejected': false,
-        'approved': true,
+        'status': CommentStatus.APPROVED,
         'user': 'bad boy'
       },
       // a comment, non-approved, rejected, created by 'Bad Boy'
       {
-        'rejected': true,
-        'approved': false,
+        'status': CommentStatus.REJECTED,
         'user': 'bad boy'
       }
     ]
@@ -29,44 +28,37 @@ export default [
     'comments': [
       // a comment, non-approved, non-rejected, created by 'Administrator'
       {
-        'rejected': false,
-        'approved': false,
+        'status': CommentStatus.INITIAL,
         'user': 'administrator'
       },
       // a comment, non-approved, non-rejected,  created by 'Naughty girl'
       {
-        'rejected': false,
-        'approved': false,
+        'status': CommentStatus.INITIAL,
         'user': 'naughty girl'
       },
       // a comment, non-approved, rejected,  created by 'Naughty girl'
       {
-        'rejected': true,
-        'approved': false,
+        'status': CommentStatus.REJECTED,
         'user': 'naughty girl'
       },
       // a comment, approved, non-rejected,  created by 'Naughty girl'
       {
-        'rejected': false,
-        'approved': true,
+        'status': CommentStatus.APPROVED,
         'user': 'naughty girl',
         'replies': [
           // a reply, non-approved, non-rejected, created by 'Good boy'
           {
-            'rejected': false,
-            'approved': false,
+            'status': CommentStatus.INITIAL,
             'user': 'good boy',
             'replies': [
               // a reply, non-approved, non-rejected, created by 'Naughty girl'
               {
-                'rejected': false,
-                'approved': false,
+                'status': CommentStatus.INITIAL,
                 'user': 'naughty girl'
               },
               // a reply, non-approved, non-rejected, created by 'Good boy'
               {
-                'rejected': false,
-                'approved': false,
+                'status': CommentStatus.INITIAL,
                 'user': 'good boy'
               }
             ]
@@ -75,20 +67,17 @@ export default [
       },
       // a comment, non-approved, non-rejected, created by 'Good boy'
       {
-        'rejected': false,
-        'approved': false,
+        'status': CommentStatus.INITIAL,
         'user': 'good boy',
         'replies': [
           // a reply, approved, non-rejected, created by 'Naughty girl'
           {
-            'rejected': false,
-            'approved': true,
+            'status': CommentStatus.APPROVED,
             'user': 'naughty girl'
           },
           // a reply, non-approved, rejected, created by 'Naughty girl'
           {
-            'rejected': true,
-            'approved': false,
+            'status': CommentStatus.REJECTED,
             'user': 'naughty girl'
           }
         ]
@@ -101,8 +90,7 @@ export default [
     // a comment, non-approved, non-rejected, created by 'Administrator',
     'comments': [
       {
-        'rejected': false,
-        'approved': false,
+        'status': CommentStatus.INITIAL,
         'user': 'administrator',
         'comment': `
 # h1 Heading 8-)

@@ -8,7 +8,7 @@ import * as rss from 'rss';
 import { CommentApprovedEvent, CommentPostedEvent, CommentRejectedEvent } from '../objects/events';
 import { IAuthenticationService, ICommentService, IConfigurationService, IEventService , ISettingService} from '../services';
 
-import { Comment, Setting } from '../db/entities';
+import { Comment, CommentStatus, Setting } from '../db/entities';
 import { DtoComment, DtoUser } from '../objects/data-transfer';
 
 import SETTINGKEYS from '../objects/settings/setting.keys';
@@ -216,11 +216,11 @@ export class CommentController implements ICommentController {
       dtoComment.created = this.configurationService.formatDate(comment.created);
 
       if (admin) {
-        dtoComment.approved = comment.approved;
+        dtoComment.approved = comment.status === CommentStatus.APPROVED;
         dtoComment.authorId = comment.user.id;
         dtoComment.authorTrusted = comment.user.trusted;
       } else {
-        dtoComment.approved = comment.approved || comment.user.trusted;
+        dtoComment.approved = comment.status === CommentStatus.APPROVED || comment.user.trusted;
         dtoComment.authorId = null;
         dtoComment.authorTrusted = null;
       }

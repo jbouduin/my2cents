@@ -4,6 +4,12 @@ import { CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
 import { User } from './user';
 
+export enum CommentStatus {
+  INITIAL = 'initial',
+  APPROVED = 'approved',
+  REJECTED = 'rejected'
+}
+
 @Entity()
 export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -23,12 +29,8 @@ export class Comment extends BaseEntity {
   public comment: string;
 
   @Index()
-  @Column({ default: false })
-  public rejected: boolean;
-
-  @Index()
-  @Column({ default: false })
-  public approved: boolean;
+  @Column('nvarchar', { length: 32, nullable: false })
+  public status: string;
 
   @Column('nvarchar', { length: 256, nullable: false })
   public ipAddress: string;
