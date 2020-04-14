@@ -10,6 +10,7 @@ import * as passportLocal from 'passport-local';
 import * as twitter from 'passport-twitter';
 import 'reflect-metadata';
 
+import { UserStatus } from '../db/entities';
 import { CfgAuthentication, CfgProvider, ProviderName } from '../objects/configuration';
 
 import { IConfigurationService} from './configuration.service';
@@ -180,7 +181,7 @@ export class AuthenticationService implements IAuthenticationService {
           } else {
             this.userService.findUser('local', user.toLowerCase())
               .then(found => {
-                if (found && !found.blocked && password.toLowerCase() === found.localPassword.toLowerCase()) {
+                if (found && found.status !== UserStatus.BLOCKED && password.toLowerCase() === found.localPassword.toLowerCase()) {
                   return done(null, { id: found.providerId, provider: 'local' });
                 } else {
                   return done(null, false, { message: 'Incorrect credentials.' });

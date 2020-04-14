@@ -3,10 +3,10 @@ import { Repository } from 'typeorm';
 
 import { IConfigurationService, IDatabaseService } from '../../services';
 
-import { User } from '../entities';
-import SERVICETYPES from '../../services/service.types';
-
+import { User, UserStatus } from '../entities';
 import { ISeeder, Seeder } from './seeder';
+
+import SERVICETYPES from '../../services/service.types';
 
 export interface IUserSeeder extends ISeeder { }
 
@@ -39,9 +39,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
             return this.createSeededUser(
               repository,
               'Anonymous',
-              false,
-              false,
-              false
+              UserStatus.INITIAL
             );
           }
         })
@@ -58,9 +56,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
             return this.createSeededUser(
               repository,
               'Administrator',
-              true,
-              true,
-              false
+              UserStatus.ADMINISTRATOR
             );
           }
         })
@@ -75,9 +71,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
             return this.createSeededUser(
               repository,
               'Good boy',
-              false,
-              true,
-              false
+              UserStatus.TRUSTED
             );
           }
         })
@@ -92,9 +86,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
             return this.createSeededUser(
               repository,
               'Naughty girl',
-              false,
-              false,
-              false
+              UserStatus.INITIAL
             );
           }
         })
@@ -109,9 +101,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
             return this.createSeededUser(
               repository,
               'Bad boy',
-              false,
-              false,
-              true
+              UserStatus.BLOCKED
             );
           }
         })
@@ -134,20 +124,16 @@ export class UserSeeder extends Seeder implements IUserSeeder {
   private createSeededUser(
     repository: Repository<User>,
     name: string,
-    administrator: boolean,
-    trusted: boolean,
-    blocked: boolean
+    status: UserStatus
   ): User {
     return repository.create({
-      administrator,
-      blocked,
       displayName: name,
       ipAddress: this.ipAddress,
       localPassword: name.toLowerCase(),
       name: name.toLowerCase(),
       provider: 'local',
       providerId: name.toLowerCase(),
-      trusted,
+      status,
       userAgent: this.userAgent
     });
   }

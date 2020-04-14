@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 
 import { IConfigurationService, IDatabaseService } from '../../services';
 
-import { Comment, CommentStatus, User } from '../entities';
+import { Comment, CommentStatus, User, UserStatus } from '../entities';
 import { ISeeder, Seeder } from './seeder';
 
 import SERVICETYPES from '../../services/service.types';
@@ -83,11 +83,9 @@ export class CommentSeeder extends Seeder implements ICommentSeeder {
       comment.comment :
       `### ${replyTo ? 'Reply' : 'Comment'} by *${user.displayName}*
 
-**User Trusted:**  ${user.trusted}
+**User Status:**  ${user.status}
 
-**User Blocked:**  ${user.blocked}
-
-**Comment Status:** ${comment.Status}
+**Comment Status:** ${comment.status}
 `;
     const newComment = commentRepository.create({
       comment: content,

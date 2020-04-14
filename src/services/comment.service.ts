@@ -3,7 +3,8 @@ import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { Brackets, createQueryBuilder } from 'typeorm';
 
-import { Comment, CommentStatus, User } from '../db/entities';
+import { Comment, CommentStatus } from '../db/entities';
+import { User, UserStatus } from '../db/entities';
 import { ICommentSeeder } from '../db/seeders';
 
 import { IDatabaseService } from './database.service';
@@ -74,13 +75,13 @@ export class CommentService implements ICommentService {
     console.log(CommentStatus.REJECTED);
     if (administrator) {
       // SELECT user.id, user.name, user.displayName, comment.id,
-      //     comment.created, comment, approved, trusted, provider,
+      //     comment.created, comment, status, provider,
       //     replyTo
       //   FROM comment INNER JOIN user ON (userId=user.id)
-      //   WHERE slug = ? AND NOT user.blocked
-      //     AND NOT comment.rejected
+      //   WHERE slug = ? AND NOT user.status = blocked
+      //     AND NOT comment.status = rejectedd
       //   ORDER BY comment.created DESC
-      qryBuilder.andWhere('not user.blocked')
+      qryBuilder.andWhere('user.status != :status', { status: UserStatus.BLOCKED })
         .andWhere('comment.status != :status', { status: CommentStatus.REJECTED });
     } else {
       // SELECT comment.id, comment.userId, user.name, user.displayName,
@@ -88,19 +89,20 @@ export class CommentService implements ICommentService {
       //     trusted, provider, replyTo
       //   FROM comment INNER JOIN user ON (comment.serId=user.id)
       //   WHERE slug = ? AND ((
-      //     NOT user.blocked AND NOT comment.rejected
-      //     AND (comment.approved OR user.trusted))
+      //     user.status != blocked AND comment.status != rejected
+      //     AND (comment.status = approved OR user.status = trusted))
       //     OR user.id = ?)
       //   ORDER BY comment.created DESC
       qryBuilder.andWhere(new Brackets(qb0 =>
         qb0.where(
           new Brackets(qb1 =>
-            qb1.where('not user.blocked')
+            qb1.where('user.status != :status', { status: UserStatus.BLOCKED })
               .andWhere('comment.status != :status', { status: CommentStatus.REJECTED })
               .andWhere(
                 new Brackets(qb2 =>
                   qb2.where('comment.status = :status', { status: CommentStatus.APPROVED })
-                    .orWhere('user.trusted'))
+                    .orWhere('user.status = :status', { status: UserStatus.TRUSTED })
+                )
               )
             )
           )
@@ -120,13 +122,12 @@ export class CommentService implements ICommentService {
 
     // SELECT comment.id, slug, comment.created
     //   FROM comment INNER JOIN user ON (comment.userId=user.id)
-    //   WHERE NOT user.blocked AND NOT user.trusted AND
+    //   WHERE user.status = initial
     //    NOT comment.rejected AND NOT comment.approved
     //    ORDER BY comment.created DESC LIMIT 20
     return commentRepository.createQueryBuilder('comment')
       .leftJoinAndSelect('comment.user', 'user')
-      .andWhere('not user.blocked')
-      .andWhere('not user.trusted')
+      .andWhere('user.status = :status', { status: UserStatus.INITIAL })
       .andWhere('comment.status = :status', { status: CommentStatus.INITIAL })
       .orderBy('comment.created', 'DESC')
       .limit(20)
@@ -141,7 +142,7 @@ export class CommentService implements ICommentService {
       .where('comment.slug = :slug', { slug });
 
     if (replyTo) {
-      queryBuilder.where('comment.replyTo = :replyTo', { replyTo});
+      queryBuilder.where('comment.replyTo = :replyTo', { replyTo });
     }
 
     return queryBuilder.orderBy('comment.created', 'DESC')

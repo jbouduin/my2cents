@@ -4,6 +4,13 @@ import { CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
 import { Comment } from './comment';
 
+export enum UserStatus {
+  INITIAL = 'initial',
+  TRUSTED = 'trusted',
+  BLOCKED = 'blocked',
+  ADMINISTRATOR = 'administrator'
+}
+
 @Entity()
 @Index(['provider', 'providerId'], { unique: true })
 export class User extends BaseEntity {
@@ -22,16 +29,9 @@ export class User extends BaseEntity {
   @Column('nvarchar', { length: 128, nullable: false })
   public providerId: string;
 
-  @Column({ default: false })
-  public administrator: boolean;
-
   @Index()
-  @Column({ default: false })
-  public blocked: boolean;
-
-  @Index()
-  @Column({ default: false })
-  public trusted: boolean;
+  @Column('nvarchar', { length: 32, nullable: false })
+  public status: string;
 
   @Column('nvarchar', { length: 256, nullable: true })
   public url: string;

@@ -5,7 +5,7 @@ import 'reflect-metadata';
 import * as request from 'request';
 import * as webpush from 'web-push';
 
-import { Comment } from '../db/entities';
+import { Comment, UserStatus } from '../db/entities';
 import { CallbackParameter, EventType, IEvent } from '../objects/events';
 import {
   ICommentService,
@@ -81,7 +81,7 @@ export class PushConsumer implements IPushConsumer {
   // callback methods
   private commentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     try {
-      if (!callbackParameter.data.user.trusted) {
+      if (callbackParameter.data.user.status === UserStatus.INITIAL) {
         callbackParameter.pushConsumer.addToAwaitingModeration(callbackParameter.data);
       }
     } catch (error) {
