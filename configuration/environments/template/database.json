@@ -1,0 +1,30 @@
+{
+  "targets": [
+    {
+      "connectionName": "comments",
+      "targetType": "comments"
+    }, {
+      "connectionName": "sessions",
+      "targetType": "sessions"
+    }
+  ],
+  "connections": [
+    {
+      "connectionName": "sessions",
+      "databaseName": "${process.env._SESSIONSDB_NAME || 'sessions' }",
+      "connectionType": "${process.env.SESSIONSDB_TYPE || '' }",
+      "hostName": "${process.env.SESSIONSSDB_HOST || '' }",
+      "port": "${process.env.SESSIONSDB_PORT || '' }",
+      "user": "${process.env.SESSIONSDB_USR || '' }",
+      "password": "${process.env.SESSIONSDB_PWD || '' }"
+    }, {
+      "connectionName": "comments",
+      "databaseName": "${process.env._COMMENTSDB_NAME || 'comments' }",
+      "connectionType": "${process.env.COMMENTSDB_TYPE || '' }",
+      "hostName": "${process.env.COMMENTSDB_HOST || '' }",
+      "port": "${process.env.COMMENTSDB_PORT || 0 }",
+      "user": "${process.env.COMMENTSDB_USR || '' }",
+      "password": "${process.env.COMMENTSDB_PWD || '' }"
+    }
+  ]
+}

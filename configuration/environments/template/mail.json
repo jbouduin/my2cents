@@ -1,0 +1,15 @@
+{
+  "from": "${process.env.MY2CENTS_MAIL_FROM || '' }",
+  "to": "${process.env.MY2CENTS_MAIL_TO || '' }",
+  "mailProtocol": "${process.env.MY2CENTS_MAIL || '' }",
+  "sendMail": {
+    "path": "${process.env.SENDMAIL_PATH || '/usr/sbin/sendmail' }"
+  },
+  "smtp": {
+    "host":  "${process.env.SMTP_HOST || '' }",
+    "password": "${process.env.SMTP_PWD || '' }",
+    "port": "${process.env.SMTP_PORT || 465 }",
+    "secure": "${process.env.SMTP_SECURE || true }",
+    "user": "${process.env.SMTP_USR || '' }"
+  }
+}

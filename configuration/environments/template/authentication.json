@@ -1,0 +1,36 @@
+{
+  "allowAnonymous": false,
+  "allowLocal": false,
+  "providers": [
+    {
+      "name": "Twitter",
+      "id": "${process.env.TWITTER_CONSUMER_KEY || ''}",
+      "secret": "${process.env.TWITTER_CONSUMER_SECRET || ''}"
+    },
+    {
+      "name": "GitHub",
+      "id": "${process.env.GITHUB_CLIENT_ID || ''}",
+      "secret": "${process.env.GITHUB_CLIENT_SECRET || ''}"
+    },
+    {
+      "name": "Google",
+      "id": "${process.env.GOOGLE_CONSUMER_KEY || ''}",
+      "secret": "${process.env.GOOGLE_CONSUMER_SECRET || ''}"
+    },
+    {
+      "name": "Facebook",
+      "id": "${process.env.FACEBOOK_CLIENT_ID || ''}",
+      "secret": "${process.env.FACEBOOK_CLIENT_SECRET || ''}"
+    },
+    {
+      "name": "LinkedIn",
+      "id": "${process.env.LINKEDIN_CONSUMER_KEY || ''}",
+      "secret": "${process.env.LINKEDIN_CONSUMER_SECRET || ''}"
+    },
+    {
+      "name": "Instagram",
+      "id": "${process.env.INSTAGRAM_CLIENT_ID || ''}",
+      "secret": "${process.env.INSTAGRAM_CLIENT_SECRET || ''}"
+    }
+  ]
+}
