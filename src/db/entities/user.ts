@@ -4,11 +4,8 @@ import { CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
 import { Comment } from './comment';
 
-// FIXME: (#594) until we find the time to fix this, we have to disable tslint:disable
-// I'm not sure anymore why I did not do this from the beginning.
-/* tslint:disable variable-name */
 @Entity()
-@Index(['provider', 'provider_id'], { unique: true })
+@Index(['provider', 'providerId'], { unique: true })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -17,13 +14,13 @@ export class User extends BaseEntity {
   public name: string;
 
   @Column('nvarchar', { length: 128, nullable: false })
-  public display_name: string;
+  public displayName: string;
 
   @Column('nvarchar', { length: 128, nullable: false })
   public provider: string;
 
   @Column('nvarchar', { length: 128, nullable: false })
-  public provider_id: string;
+  public providerId: string;
 
   @Column({ default: false })
   public administrator: boolean;
@@ -40,14 +37,14 @@ export class User extends BaseEntity {
   public url: string;
 
   @Column('nvarchar', { length: 256, nullable: true })
-  public local_password: string;
+  public localPassword: string;
 
   @OneToMany(type => Comment, comment => comment.user)
   public comments: Promise<Array<Comment>>;
 
   @Column('nvarchar', { length: 256, nullable: false })
-  public ip_address: string;
+  public ipAddress: string;
 
   @Column('nvarchar', { length: 512, nullable: false })
-  public user_agent: string;
+  public userAgent: string;
 }

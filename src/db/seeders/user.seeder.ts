@@ -32,7 +32,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
     const seedingData = new Array<Promise<User>>();
     if (this.configurationService.environment.authentication.allowAnonymous) {
       seedingData.push(repository
-        .count({ where: { provider: 'local', provider_id: 'Anonymous'.toLowerCase() } })
+        .count({ where: { provider: 'local', providerId: 'Anonymous'.toLowerCase() } })
         .then(cnt => {
           if (cnt === 0) {
             console.info('creating \'Anonymous\'');
@@ -68,7 +68,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
 
       // seed 'Good Boy'
       seedingData.push(repository
-        .count({ where: { provider: 'local', provider_id: 'Good boy'.toLowerCase() } })
+        .count({ where: { provider: 'local', providerId: 'Good boy'.toLowerCase() } })
         .then(cnt => {
           if (cnt === 0) {
             console.info('creating \'Good boy\'');
@@ -85,7 +85,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
 
       // seed 'Naughty Girl'
       seedingData.push(repository
-        .count({ where: { provider: 'local', provider_id: 'Naughty girl'.toLowerCase() } })
+        .count({ where: { provider: 'local', providerId: 'Naughty girl'.toLowerCase() } })
         .then(cnt => {
           if (cnt === 0) {
             console.info('creating \'Naughty girl\'');
@@ -102,7 +102,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
 
       // seed 'Bad Boy'
       seedingData.push(repository
-        .count({ where: { provider: 'local', provider_id: 'Bad boy'.toLowerCase() } })
+        .count({ where: { provider: 'local', providerId: 'Bad boy'.toLowerCase() } })
         .then(cnt => {
           if (cnt === 0) {
             console.info('creating \'Bad boy\'');
@@ -141,14 +141,14 @@ export class UserSeeder extends Seeder implements IUserSeeder {
     return repository.create({
       administrator,
       blocked,
-      display_name: name,
-      ip_address: this.ipAddress,
-      local_password: name.toLowerCase(),
+      displayName: name,
+      ipAddress: this.ipAddress,
+      localPassword: name.toLowerCase(),
       name: name.toLowerCase(),
       provider: 'local',
-      provider_id: name.toLowerCase(),
+      providerId: name.toLowerCase(),
       trusted,
-      user_agent: this.userAgent
+      userAgent: this.userAgent
     });
   }
 }

@@ -83,7 +83,7 @@ export class CommentSeeder extends Seeder implements ICommentSeeder {
     const user = await userRepository.findOne({ name: comment.user.toLowerCase() })
     const content = comment.comment ?
       comment.comment :
-      `### ${replyTo ? 'Reply' : 'Comment'} by *${user.display_name}*
+      `### ${replyTo ? 'Reply' : 'Comment'} by *${user.displayName}*
 
 **User Trusted:**  ${user.trusted}
 
@@ -97,15 +97,15 @@ export class CommentSeeder extends Seeder implements ICommentSeeder {
     const newComment = commentRepository.create({
       approved: comment.approved,
       comment: content,
-      ip_address: this.ipAddress,
-      reply_to: replyTo,
+      ipAddress: this.ipAddress,
+      replyTo,
       rejected: comment.rejected,
       slug,
       user,
-      user_agent: this.userAgent
+      userAgent: this.userAgent
     });
 
-    console.info(`${replyTo ? 'Reply' : 'Comment'} by ${user.display_name}`);
+    console.info(`${replyTo ? 'Reply' : 'Comment'} by ${user.displayName}`);
 
     return commentRepository
       .save(newComment)

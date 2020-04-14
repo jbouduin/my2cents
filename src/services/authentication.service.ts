@@ -96,8 +96,8 @@ export class AuthenticationService implements IAuthenticationService {
     });
 
     passport.deserializeUser((user: any, done: any) => {
-      console.debug(`Deserialize user: ${user.provider_id}@${user.provider}`);
-      done(null, { id: user.provider_id, provider: user.provider });
+      console.debug(`Deserialize user: ${user.providerId}@${user.provider}`);
+      done(null, { id: user.providerId, provider: user.provider });
     });
 
     router.get('/signout', (request, reply) => {
@@ -180,8 +180,8 @@ export class AuthenticationService implements IAuthenticationService {
           } else {
             this.userService.findUser('local', user.toLowerCase())
               .then(found => {
-                if (found && !found.blocked && password.toLowerCase() === found.local_password.toLowerCase()) {
-                  return done(null, { id: found.provider_id, provider: 'local' });
+                if (found && !found.blocked && password.toLowerCase() === found.localPassword.toLowerCase()) {
+                  return done(null, { id: found.providerId, provider: 'local' });
                 } else {
                   return done(null, false, { message: 'Incorrect credentials.' });
                 }

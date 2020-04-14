@@ -38,7 +38,7 @@ export class SlackConsumer implements ISlackConsumer {
     try {
       const comment = callbackParameter.data;
       const postUrl = callbackParameter.configurationService.getPageUrl().replace('%SLUG%', comment.slug);
-      const user = comment.user.display_name || comment.user.name;
+      const user = comment.user.displayName || comment.user.name;
       const slackComment = comment.comment
         .split(/\n+/)
         .map(s => (s ? `> _${s}_` : '>'))

@@ -55,11 +55,11 @@ export class CommentService implements ICommentService {
     const newComment = commentRepository.create(
       {
         comment,
-        ip_address: ipAddress,
-        reply_to: replyTo ? replyTo : null,
+        ipAddress,
+        replyTo: replyTo ? replyTo : null,
         slug,
         user,
-        user_agent: userAgent
+        userAgent
       }
     );
     return commentRepository.save(newComment);
@@ -74,25 +74,25 @@ export class CommentService implements ICommentService {
       .where('comment.slug = :slug', { slug });
 
     if (administrator) {
-      // SELECT user_id, user.name, user.display_name, comment.id,
-      //     comment.created_at, comment, approved, trusted, provider,
-      //     reply_to
-      //   FROM comment INNER JOIN user ON (user_id=user.id)
+      // SELECT user.id, user.name, user.displayName, comment.id,
+      //     comment.created, comment, approved, trusted, provider,
+      //     replyTo
+      //   FROM comment INNER JOIN user ON (userId=user.id)
       //   WHERE slug = ? AND NOT user.blocked
       //     AND NOT comment.rejected
-      //   ORDER BY comment.created_at DESC
+      //   ORDER BY comment.created DESC
       qryBuilder.andWhere('not user.blocked')
         .andWhere('not comment.rejected');
     } else {
-      // SELECT comment.id, user_id, user.name, user.display_name,
-      //     user.url user_url, comment.created_at, comment, approved,
-      //     trusted, provider, reply_to
-      //   FROM comment INNER JOIN user ON (user_id=user.id)
+      // SELECT comment.id, comment.userId, user.name, user.displayName,
+      //     user.url, comment.created, comment, approved,
+      //     trusted, provider, replyTo
+      //   FROM comment INNER JOIN user ON (comment.serId=user.id)
       //   WHERE slug = ? AND ((
       //     NOT user.blocked AND NOT comment.rejected
       //     AND (comment.approved OR user.trusted))
       //     OR user.id = ?)
-      //   ORDER BY comment.created_at DESC
+      //   ORDER BY comment.created DESC
       qryBuilder.andWhere(new Brackets(qb0 =>
         qb0.where(
           new Brackets(qb1 =>
@@ -119,11 +119,11 @@ export class CommentService implements ICommentService {
 
     const commentRepository = this.databaseService.getCommentRepository();
 
-    // SELECT comment.id, slug, comment.created_at
-    //   FROM comment INNER JOIN user ON (user_id=user.id)
+    // SELECT comment.id, slug, comment.created
+    //   FROM comment INNER JOIN user ON (comment.userId=user.id)
     //   WHERE NOT user.blocked AND NOT user.trusted AND
     //    NOT comment.rejected AND NOT comment.approved
-    //    ORDER BY comment.created_at DESC LIMIT 20
+    //    ORDER BY comment.created DESC LIMIT 20
     return commentRepository.createQueryBuilder('comment')
       .leftJoinAndSelect('comment.user', 'user')
       .andWhere('not user.blocked')
@@ -143,7 +143,7 @@ export class CommentService implements ICommentService {
       .where('comment.slug = :slug', { slug });
 
     if (replyTo) {
-      queryBuilder.where('comment.reply_to = :replyTo', { replyTo});
+      queryBuilder.where('comment.replyTo = :replyTo', { replyTo});
     }
 
     return queryBuilder.orderBy('comment.created', 'DESC')

@@ -4,9 +4,6 @@ import { CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
 import { User } from './user';
 
-// FIXME: (#594) until we find the time to fix this, we have to disable tslint:disable
-// I'm not sure anymore why I did not do this from the beginning.
-/* tslint:disable variable-name */
 @Entity()
 export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -17,7 +14,7 @@ export class Comment extends BaseEntity {
   public user: User;
 
   @Column({ nullable: true })
-  public reply_to: number;
+  public replyTo: number;
 
   @Column('nvarchar', { length: 256, nullable: false })
   public slug: string;
@@ -34,8 +31,8 @@ export class Comment extends BaseEntity {
   public approved: boolean;
 
   @Column('nvarchar', { length: 256, nullable: false })
-  public ip_address: string;
+  public ipAddress: string;
 
   @Column('nvarchar', { length: 512, nullable: false })
-  public user_agent: string;
+  public userAgent: string;
 }

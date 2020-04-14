@@ -29,6 +29,6 @@ export class WriteLogConsumer implements IWriteLogConsumer {
   // callback method
   private CommentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     const comment = callbackParameter.data;
-    console.info(`event: ${EventType.COMMENTPOSTED} on slug '${comment.slug}'' by '${comment.user.display_name || comment.user.name}''`);
+    console.info(`event: ${EventType.COMMENTPOSTED} on slug '${comment.slug}'' by '${comment.user.displayName || comment.user.name}''`);
   }
 }

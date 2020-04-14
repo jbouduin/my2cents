@@ -58,15 +58,15 @@ export class UserService implements IUserService {
     const repository = this.databaseService.getUserRepository();
     const newUser = new User();
     newUser.provider = provider;
-    newUser.provider_id = providerId;
-    newUser.display_name = displayName;
+    newUser.providerId = providerId;
+    newUser.displayName = displayName;
     newUser.name = name;
     newUser.url = url;
     newUser.trusted = false;
     newUser.blocked = false;
     newUser.administrator = false;
-    newUser.ip_address = 'unknown';
-    newUser.user_agent = 'unknown';
+    newUser.ipAddress = 'unknown';
+    newUser.userAgent = 'unknown';
     return repository.save(newUser);
   }
 
@@ -77,7 +77,7 @@ export class UserService implements IUserService {
     return this.databaseService.getUserRepository().createQueryBuilder('user')
       .select()
       .where('user.provider = :provider', { provider })
-      .andWhere('user.provider_id = :providerId', { providerId })
+      .andWhere('user.providerId = :providerId', { providerId })
       .getOne();
   }
 

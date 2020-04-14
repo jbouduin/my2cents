@@ -34,7 +34,7 @@ export class SendMailConsumer implements ISendMailConsumer {
   private CommentPostedCallBack(callbackParameter: CallbackParameter<Comment>): void {
     try {
       const comment = callbackParameter.data;
-      const user = comment.user.display_name || comment.user.name;
+      const user = comment.user.displayName || comment.user.name;
       const to = `My2Cents Admin <${this.configurationService.environment.mail.to}>`;
       const from = `${user} <${this.configurationService.environment.mail.from}>`;
       const subject = `New comment on your post ${comment.slug}`;
@@ -97,7 +97,7 @@ export class SendMailConsumer implements ISendMailConsumer {
 
   private createEmailBody(comment: Comment): string {
       const postUrl = this.configurationService.getPageUrl().replace('%SLUG%', comment.slug);
-      const user = comment.user.display_name || comment.user.name;
+      const user = comment.user.displayName || comment.user.name;
 
       const result = `
   New comment on your post ${postUrl}

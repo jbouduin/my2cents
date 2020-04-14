@@ -68,7 +68,7 @@ export class CommentController implements ICommentController {
     let userId = 0;
     if (request.session && request.session.passport && request.session.passport.user) {
       dtoUser = new DtoUser();
-      dtoUser.name = request.session.passport.user.display_name || request.session.passport.user.name;
+      dtoUser.name = request.session.passport.user.displayName || request.session.passport.user.name;
       dtoUser.admin = request.session.passport.user.administrator;
       userId = request.session.passport.user.id;
     }
@@ -148,7 +148,7 @@ export class CommentController implements ICommentController {
       this.commentService
         .getLastComment(
           request.session.passport.user.id,
-          request.body.reply_to,
+          request.body.replyTo,
           request.params.slug)
         .then(lastComment => {
           if (lastComment && lastComment.comment === request.body.comment) {
@@ -156,7 +156,7 @@ export class CommentController implements ICommentController {
           } else {
             this.commentService.createComment(
               request.session.passport.user,
-              request.body.replyTo === undefined ? null : request.body.reply_to,
+              request.body.replyTo === undefined ? null : request.body.replyTo,
               request.params.slug,
               request.body.comment,
               this.getCallerIP(request),
@@ -206,8 +206,8 @@ export class CommentController implements ICommentController {
     return comments.map(comment => {
       const dtoComment = new DtoComment();
       dtoComment.id = comment.id;
-      dtoComment.replyTo = comment.reply_to;
-      dtoComment.author = comment.user.display_name || comment.user.name;
+      dtoComment.replyTo = comment.replyTo;
+      dtoComment.author = comment.user.displayName || comment.user.name;
       dtoComment.authorUrl = this.getAuthorUrl(
         comment.user.url,
         comment.user.provider,
