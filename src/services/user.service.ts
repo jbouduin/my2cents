@@ -68,9 +68,9 @@ export class UserService implements IUserService {
   }
 
   public async findUser(provider: string, providerId: string): Promise<User> {
-    // SELECT id, name, displayName, provider, providerId,
-    //      status FROM user
-    //    WHERE provider = ? AND provider_id = ?
+    // SELECT *
+    //   FROM user
+    //  WHERE user.provider = provider AND user.providerId = providerId
     return this.databaseService.getUserRepository().createQueryBuilder('user')
       .select()
       .where('user.provider = :provider', { provider })

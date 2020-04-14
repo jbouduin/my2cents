@@ -72,27 +72,25 @@ export class CommentService implements ICommentService {
     const qryBuilder = commentRepository.createQueryBuilder('comment')
       .leftJoinAndSelect('comment.user', 'user')
       .where('comment.slug = :slug', { slug });
-    console.log(CommentStatus.REJECTED);
+
     if (administrator) {
-      // SELECT user.id, user.name, user.displayName, comment.id,
-      //     comment.created, comment, status, provider,
-      //     replyTo
-      //   FROM comment INNER JOIN user ON (userId=user.id)
-      //   WHERE slug = ? AND NOT user.status = blocked
-      //     AND NOT comment.status = rejectedd
-      //   ORDER BY comment.created DESC
-      qryBuilder.andWhere('user.status != :status', { status: UserStatus.BLOCKED })
-        .andWhere('comment.status != :status', { status: CommentStatus.REJECTED });
+      //   SELECT  *
+      //     FROM  comment INNER JOIN user ON (comment.userId = user.id)
+      //    WHERE comment.slug = slug
+      //      AND NOT user.status = 'blocked'
+      //      AND NOT comment.status = 'rejected'
+      // ORDER BY comment.created DESC
+      qryBuilder.andWhere('user.status != :status', { status: UserStatus.BLOCKED });
+        // .andWhere('comment.status != :status', { status: CommentStatus.REJECTED });
     } else {
-      // SELECT comment.id, comment.userId, user.name, user.displayName,
-      //     user.url, comment.created, comment, status,
-      //     trusted, provider, replyTo
-      //   FROM comment INNER JOIN user ON (comment.serId=user.id)
-      //   WHERE slug = ? AND ((
-      //     user.status != blocked AND comment.status != rejected
-      //     AND (comment.status = approved OR user.status = trusted))
-      //     OR user.id = ?)
-      //   ORDER BY comment.created DESC
+      //   SELECT  *
+      //     FROM  comment INNER JOIN user ON (comment.userId = user.id)
+      //    WHERE comment.slug = slug
+      //      AND (user.status != blocked
+      //        AND comment.status != 'rejected'
+      //        AND (comment.status = 'approved' OR user.status IN ('trusted', 'administrator']))
+      //       OR user.id = ?)
+      // ORDER BY comment.created DESC
       qryBuilder.andWhere(new Brackets(qb0 =>
         qb0.where(
           new Brackets(qb1 =>
@@ -101,7 +99,7 @@ export class CommentService implements ICommentService {
               .andWhere(
                 new Brackets(qb2 =>
                   qb2.where('comment.status = :status', { status: CommentStatus.APPROVED })
-                    .orWhere('user.status = :status', { status: UserStatus.TRUSTED })
+                    .orWhere('user.status IN (:statuses)', { statuses: [UserStatus.TRUSTED, UserStatus.ADMINISTRATOR] })
                 )
               )
             )
@@ -113,6 +111,7 @@ export class CommentService implements ICommentService {
 
     return qryBuilder
       .orderBy('comment.created', 'DESC')
+      .printSql()
       .getMany();
   }
 
@@ -120,11 +119,11 @@ export class CommentService implements ICommentService {
 
     const commentRepository = this.databaseService.getCommentRepository();
 
-    // SELECT comment.id, slug, comment.created
-    //   FROM comment INNER JOIN user ON (comment.userId=user.id)
-    //   WHERE user.status = initial
-    //    NOT comment.rejected AND NOT comment.approved
-    //    ORDER BY comment.created DESC LIMIT 20
+    //   SELECT *
+    //     FROM comment INNER JOIN user ON (comment.userId = user.id)
+    //    WHERE user.status = 'initial'
+    //      NOT comment.status = 'initial'
+    // ORDER BY comment.created DESC LIMIT 20
     return commentRepository.createQueryBuilder('comment')
       .leftJoinAndSelect('comment.user', 'user')
       .andWhere('user.status = :status', { status: UserStatus.INITIAL })

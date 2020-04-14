@@ -68,8 +68,9 @@ export class CommentController implements ICommentController {
     let userId = 0;
     if (request.session && request.session.passport && request.session.passport.user) {
       dtoUser = new DtoUser();
+      dtoUser.id = request.session.passport.user.id;
       dtoUser.name = request.session.passport.user.displayName || request.session.passport.user.name;
-      dtoUser.admin = request.session.passport.user.administrator;
+      dtoUser.admin = request.session.passport.user.status === UserStatus.ADMINISTRATOR;
       userId = request.session.passport.user.id;
     }
 
@@ -78,7 +79,7 @@ export class CommentController implements ICommentController {
       this.settingService.getSetting(SETTINGKEYS.Push)
     ]).then( ([comments, setting]) => {
         const notification = dtoUser && dtoUser.admin ? JSON.parse(setting.setting) : null;
-        const dtoComments = this.transformComments(comments, dtoUser && dtoUser.admin);
+        const dtoComments = this.transformComments(comments, dtoUser);
 
         response.send(
           {
@@ -202,9 +203,10 @@ export class CommentController implements ICommentController {
   }
 
   // private helper methods
-  private transformComments(comments: Array<Comment>, admin: boolean): Array<DtoComment> {
+  private transformComments(comments: Array<Comment>, dtoUser: DtoUser): Array<DtoComment> {
     return comments.map(comment => {
       const dtoComment = new DtoComment();
+      // properties that are always set
       dtoComment.id = comment.id;
       dtoComment.replyTo = comment.replyTo;
       dtoComment.author = comment.user.displayName || comment.user.name;
@@ -215,15 +217,24 @@ export class CommentController implements ICommentController {
       dtoComment.comment = marked(comment.comment.trim());
       dtoComment.created = this.configurationService.formatDate(comment.created);
 
-      if (admin) {
-        dtoComment.approved = comment.status === CommentStatus.APPROVED;
-        dtoComment.authorId = comment.user.id;
-        dtoComment.authorTrusted = comment.user.status === UserStatus.TRUSTED;
-      } else {
-        dtoComment.approved = comment.status === CommentStatus.APPROVED || comment.user.status === UserStatus.TRUSTED;
-        dtoComment.authorId = null;
-        dtoComment.authorTrusted = null;
-      }
+      // user.id: only set if administrator
+      dtoComment.authorId = dtoUser?.admin ? comment.user.id : null;
+      // user.status in ('trusted', 'administrator') or commend.status = 'approved' and logged in
+      dtoComment.canReply = dtoUser &&
+        (comment.user.status === UserStatus.TRUSTED ||
+        comment.user.status === UserStatus.ADMINISTRATOR ||
+        comment.status === CommentStatus.APPROVED);
+      // user.id = comment.user.id
+      dtoComment.own = comment.user.id === dtoUser?.id;
+      // comment.status: only set if administrator or when own comment
+      dtoComment.status = dtoComment.own || dtoUser?.admin ?
+        comment.status :
+        null;
+      // user.status: only set if administrator or when own comment
+      dtoComment.authorStatus = dtoComment.own || dtoUser?.admin ?
+        comment.user.status :
+        null;
+
       return dtoComment;
     });
   }

@@ -3,7 +3,7 @@
     <header class="m2c-comment-header">
       <div class="m2c-author-card">
         <div class="m2c-author-actions">
-          <% if (data.user && data.user.admin && !comment.authorTrusted) {
+          <% if (data.user && data.user.admin && comment.authorStatus !== 'trusted' && comment.authorStatus !== 'administrator') {
             ['trust', 'block'].forEach((action) => {
           %>
             <button class="m2c-button m2c-admin-action m2c-<%= action %>" data-target="<%= comment.authorId %>" data-class="user" data-action="<%= action %>">
@@ -14,7 +14,7 @@
             </button>
           <% }); } %>
         </div>
-        <% if (data.user && data.user.admin && !comment.authorTrusted) { %>
+        <% if (data.user && data.user.admin && comment.authorStatus !== 'trusted' && comment.authorStatus !== 'administrator') { %>
           <div class="m2c-author m2c-needs-admin-action">
         <% } else { %>
           <div class="m2c-author">
@@ -22,7 +22,6 @@
           <% if (comment.authorUrl) { %>
             <a href="<%= comment.authorUrl %>" target="_blank">
           <% } %>
-
           <%= comment.author %>
           <% if (comment.authorUrl) { %>
             </a>
@@ -36,45 +35,51 @@
     <section class="m2c-comment-body">
         <%= comment.comment %>
     </section>
+    <% // we only need a footer if logged in or there are replies %>
     <% if (data.user || data.replies[comment.id]) { %>
       <footer class="m2c-comment-footer">
-        <% // if logged in, and not an administrator, comments that are not approved or from an untrusted user just get approved = false %>
-        <% if (!comment.approved && !comment.authorTrusted) { %>
-          <div class="m2c-comment-actions">
-            <% if (data.user && data.user.admin) {
-              ['approve', 'reject'].forEach((action) => { %>
-                <button class="m2c-button m2c-admin-action m2c-<%= action %>" data-target="<%= comment.id %>" data-class="comment" data-action="<%= action %>">
-                  <i class="icon m2c-icon-<%= action %>"></i>
+        <% if (data.user) { %>
+          <% if ((comment.status === 'initial' && comment.authorStatus === 'initial') || comment.status === 'rejected') { %>
+            <div class="m2c-comment-actions">
+              <% // admins can approve of reject comments %>
+              <% if (data.user.admin && comment.status !== 'rejected') {
+                ['approve', 'reject'].forEach((action) => { %>
+                  <button class="m2c-button m2c-admin-action m2c-<%= action %>" data-target="<%= comment.id %>" data-class="comment" data-action="<%= action %>">
+                    <i class="icon m2c-icon-<%= action %>"></i>
+                    <span>
+                      <%= action %>
+                    </span>
+                  </button>
+                <% });
+              } // if (data.user.admin) %>
+              <span class="m2c-needs-admin-action">
+                <%= comment.status === 'rejected' ?
+                  data.partials.Rejected :
+                  data.user.admin ?
+                    data.partials.AdminApproval :
+                    data.partials.WaitingForApproval
+                %>
+              </span>
+            </div>
+          <% } // if (comment.status === 'initial' && comment.authorStatus === 'initial') %>
+            <div class="m2c-reply-to-comment">
+              <% if (comment.canReply) { %>
+                <button class="m2c-button m2c-reply" data-reply-to="<%= comment.id %>">
+                  <i class="icon m2c-icon-reply"></i>
                   <span>
-                    <%= action %>
+                    <%= data.partials.Reply %>
                   </span>
                 </button>
-              <% });
-            } %>
-            <span class="m2c-needs-admin-action">
-              <%= !comment.approved && data.user && data.user.admin ?
-                data.partials.AdminApproval :
-                data.partials.WaitingForApproval
-              %>
-            </span>
+              <% } %>
+            </div>
+        <% } // if (data.user) %>
+          <div class="m2c-replies">
+            <% if (data.replies[comment.id]) {
+              data.comments = data.replies[comment.id]; %>
+              <%= data.comments_tpl(data) %>
+            <% } %>
           </div>
-        <% } else if (data.user) { %>
-          <div class="m2c-reply-to-comment">
-            <button class="m2c-button m2c-reply" data-reply-to="<%= comment.id %>">
-              <i class="icon m2c-icon-reply"></i>
-              <span>
-                <%= data.partials.Reply %>
-              </span>
-            </button>
-          </div>
-        <% } %>
-        <div class="m2c-replies">
-          <% if (data.replies[comment.id]) {
-            data.comments = data.replies[comment.id]; %>
-            <%= data.comments_tpl(data) %>
-          <% } %>
-        </div>
-      </footer>
-    <% } %>
+        </footer>
+    <% } // if (data.user || data.replies[comment.id]) %>
   </article>
-<% }) %>
+<% }) // data.comments.forEach((comment) %>
