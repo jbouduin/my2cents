@@ -31,11 +31,10 @@ In 'json.package' there is an npm script defined to test the production configur
 
 ### application.json
 this file is cross-environment.
-
-| Key        | Mandatory | Default Value | Description |
-| ---------- | :-------: | ------------- | ----------- |
-| dateFormat |           | *undefined*   | Dates are formatted using [*moment*](https://momentjs.com/). If this value is empty or undefined, dates are formatted using the .fromNow() method, otherwise the setting is used as input parameter for .format().  |
-| secret     |    [x]    | *undefined*   | The application secret, which is used for [*express-session*](https://github.com/expressjs/session), You can enter whatever you want here |
+| Key        | Mandatory          | Default Value | Description |
+| ---------- | :----------------: | ------------- | ----------- |
+| dateFormat |                    | *undefined*   | Dates are formatted using [*moment*](https://momentjs.com/). If this value is empty or undefined, dates are formatted using the .fromNow() method, otherwise the setting is used as input parameter for .format().  |
+| secret     | :white_check_mark: | *undefined*   | The application secret, which is used for [*express-session*](https://github.com/expressjs/session), You can enter whatever you want here |
 
 **Sample application.json**
 
@@ -49,21 +48,21 @@ this file is cross-environment.
 ### authentication.json
 The authentication configuration file contains the settings for [*passport*](http://www.passportjs.org/) and the authentication providers implemented in *My2Cents*.
 
-| Key            | Mandatory | Default Value | Description |
-| -------------- | :-------: | ------------- | ----------- |
-| allowAnonymous |           | *false*       | allows writing comments anonymously. |
-| allowLocal     |           | *false*       | use [*passport-local*](https://github.com/jaredhanson/passport-local#readme), allowing for a simple user/password authentication. |
-| providers      |           | *empty array* | an array of authentication providers configurations|
+| Key            | Mandatory          | Default Value | Description |
+| -------------- | :----------------: | ------------- | ----------- |
+| allowAnonymous |                    | *false*       | allows writing comments anonymously. |
+| allowLocal     |                    | *false*       | use [*passport-local*](https://github.com/jaredhanson/passport-local#readme), allowing for a simple user/password authentication. |
+| providers      |                    | *empty array* | an array of authentication providers configurations|
 
 About the [*passport-local*](https://github.com/jaredhanson/passport-local#readme) implementation in *My2Cents*:
  **The implementation is not suitable for production environments!** *passport-local* is **NOT** to blame. It is because the implementation in *My2Cents* is unsafe and unsecure, as it was implemented for testing purposes only. For that reason, this form of authorization is only activated when **NODE_ENV** is set to "Development".
 
 #### Authentication configuration
-| Key    | Mandatory | Default Value | Description |
-| ------ | :-------: | ------------- | ----------- |
-| name   |    [x]    | *undefined*   | One of the implemented OAuth Providers |
-| id     |    [x]    | *undefined*   | See provider specific details below |
-| secret |    [x]    | *undefined*   | See provider specific details below |
+| Key    | Mandatory          | Default Value | Description |
+| ------ | :----------------: | ------------- | ----------- |
+| name   | :white_check_mark: | *undefined*   | One of the implemented OAuth Providers |
+| id     | :white_check_mark: | *undefined*   | See provider specific details below |
+| secret | :white_check_mark: | *undefined*   | See provider specific details below |
 
 All fields of any authentication provider are mandatory. If the *id* or *secret* property are not set, the provider is skipped during server initialization. If the *name* (case sensitive!) is an not implemented provider, the entry will not be processed at all.
 
@@ -79,7 +78,7 @@ Library used: [*passport-twitter*](https://github.com/jaredhanson/passport-twitt
 #### Authentication Provider GitHub (OAuth 2.0)
 Library used: [*passport-github*](https://github.com/jaredhanson/passport-github#readme).
 
-| Key    | Description |
+| Key    | Description        |
 | ------ | ------------------ |
 | name   | Value: *'GitHub'*  |
 | id     |                    |
@@ -170,30 +169,30 @@ For specific connection types, different libraries are used:
 - Postgres:
 
 
-| Key         | Mandatory | Default Value | Description |
-| ----------- | :-------: | ------------- | ----------- |
-| targets     |    [x]    | *undefined*   | An array of target configurations. |
-| connections |    [x]    | *undefined*   | An array of database physical database connections.|
+| Key         | Mandatory          | Default Value | Description |
+| ----------- | :----------------: | ------------- | ----------- |
+| targets     | :white_check_mark: | *undefined*   | An array of target configurations. |
+| connections | :white_check_mark: | *undefined*   | An array of database physical database connections.|
 
  *My2Cents* is capable of using two different physical databases. You need to define two targets: on for *comments* and one for *sessions*. Consider them as virtual database definitions, that map to a physical connection. The *comments* target contains the real application data. The *sessions* target contains only the session data. You can save all in one single database also by targetting the same connection twice.
 
 #### Target
-| Key            | Mandatory | Default Value | Description |
-| -------------- | :-------: | ------------- | ----------- |
-| connectionName |    [x]    | *undefined*   | The name of the connection to be used for this target. |
-| target         |    [x]    | *undefined*   | Value: [*'sessions'* \| *'comments'*] |
+| Key            | Mandatory          | Default Value | Description |
+| -------------- | :----------------: | ------------- | ----------- |
+| connectionName | :white_check_mark: | *undefined*   | The name of the connection to be used for this target. |
+| target         | :white_check_mark: | *undefined*   | Value: [*'sessions'* \| *'comments'*] |
 
 #### Connection
 
-| Key            | Mandatory |  Description |
-| -------------- | :-------: |  ----------- |
-| connectionName |    [x]    | The name used to map the connection to a target. |
-| databaseName   |    [x]    |              |
-| connectionType |    [x]    | Value: [*'mysql'* \| *'postgres'* \| *'sqlite'* |
-| hostName       |           |              |
-| port           |           |              |
-| user           |           |              |
-| password       |           |              |
+| Key            | Mandatory          |  Description |
+| -------------- | :----------------: |  ----------- |
+| connectionName | :white_check_mark: | The name used to map the connection to a target. |
+| databaseName   | :white_check_mark: |              |
+| connectionType | :white_check_mark: | Value: [*'mysql'* \| *'postgres'* \| *'sqlite'* |
+| hostName       |                    |              |
+| port           |                    |              |
+| user           |                    |              |
+| password       |                    |              |
 
 **Sample database.json**
 ``` json
@@ -226,31 +225,31 @@ For specific connection types, different libraries are used:
 ```
 ### mail.json
 
-| Key          | Mandatory | Default Value | Description |
-| ------------ | :-------: | ------------- | ----------- |
-| from         |    [x]    | *undefined*   |             |
-| to           |    [x]    | *undefined*   |             |
-| mailProtocol |    [x]    | *'nomail'*    | Value: [ *'nomail'* \| *'smpt'* \| *'sendMail'* ] |
-| sendmail     |           |               | a sendmail configuration |
-| smtp         |           |               | an SMTP configuration |
+| Key          | Mandatory          | Default Value | Description |
+| ------------ | :----------------: | ------------- | ----------- |
+| from         | :white_check_mark: | *undefined*   |             |
+| to           | :white_check_mark: | *undefined*   |             |
+| mailProtocol | :white_check_mark: | *'nomail'*    | Value: [ *'nomail'* \| *'smpt'* \| *'sendMail'* ] |
+| sendmail     |                    |               | a sendmail configuration |
+| smtp         |                    |               | an SMTP configuration |
 
 #### SMTP configuration
 
 *My2Cents* uses [*nodemailer*](https://nodemailer.com/about/) when sending mails over SMTP.
 
-| Key      | Mandatory | Default Value | Description |
-| -------- | :-------: | ------------- | ----------- |
-| host     |    [x]    |               |             |
-| password |    [x]    |               |             |
-| port     |           | 465           |             |
-| secure   |           | true          |             |
-| user     |    [x]    |               |             |
+| Key      | Mandatory          | Default Value | Description |
+| -------- | :----------------: | ------------- | ----------- |
+| host     | :white_check_mark: |               |             |
+| password | :white_check_mark: |               |             |
+| port     |                    | 465           |             |
+| secure   |                    | true          |             |
+| user     | :white_check_mark: |               |             |
 
 #### Sendmail configuration
 
-| Key    | Mandatory | Default Value |Description |
-| ------ | :-------: | ------------- | ----------- |
-| path   |           | *'/usr/sbin/sendmail'* | The path to the sendmail executable. |
+| Key    | Mandatory          | Default Value |Description |
+| ------ | :----------------: | ------------- | ----------- |
+| path   |                    | *'/usr/sbin/sendmail'* | The path to the sendmail executable. |
 
 **Sample mail.json when no mail is send**
 ``` json
@@ -286,47 +285,47 @@ For specific connection types, different libraries are used:
 ```
 ### notification.jason
 
-| Key      | Mandatory | Default Value |Description |
-| -------- | :-------: | ------------- | ----------- |
-| interval |           | 60000         | The interval in milliseconds between sending out notifications |
-| pushover |           | *undefined*   | a pushover configuration |
-| webpush  |           | *undefined*   | a webpush configuration |
-| slack    |           | *undefined*   | a slack configuration |
+| Key      | Mandatory          | Default Value |Description |
+| -------- | :----------------: | ------------- | ----------- |
+| interval |                    | 60000         | The interval in milliseconds between sending out notifications |
+| pushover |                    | *undefined*   | a pushover configuration |
+| webpush  |                    | *undefined*   | a webpush configuration |
+| slack    |                    | *undefined*   | a slack configuration |
 
 #### *pushover* configuration
-| Key      | Mandatory | Default Value |Description |
-| -------- | :-------: | ------------- | ----------- |
-| appToken |    [x]    | | |
-| userKey  |    [x]    | | |
+| Key      | Mandatory          | Default Value |Description |
+| -------- | :----------------: | ------------- | ----------- |
+| appToken | :white_check_mark: | | |
+| userKey  | :white_check_mark: | | |
 
 #### *webPush* configuration
 
 to use webpush: generate keys by running npx web-push generate-vapid-keys and enter them in the configuration file or pass them as environment variable to your server
 
-| Key        | Mandatory | Default Value |Description |
-| ---------- | :-------: |----------- | ----------- |
-| publicKey  |    [x]    | | |
-| privateKey |    [x]    | | |
+| Key        | Mandatory          | Default Value |Description |
+| ---------- | :----------------: |----------- | ----------- |
+| publicKey  | :white_check_mark: | | |
+| privateKey | :white_check_mark: | | |
 
 #### *slack* configuration
-| Key        | Mandatory | Default Value |Description |
-| ---------- | :-------: |----------- | ----------- |
-| webHookUrl |    [x]    | | |
+| Key        | Mandatory          | Default Value |Description |
+| ---------- | :----------------: |----------- | ----------- |
+| webHookUrl | :white_check_mark: | | |
 
 ### server.json
 
 *My2Cents* is serving content using [*expressjs*](http://expressjs.com/)
 
-| Key            | Mandatory | Default Value | Description |
-| -------------- | :-------: |-------------- | ----------- |
-| hostname       |    [x]    | *undefined*   | The hostname of your website. Used when building the URL of the embedding page and callback URL's for the authentication providers.. |
-| pageSuffix     |           | *undefined*   | Suffix to be appended to the SLUG when building the URL of the embedding page. |
-| pathToMy2Cents |           | *'/my2cents'* | Used when building callback URL's for the authentication providers and callback URL's for the authentication providers. |
-| my2CentsPort   |           | 3000          | The port number the express-server will listen to. |
-| pathToPage     |           | *'/'*         | The path to the pages on your webserver. Used when building the URL of the embedding page. |
-| port           |           | *undefined*   | The port your website server is listening to. Used when building the URL of the embedding page and callback URL's for the authentication providers.|
-| protocol       |           | *'https'*     | The protocol your website is using.  Used when building the URL of the embedding page and callback URL's for the authentication providers..|
-| serveStatic    |    [x]    | *undefined*   | an array of directory names that will be used to serve static *My2Cents* content. |
+| Key            | Mandatory          | Default Value | Description |
+| -------------- | :----------------: |-------------- | ----------- |
+| hostname       | :white_check_mark: | *undefined*   | The hostname of your website. Used when building the URL of the embedding page and callback URL's for the authentication providers.. |
+| pageSuffix     |                    | *undefined*   | Suffix to be appended to the SLUG when building the URL of the embedding page. |
+| pathToMy2Cents |                    | *'/my2cents'* | Used when building callback URL's for the authentication providers and callback URL's for the authentication providers. |
+| my2CentsPort   |                    | 3000          | The port number the express-server will listen to. |
+| pathToPage     |                    | *'/'*         | The path to the pages on your webserver. Used when building the URL of the embedding page. |
+| port           |                    | *undefined*   | The port your website server is listening to. Used when building the URL of the embedding page and callback URL's for the authentication providers.|
+| protocol       |                    | *'https'*     | The protocol your website is using.  Used when building the URL of the embedding page and callback URL's for the authentication providers..|
+| serveStatic    | :white_check_mark: | *undefined*   | an array of directory names that will be used to serve static *My2Cents* content. |
 
 **sample server.json**
 ``` json
