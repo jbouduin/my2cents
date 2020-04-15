@@ -4,8 +4,8 @@
 *My2Cents* is Licensed under the EUPL-1.2-or-later.
 
 ## This is still a work in progress
-This means that a lot of the features have not been tested.
-Features checked "work on my machine"
+This means that a lot of the features have not been tested. Moreover, currently there is no automated testing implemented.
+Features with :white_check_mark: means "works on my machine"
 
 ## Features:
 - **Tiny**: it takes only ~**14 KB!!!** to embed My2Cents.
@@ -13,25 +13,25 @@ Features checked "work on my machine"
 - **Ad-free**: *My2Cents* will not disturb your users.
 - **Tracking-free**
 - **Multiple databases supported**:
-  - [x] SQLite3
-  - [ ] Postgres
-  - [X] MySQL databases
+  - SQLite3 :white_check_mark:
+  - Postgres :x:
+  - MySQL databases :white_check_mark:
 - **Moderation**: with a *minimal* and *slick UI* a site administrator can allow/reject comments or trust/block users.
 - **Notifications**:
   - Push the number of comments awaiting moderation, if any, for each slug
-    - [x] [webpush protocol](https://tools.ietf.org/html/draft-ietf-webpush-protocol-12) **currently requires copying sw.js to the website**
-    - [ ] pushover
+    - [webpush protocol](https://tools.ietf.org/html/draft-ietf-webpush-protocol-12) **currently requires copying sw.js to the website** :white_check_mark:
+    - pushover :x:
   - Send a notification if a new comment is posted
-    [x] slack
-  - [ ] mail
+    - slack :white_check_mark:
+    - mail :x:
 
 - **Third party providers for authentication**: users are not required to register a new account and you don't need to manage a user management system or bother about GDPR.
- - [ ] Github
- - [ ] Twitter
- - [ ] Google
- - [ ] Facebook
- - [ ] Instagram
- - [ ] LinkedIn
+  - Github :x:
+  - Twitter :x:
+  - Google :x:
+  - Facebook :x:
+  - Instagram :x:
+  - LinkedIn :x:
 
 ## Why I started building my2cents
 I was looking for an embeddable commenting solution with the features described above for [my blog](https://agile-is-a-state-of-mind), and found [Schnack](https://schnack.cool/). Unfortunately, it only offers support for SQLite, a personal no-go for production environments.
