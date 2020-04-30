@@ -109,10 +109,9 @@ export class CommentService implements ICommentService {
       );
     }
 
-    return qryBuilder
-      .orderBy('comment.created', 'DESC')
-      .printSql()
-      .getMany();
+    qryBuilder.orderBy('comment.created', 'DESC')
+    console.debug(qryBuilder.getQuery());
+    return qryBuilder.getMany();
   }
 
   public async getCommentsForModeration(): Promise<Array<Comment>> {
@@ -124,13 +123,14 @@ export class CommentService implements ICommentService {
     //    WHERE user.status = 'initial'
     //      NOT comment.status = 'initial'
     // ORDER BY comment.created DESC LIMIT 20
-    return commentRepository.createQueryBuilder('comment')
+    const qryBuilder = commentRepository.createQueryBuilder('comment')
       .leftJoinAndSelect('comment.user', 'user')
       .andWhere('user.status = :status', { status: UserStatus.INITIAL })
       .andWhere('comment.status = :status', { status: CommentStatus.INITIAL })
       .orderBy('comment.created', 'DESC')
-      .limit(20)
-      .getMany();
+      .limit(20);
+    console.debug(qryBuilder.getQuery());
+    return qryBuilder.getMany();
   }
 
   public async getLastComment(userId: number, replyTo: number, slug: string): Promise<Comment> {
