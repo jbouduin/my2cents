@@ -4,15 +4,22 @@ import { inject, injectable } from 'inversify';
 import * as marked from 'marked';
 import 'reflect-metadata';
 import * as rss from 'rss';
+// import '../types.d.ts';
 
 import { CommentApprovedEvent, CommentPostedEvent, CommentRejectedEvent } from '../objects/events';
 import { IAuthenticationService, ICommentService, IConfigurationService, IEventService , ISettingService} from '../services';
 
-import { Comment, CommentStatus, Setting, UserStatus } from '../db/entities';
+import { Comment, CommentStatus, Setting, User, UserStatus } from '../db/entities';
 import { DtoComment, DtoUser } from '../objects/data-transfer';
 
 import SETTINGKEYS from '../objects/settings/setting.keys';
 import SERVICETYPES from '../services/service.types';
+
+declare module "express-session" {
+  interface Session {
+    user: User;
+  }
+}
 
 export interface ICommentController {
   approveComment(request: Request, response: Response): void;
@@ -39,7 +46,8 @@ export class CommentController implements ICommentController {
     if (!request.isAuthenticated()) {
       response.sendStatus(401);
     } else {
-      if (!request.session.passport.user.administrator) {
+
+      if (request.session.user.status !== UserStatus.ADMINISTRATOR) {
         response.sendStatus(403);
       } else {
         const commentId = Number(request.params.id);
@@ -66,12 +74,12 @@ export class CommentController implements ICommentController {
 
     let dtoUser: DtoUser = null;
     let userId = 0;
-    if (request.session && request.session.passport && request.session.passport.user) {
+    if (request.session?.user) {
       dtoUser = new DtoUser();
-      dtoUser.id = request.session.passport.user.id;
-      dtoUser.name = request.session.passport.user.displayName || request.session.passport.user.name;
-      dtoUser.admin = request.session.passport.user.status === UserStatus.ADMINISTRATOR;
-      userId = request.session.passport.user.id;
+      dtoUser.id = request.session.user.id;
+      dtoUser.name = request.session.user.displayName || request.session.user.name;
+      dtoUser.admin = request.session.user.status === UserStatus.ADMINISTRATOR;
+      userId = request.session.user.id;
     }
 
     Promise.all<Array<Comment>, Setting>([
@@ -99,7 +107,7 @@ export class CommentController implements ICommentController {
     if (!request.isAuthenticated()) {
       response.sendStatus(401);
     } else {
-      if (!request.session.passport.user.administrator) {
+      if (request.session.user.status !== UserStatus.ADMINISTRATOR) {
         response.sendStatus(403);
       } else {
         const commentId = Number(request.params.id);
@@ -148,7 +156,7 @@ export class CommentController implements ICommentController {
     } else {
       this.commentService
         .getLastComment(
-          request.session.passport.user.id,
+          request.session.user.id,
           request.body.replyTo,
           request.params.slug)
         .then(lastComment => {
@@ -156,7 +164,7 @@ export class CommentController implements ICommentController {
             response.send({ status: 'rejected', reason: 'reason' });
           } else {
             this.commentService.createComment(
-              request.session.passport.user,
+              request.session.user,
               request.body.replyTo === undefined ? null : request.body.replyTo,
               request.params.slug,
               request.body.comment,
@@ -180,7 +188,7 @@ export class CommentController implements ICommentController {
     if (!request.isAuthenticated()) {
       response.sendStatus(401);
     } else {
-      if (!request.session.passport.user.administrator) {
+      if (request.session.user.status !== UserStatus.ADMINISTRATOR) {
         response.sendStatus(403);
       } else {
         const commentId = Number(request.params.id);
@@ -254,7 +262,6 @@ export class CommentController implements ICommentController {
 
   private getCallerIP(request: Request): string {
     let ip = request.get('x-forwarded-for') ||
-        request.connection.remoteAddress ||
         request.socket.remoteAddress;
     ip = ip.split(',')[0];
     // in case the ip returned in a format: "::ffff:146.xxx.xxx.xxx"

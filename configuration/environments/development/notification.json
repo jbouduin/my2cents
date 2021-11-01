@@ -1,9 +1,5 @@
 {
   "interval": 123456,
-  "pushover": {
-    "appToken": "",
-    "userKey": ""
-  },
   "slack": {
     "webHookUrl": "https://hooks.slack.com/services/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"
   },

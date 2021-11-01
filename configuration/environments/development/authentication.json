@@ -31,11 +31,6 @@
       "name": "Instagram",
       "id": "xxx",
       "secret": "xxx"
-    },
-    {
-      "name": "Fake",
-      "id": "xxxxxx",
-      "secret": "xxxxxx"
     }
   ]
 }

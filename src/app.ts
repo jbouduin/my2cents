@@ -1,4 +1,3 @@
-import * as bodyParser from 'body-parser';
 import { TypeormStore } from 'connect-typeorm';
 import * as cors from 'cors';
 import * as express from 'express';
@@ -19,6 +18,7 @@ import {
 import { CfgValidation } from './configuration';
 
 import SERVICETYPES from './services/service.types';
+import bodyParser = require('body-parser');
 
 class App {
 
@@ -99,9 +99,9 @@ class App {
 
     // this.app.use(CookieParser());
     // support application/json type post data
-    this.app.use(bodyParser.json());
+    this.app.use(express.json());
     // support application/x-www-form-urlencoded post data
-    this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(express.urlencoded({ extended: true }));
 
     const sessionRepository = this.databaseService.getSessionRepository();
     this.app.use(expressSession(

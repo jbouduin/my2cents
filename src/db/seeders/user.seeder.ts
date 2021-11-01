@@ -49,7 +49,7 @@ export class UserSeeder extends Seeder implements IUserSeeder {
     if (this.configurationService.environment.authentication.allowLocal) {
       // seed the Administrator
       seedingData.push(repository
-        .count({ where: { administrator: true } })
+        .count({ where: { status: UserStatus.ADMINISTRATOR } })
         .then(cnt => {
           if (cnt === 0) {
             console.info('creating \'Administrator\'');

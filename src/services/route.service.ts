@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
+import connectEnsureLogin = require('connect-ensure-login');
 
 import {
   ICommentController,
@@ -48,6 +49,7 @@ export class RouteService implements IRouteService {
 
     router.post(
       '/comments/:slug',
+      connectEnsureLogin.ensureLoggedIn(),
       (request: express.Request, response: express.Response) => {
         this.commentController.postComment(request, response);
       }
@@ -64,6 +66,7 @@ export class RouteService implements IRouteService {
     // single comment
     router.post(
       '/comment/:id/approve',
+      connectEnsureLogin.ensureLoggedIn(),
       (request: express.Request, response: express.Response) => {
         this.commentController.approveComment(request, response);
       }
@@ -71,6 +74,7 @@ export class RouteService implements IRouteService {
 
     router.post(
       '/comment/:id/reject',
+      connectEnsureLogin.ensureLoggedIn(),
       (request: express.Request, response: express.Response) => {
           this.commentController.rejectComment(request, response);
       }
@@ -78,6 +82,7 @@ export class RouteService implements IRouteService {
 
     router.post(
       '/markdown',
+      connectEnsureLogin.ensureLoggedIn(),
       (request: express.Request, response: express.Response) => {
         this.commentController.markdown2Html(request, response);
       }
@@ -86,6 +91,7 @@ export class RouteService implements IRouteService {
     // user
     router.post(
       '/user/:id/block',
+      connectEnsureLogin.ensureLoggedIn(),
       (request: express.Request, response: express.Response) => {
           this.userController.blockUser(request, response);
       }
@@ -93,6 +99,7 @@ export class RouteService implements IRouteService {
 
     router.post(
       '/user/:id/trust',
+      connectEnsureLogin.ensureLoggedIn(),
       (request: express.Request, response: express.Response) => {
           this.userController.trustUser(request, response);
       }
@@ -101,6 +108,7 @@ export class RouteService implements IRouteService {
     // subscribe - unsubscribe
     router.post(
       '/subscribe',
+      connectEnsureLogin.ensureLoggedIn(),
       (request: express.Request, response: express.Response) => {
         this.subscriptionController.subscribe(request, response);
       }
@@ -108,6 +116,7 @@ export class RouteService implements IRouteService {
 
     router.post(
       '/unsubscribe',
+      connectEnsureLogin.ensureLoggedIn(),
       (request: express.Request, response: express.Response) => {
         this.subscriptionController.unsubscribe(request, response);
       }

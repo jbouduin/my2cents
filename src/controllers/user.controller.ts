@@ -1,9 +1,16 @@
+import { User, UserStatus } from '../db/entities';
 import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 
 import { IUserService } from '../services';
 import SERVICETYPES from '../services/service.types';
+
+declare module "express-session" {
+  interface Session {
+    user: User;
+  }
+}
 
 export interface IUserController {
   blockUser(request: Request, response: Response): void;
@@ -23,7 +30,7 @@ export class UserController implements IUserController {
     if (!request.isAuthenticated()) {
       response.sendStatus(401);
     } else {
-      if (!request.session.passport.user.administrator) {
+      if (request.session.user.status !== UserStatus.ADMINISTRATOR) {
         response.sendStatus(403);
       } else {
         const userId = Number(request.params.id);
@@ -45,7 +52,7 @@ export class UserController implements IUserController {
     if (!request.isAuthenticated()) {
       response.sendStatus(401);
     } else {
-      if (!request.session.passport.user.administrator) {
+      if (request.session.user.status !== UserStatus.ADMINISTRATOR) {
         response.sendStatus(403);
       } else {
         const userId = Number(request.params.id);
