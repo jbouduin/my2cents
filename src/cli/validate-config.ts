@@ -1,4 +1,3 @@
-import container from '../inversify.config';
 import { Configuration, CfgValidation } from '../configuration';
 
 class Main {

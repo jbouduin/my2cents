@@ -296,7 +296,7 @@ export class AuthenticationService implements IAuthenticationService {
   private initializeGoogle(router: Router, provider: CfgProvider): void {
     this.providers.push({ id: 'google', name: 'Google' });
     passport.use(
-      new google.Strategy(
+      new google.OAuthStrategy(
         {
           callbackURL: this.buildCallBackUrl('google'),
           consumerKey: provider.id,

@@ -5,7 +5,7 @@
     "userKey": ""
   },
   "slack": {
-    "webHookUrl": ""
+    "webHookUrl": "https://hooks.slack.com/services/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"
   },
   "webpush": {
     "publicKey": "BBuh81yiREqP0F3Zl6q1dkU4YpMeqXap3umLLoI6k_PzyRCJC9-wmJAPUTysmCybbo9Eb120FK_THuKNhHl6VwY",

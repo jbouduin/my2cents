@@ -25,6 +25,14 @@
       "port": 0,
       "user": "",
       "password": ""
+    }, {
+      "connectionName": "mysql_local",
+      "databaseName": "my2cents",
+      "connectionType": "mysql",
+      "hostName": "",
+      "port": 3306,
+      "user": "my2cents",
+      "password": "my2cents"
     }
   ]
 }
