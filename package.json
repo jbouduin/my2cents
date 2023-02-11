@@ -68,7 +68,7 @@
         "@types/passport-instagram": "^1.0.2",
         "@types/passport-local": "^1.0.34",
         "@types/passport-twitter": "^1.0.37",
-        "nodemon": "^2.0.14",
+        "nodemon": "^2.0.20",
         "rollup": "^2.59.0",
         "rollup-plugin-buble": "^0.19.8",
         "rollup-plugin-commonjs": "^10.1.0",
